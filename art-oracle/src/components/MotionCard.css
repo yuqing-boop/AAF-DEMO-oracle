@@ -1,0 +1,498 @@
+/* ═══════════════════════════════════════════════════════════════
+   MotionCard — animated option tiles (Q1)
+   4 variants: deep-ink · amber-pulse · silver-silk · color-noise
+═══════════════════════════════════════════════════════════════ */
+
+/* Tinted shadow core (no pure black) — cool violet drift for depth */
+.motion-card {
+  --mc-shadow: oklch(22% 0.04 278 / 0.38);
+  --mc-shadow-deep: oklch(18% 0.045 278 / 0.48);
+  --mc-shadow-lift: oklch(26% 0.05 278 / 0.42);
+  --mc-glow-ambient: oklch(72% 0.14 75 / 0.1);
+  position: relative;
+  overflow: hidden;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  /* Shape driven per-variant by morph keyframes */
+  border-radius: 42% 58% 54% 46% / 45% 48% 55% 52%;
+  box-shadow:
+    0 8px 40px var(--mc-shadow),
+    inset 0 1px 0 oklch(100% 0.02 85 / 0.12);
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  transition:
+    box-shadow 0.45s cubic-bezier(0.19, 1, 0.22, 1),
+    transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* Keyboard-only focus ring — suppressed for mouse/touch */
+.motion-card:focus-visible {
+  outline: 2px solid oklch(50% 0.12 300);
+  outline-offset: 3px;
+  z-index: 2;
+}
+
+.motion-card:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Frost: blur what’s below, add hue-matched translucency (not flat glass) */
+.motion-card__veil {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  border-radius: inherit;
+  opacity: 1;
+  -webkit-backdrop-filter: blur(14px) saturate(1.45);
+  backdrop-filter: blur(14px) saturate(1.45);
+  transition: opacity 0.22s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.motion-card__stage {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  border-radius: inherit;
+  transition: transform 0.38s cubic-bezier(0.19, 1, 0.22, 1);
+  transform: scale(1);
+  transform-origin: center center;
+  box-shadow: inset 4px 4px 12px 6px rgba(232, 191, 191, 0.25);
+}
+
+.motion-card:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 16px 52px var(--mc-shadow-lift),
+    0 0 72px var(--mc-glow-ambient),
+    inset 0 1px 0 oklch(100% 0.02 85 / 0.16);
+}
+
+.motion-card:active {
+  transform: translateY(-1px) scale(0.982);
+  box-shadow:
+    0 6px 28px var(--mc-shadow-deep),
+    inset 0 2px 12px oklch(18% 0.04 278 / 0.35),
+    inset 0 1px 0 oklch(100% 0.02 85 / 0.08);
+}
+
+.motion-card:active .motion-card__veil {
+  opacity: 0.86;
+}
+
+.motion-card:active .motion-card__stage {
+  transform: scale(1.028);
+}
+
+/* Shared blob base — GPU layer for drifting fields */
+.mc-blob {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Label: above veil for legibility on translucency */
+.motion-card__label-bar {
+  position: absolute;
+  bottom: 0;
+  inset-inline: 0;
+  z-index: 2;
+  padding: 44px 12px 11px;
+  background: linear-gradient(
+    to bottom,
+    oklch(12% 0.05 300 / 0),
+    oklch(8% 0.06 300 / 0.55) 100%
+  );
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.motion-card__key {
+  flex-shrink: 0;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: oklch(88% 0.01 85 / 0.85);
+  background: oklch(20% 0.04 300 / 0.35);
+  border: 1px solid oklch(100% 0.01 85 / 0.18);
+  border-radius: 3px;
+  padding: 2px 6px;
+  line-height: 1.5;
+}
+
+.motion-card__name {
+  font-family: 'Neuzeit 2', system-ui, sans-serif;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: oklch(95% 0.008 85);
+  text-shadow: 0 1px 14px oklch(22% 0.05 285 / 0.55);
+  line-height: 1.2;
+}
+
+/* Per-variant veils: hue-matched translucency over motion */
+.motion-card--deep-ink .motion-card__veil {
+  background: oklch(35% 0.11 255 / 0.38);
+  box-shadow: inset 0 1px 0 oklch(100% 0.02 255 / 0.18);
+}
+
+.motion-card--amber-pulse .motion-card__veil {
+  background: oklch(52% 0.12 55 / 0.32);
+  box-shadow: inset 0 1px 0 oklch(100% 0.04 70 / 0.24);
+}
+
+.motion-card--silver-silk .motion-card__veil {
+  background: oklch(58% 0.04 250 / 0.30);
+  box-shadow: inset 0 1px 0 oklch(100% 0.01 250 / 0.26);
+}
+
+.motion-card--color-noise .motion-card__veil {
+  background: oklch(45% 0.08 310 / 0.34);
+  box-shadow: inset 0 1px 0 oklch(100% 0.02 300 / 0.18);
+}
+
+/* ── Per-variant organic shape morph + glass border ─────────── */
+
+.motion-card--deep-ink {
+  animation: morph-mc-a 14s cubic-bezier(0.37, 0, 0.21, 1) infinite;
+  border: 1px solid oklch(55% 0.14 255 / 0.22);
+}
+
+.motion-card--amber-pulse {
+  animation: morph-mc-b 11s cubic-bezier(0.37, 0, 0.21, 1) infinite;
+  animation-delay: -4.5s;
+  border: 1px solid oklch(70% 0.18 66 / 0.25);
+}
+
+.motion-card--silver-silk {
+  animation: morph-mc-c 16s cubic-bezier(0.37, 0, 0.21, 1) infinite;
+  animation-delay: -8s;
+  border: 1px solid oklch(78% 0.04 215 / 0.28);
+}
+
+.motion-card--color-noise {
+  animation: morph-mc-d 13s cubic-bezier(0.37, 0, 0.21, 1) infinite;
+  animation-delay: -5.5s;
+  border: 1px solid oklch(65% 0.1 310 / 0.22);
+}
+
+/* Four distinct organic shape families — never the same phase */
+@keyframes morph-mc-a {
+  0%   { border-radius: 38% 62% 55% 45% / 41% 44% 58% 57%; }
+  20%  { border-radius: 52% 48% 36% 64% / 56% 40% 62% 44%; }
+  45%  { border-radius: 44% 56% 62% 38% / 48% 60% 38% 52%; }
+  70%  { border-radius: 60% 40% 47% 53% / 37% 58% 46% 63%; }
+  100% { border-radius: 38% 62% 55% 45% / 41% 44% 58% 57%; }
+}
+
+@keyframes morph-mc-b {
+  0%   { border-radius: 55% 45% 38% 62% / 57% 58% 44% 41%; }
+  25%  { border-radius: 36% 64% 52% 48% / 45% 62% 40% 55%; }
+  55%  { border-radius: 62% 38% 44% 56% / 52% 38% 60% 48%; }
+  80%  { border-radius: 47% 53% 60% 40% / 62% 46% 58% 38%; }
+  100% { border-radius: 55% 45% 38% 62% / 57% 58% 44% 41%; }
+}
+
+@keyframes morph-mc-c {
+  0%   { border-radius: 42% 58% 48% 52% / 52% 46% 54% 48%; }
+  30%  { border-radius: 58% 42% 64% 36% / 44% 56% 40% 60%; }
+  62%  { border-radius: 36% 64% 44% 56% / 62% 40% 64% 36%; }
+  100% { border-radius: 42% 58% 48% 52% / 52% 46% 54% 48%; }
+}
+
+@keyframes morph-mc-d {
+  0%   { border-radius: 60% 40% 52% 48% / 44% 58% 46% 54%; }
+  35%  { border-radius: 44% 56% 38% 62% / 58% 42% 66% 34%; }
+  65%  { border-radius: 52% 48% 66% 34% / 38% 62% 44% 56%; }
+  100% { border-radius: 60% 40% 52% 48% / 44% 58% 46% 54%; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   A — Deep Ink  (靜 · still · prussian blue)
+   Two immense, barely-moving ink-stain blobs.
+═══════════════════════════════════════════════════════════════ */
+.motion-card--deep-ink {
+  background: oklch(7% 0.05 265);
+}
+
+.mc-blob--ink-a {
+  width: 150%;
+  aspect-ratio: 1;
+  top: -28%;
+  left: -22%;
+  background: radial-gradient(circle at 50% 50%,
+    oklch(30% 0.18 248) 0%,
+    oklch(19% 0.13 256 / 0.65) 42%,
+    transparent 72%
+  );
+  animation: ink-drift-a 32s ease-in-out infinite;
+}
+
+.mc-blob--ink-b {
+  width: 132%;
+  aspect-ratio: 1;
+  bottom: -32%;
+  right: -18%;
+  background: radial-gradient(circle at 50% 50%,
+    oklch(22% 0.16 262) 0%,
+    oklch(14% 0.11 252 / 0.6) 46%,
+    transparent 72%
+  );
+  animation: ink-drift-b 40s ease-in-out infinite;
+  animation-delay: -15s;
+}
+
+@keyframes ink-drift-a {
+  0%   { transform: translate(0%,    0%)   scale(1);    }
+  25%  { transform: translate(4%,    8%)   scale(1.03); }
+  55%  { transform: translate(9%,   -6%)   scale(1.06); }
+  78%  { transform: translate(3%,  -11%)   scale(1.02); }
+  100% { transform: translate(0%,    0%)   scale(1);    }
+}
+
+@keyframes ink-drift-b {
+  0%   { transform: translate(0%,    0%)   scale(1.08); }
+  30%  { transform: translate(-7%,   5%)   scale(1);    }
+  62%  { transform: translate(-3%,  12%)   scale(1.05); }
+  82%  { transform: translate(5%,    3%)   scale(1.1);  }
+  100% { transform: translate(0%,    0%)   scale(1.08); }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   B — Amber Pulse  (溫 · warm · breathing glow)
+   Central amber radial that inhales and exhales.
+═══════════════════════════════════════════════════════════════ */
+.motion-card--amber-pulse {
+  background: oklch(10% 0.06 45);
+}
+
+.mc-blob--amber-core {
+  width: 78%;
+  aspect-ratio: 1;
+  top: 50%;
+  left: 50%;
+  background: radial-gradient(circle at 50% 50%,
+    oklch(70% 0.22 66)  0%,
+    oklch(58% 0.25 48) 35%,
+    transparent 70%
+  );
+  transform: translate(-50%, -50%);
+  animation: amber-breathe 3.8s ease-in-out infinite;
+}
+
+.mc-blob--amber-halo {
+  width: 115%;
+  aspect-ratio: 1;
+  top: 50%;
+  left: 50%;
+  background: radial-gradient(circle at 50% 50%,
+    oklch(52% 0.19 54 / 0.42) 0%,
+    oklch(38% 0.15 40 / 0.18) 46%,
+    transparent 70%
+  );
+  transform: translate(-50%, -50%);
+  animation: amber-breathe 3.8s ease-in-out infinite;
+  animation-delay: -1.9s;
+}
+
+@keyframes amber-breathe {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(0.86);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.16);
+    opacity: 1;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   C — Silver Silk  (動 · dynamic · sweeping metallic sheen)
+   A bright diagonal band glides continuously across a cool dark ground.
+═══════════════════════════════════════════════════════════════ */
+.motion-card--silver-silk {
+  background: radial-gradient(
+    ellipse at 38% 52%,
+    oklch(14% 0.04 255) 0%,
+    oklch(8% 0.04 270) 100%
+  );
+}
+
+.silk-sweep,
+.silk-sweep-2 {
+  position: absolute;
+  inset: -35% -25%;
+  pointer-events: none;
+  background: linear-gradient(
+    108deg,
+    transparent 24%,
+    oklch(78% 0.02 215 / 0.10) 39%,
+    oklch(88% 0.01 212 / 0.68) 48.8%,
+    oklch(96% 0.005 205 / 0.90) 50%,
+    oklch(88% 0.01 212 / 0.68) 51.2%,
+    oklch(78% 0.02 215 / 0.10) 61%,
+    transparent 76%
+  );
+}
+
+.silk-sweep {
+  will-change: transform;
+  animation: silk-glide 3.2s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+.silk-sweep-2 {
+  opacity: 0.45;
+  will-change: transform;
+  animation: silk-glide 3.2s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  animation-delay: -1.6s;
+}
+
+@keyframes silk-glide {
+  from { transform: translateX(-115%) skewX(-5deg); }
+  to   { transform: translateX(115%)  skewX(-5deg); }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   D — Color Noise  (亂 · chaos · vivid competing blobs)
+   Six oversized blobs that collectively flood every corner.
+   No dark background — blobs alone form the surface.
+═══════════════════════════════════════════════════════════════ */
+.motion-card--color-noise {
+  /* Warm mid-tone fallback; in practice blobs cover everything */
+  background: oklch(52% 0.18 30);
+}
+
+.mc-blob--noise-r {
+  width: 110%;
+  aspect-ratio: 1;
+  top: -20%;
+  left: -15%;
+  background: radial-gradient(circle, oklch(62% 0.30 22) 0%, oklch(56% 0.28 22) 38%, transparent 72%);
+  animation: cn-r 2.1s ease-in-out infinite alternate;
+}
+
+.mc-blob--noise-g {
+  width: 100%;
+  aspect-ratio: 1;
+  top: -10%;
+  right: -20%;
+  background: radial-gradient(circle, oklch(66% 0.25 142) 0%, oklch(60% 0.22 142) 40%, transparent 72%);
+  animation: cn-g 1.8s ease-in-out infinite alternate;
+  animation-delay: -0.7s;
+}
+
+.mc-blob--noise-b {
+  width: 105%;
+  aspect-ratio: 1;
+  bottom: -20%;
+  left: -10%;
+  background: radial-gradient(circle, oklch(60% 0.26 264) 0%, oklch(54% 0.23 264) 40%, transparent 72%);
+  animation: cn-b 2.4s ease-in-out infinite alternate;
+  animation-delay: -1.1s;
+}
+
+.mc-blob--noise-y {
+  width: 90%;
+  aspect-ratio: 1;
+  top: -5%;
+  right: -10%;
+  background: radial-gradient(circle, oklch(76% 0.23 90) 0%, oklch(70% 0.20 90) 42%, transparent 72%);
+  animation: cn-y 1.6s ease-in-out infinite alternate;
+  animation-delay: -0.4s;
+}
+
+.mc-blob--noise-m {
+  width: 95%;
+  aspect-ratio: 1;
+  bottom: -15%;
+  right: -15%;
+  background: radial-gradient(circle, oklch(65% 0.28 330) 0%, oklch(58% 0.25 330) 40%, transparent 72%);
+  animation: cn-m 2.0s ease-in-out infinite alternate;
+  animation-delay: -0.9s;
+}
+
+.mc-blob--noise-c {
+  width: 85%;
+  aspect-ratio: 1;
+  bottom: -10%;
+  left: 10%;
+  background: radial-gradient(circle, oklch(68% 0.23 188) 0%, oklch(62% 0.20 188) 42%, transparent 72%);
+  animation: cn-c 1.4s ease-in-out infinite alternate;
+  animation-delay: -0.3s;
+}
+
+@keyframes cn-r { to { transform: translate(30%,  44%) scale(1.15); } }
+@keyframes cn-g { to { transform: translate(-28%, 36%) scale(0.85); } }
+@keyframes cn-b { to { transform: translate(24%, -38%) scale(1.10); } }
+@keyframes cn-y { to { transform: translate(-22%, 42%) scale(0.90); } }
+@keyframes cn-m { to { transform: translate(-34%, -28%) scale(1.12); } }
+@keyframes cn-c { to { transform: translate(40%, -20%) scale(1.18); } }
+
+/* ── Accessibility: reduced motion ─────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .motion-card {
+    transition-duration: 0.01ms;
+  }
+
+  .motion-card:hover {
+    transform: none;
+  }
+
+  .motion-card:active {
+    transform: scale(0.99);
+  }
+
+  .motion-card:active .motion-card__stage {
+    transform: none;
+  }
+
+  .motion-card__veil {
+    transition-duration: 0.01ms;
+  }
+
+  .motion-card__stage {
+    transition-duration: 0.01ms;
+  }
+
+  .motion-card--deep-ink,
+  .motion-card--amber-pulse,
+  .motion-card--silver-silk,
+  .motion-card--color-noise {
+    animation: none;
+    border-radius: 44% 56% 52% 48% / 46% 48% 54% 52%;
+  }
+
+  .mc-blob,
+  .silk-sweep,
+  .silk-sweep-2 {
+    will-change: auto;
+  }
+
+  .mc-blob--ink-a,
+  .mc-blob--ink-b,
+  .mc-blob--amber-core,
+  .mc-blob--amber-halo,
+  .silk-sweep,
+  .silk-sweep-2,
+  .mc-blob--noise-r,
+  .mc-blob--noise-g,
+  .mc-blob--noise-b,
+  .mc-blob--noise-y,
+  .mc-blob--noise-m,
+  .mc-blob--noise-c {
+    animation: none;
+  }
+}

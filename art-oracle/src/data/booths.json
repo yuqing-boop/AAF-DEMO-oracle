@@ -1,0 +1,302 @@
+[
+  {
+    "id": "booth_01",
+    "name": { "EN": "Void & Presence", "CN": "虚与在场" },
+    "number": "A01",
+    "matchReason": {
+      "EN": "Your energy resonates with contemplative silence — this booth curates work that turns emptiness into presence.",
+      "CN": "你的能量与沉思的寂静产生共鸣——这个展位策划的作品将空无转化为在场。"
+    },
+    "dims": [1, 1, 2, 1, 5, 1]
+  },
+  {
+    "id": "booth_02",
+    "name": { "EN": "Chromatic Field", "CN": "色域" },
+    "number": "A02",
+    "matchReason": {
+      "EN": "You are drawn to pure chromatic intensity — this booth presents paintings that exist solely as saturated color experience.",
+      "CN": "你被纯粹的色彩强度所吸引——这个展位呈现仅以饱和色彩体验为核心的绘画。"
+    },
+    "dims": [5, 2, 3, 2, 3, 5]
+  },
+  {
+    "id": "booth_03",
+    "name": { "EN": "Raw Material", "CN": "原料" },
+    "number": "A03",
+    "matchReason": {
+      "EN": "Your instincts favour the unfinished and the honest — this booth celebrates the material truth of art-making.",
+      "CN": "你的本能偏爱未完成与真实——这个展位颂扬艺术创作中材料的诚实。"
+    },
+    "dims": [4, 3, 1, 3, 4, 2]
+  },
+  {
+    "id": "booth_04",
+    "name": { "EN": "Commerce & Canvas", "CN": "商业与画布" },
+    "number": "A04",
+    "matchReason": {
+      "EN": "You understand art as cultural capital — this booth bridges aesthetic investment with market clarity.",
+      "CN": "你将艺术理解为文化资本——这个展位将审美投资与市场清晰度相连接。"
+    },
+    "dims": [3, 2, 5, 3, 2, 3]
+  },
+  {
+    "id": "booth_05",
+    "name": { "EN": "Kinetic Pulse", "CN": "动能脉冲" },
+    "number": "A05",
+    "matchReason": {
+      "EN": "Your sensory frequency vibrates with motion — this booth features work that never truly stays still.",
+      "CN": "你的感官频率随运动振动——这个展位呈现永不真正静止的作品。"
+    },
+    "dims": [3, 5, 2, 2, 3, 4]
+  },
+  {
+    "id": "booth_06",
+    "name": { "EN": "Tender Archive", "CN": "温柔档案" },
+    "number": "B01",
+    "matchReason": {
+      "EN": "You carry a quiet nostalgia — this booth presents works that excavate personal and collective memory.",
+      "CN": "你承载着安静的怀旧——这个展位呈现挖掘个人与集体记忆的作品。"
+    },
+    "dims": [2, 1, 3, 2, 5, 2]
+  },
+  {
+    "id": "booth_07",
+    "name": { "EN": "Structural Play", "CN": "结构游戏" },
+    "number": "B02",
+    "matchReason": {
+      "EN": "Your mind organises space instinctively — this booth showcases work that treats structure as the subject.",
+      "CN": "你的思维本能地组织空间——这个展位展示以结构为主题的作品。"
+    },
+    "dims": [2, 2, 3, 5, 2, 2]
+  },
+  {
+    "id": "booth_08",
+    "name": { "EN": "Surge", "CN": "涌现" },
+    "number": "B03",
+    "matchReason": {
+      "EN": "You crave visual overwhelm — this booth immerses you in explosive, large-scale gestural energy.",
+      "CN": "你渴望视觉上的压倒——这个展位让你沉浸于爆发性、大尺度的姿态能量中。"
+    },
+    "dims": [5, 5, 1, 4, 4, 5]
+  },
+  {
+    "id": "booth_09",
+    "name": { "EN": "Quiet Luxury", "CN": "安静的奢华" },
+    "number": "B04",
+    "matchReason": {
+      "EN": "Your taste runs toward the understated — this booth curates works that whisper rather than shout.",
+      "CN": "你的品味偏向低调——这个展位策划的作品是低语而非呐喊。"
+    },
+    "dims": [2, 1, 5, 2, 4, 2]
+  },
+  {
+    "id": "booth_10",
+    "name": { "EN": "Earth Frequency", "CN": "大地频率" },
+    "number": "B05",
+    "matchReason": {
+      "EN": "You are grounded in the elemental — this booth presents works rooted in land, soil, and organic cycles.",
+      "CN": "你植根于元素——这个展位呈现扎根于土地、泥土与有机循环的作品。"
+    },
+    "dims": [3, 2, 2, 3, 4, 2]
+  },
+  {
+    "id": "booth_11",
+    "name": { "EN": "Neon Archaeology", "CN": "霓虹考古" },
+    "number": "C01",
+    "matchReason": {
+      "EN": "You feel the pull of the urban and the ancient simultaneously — this booth fuses street-level glow with historical residue.",
+      "CN": "你同时感受到都市与古老的牵引——这个展位将街头的光晕与历史的残留融合。"
+    },
+    "dims": [4, 4, 3, 3, 3, 5]
+  },
+  {
+    "id": "booth_12",
+    "name": { "EN": "Soft Architecture", "CN": "柔性建筑" },
+    "number": "C02",
+    "matchReason": {
+      "EN": "You experience space as an emotional body — this booth blurs the line between sculpture and room.",
+      "CN": "你将空间体验为情感的身体——这个展位模糊雕塑与房间之间的界限。"
+    },
+    "dims": [2, 2, 2, 5, 5, 2]
+  },
+  {
+    "id": "booth_13",
+    "name": { "EN": "Signal & Noise", "CN": "信号与噪音" },
+    "number": "C03",
+    "matchReason": {
+      "EN": "Your mind finds patterns in chaos — this booth presents media works that toggle between clarity and disruption.",
+      "CN": "你的思维在混沌中寻找模式——这个展位呈现在清晰与干扰之间切换的媒体作品。"
+    },
+    "dims": [3, 5, 2, 3, 3, 3]
+  },
+  {
+    "id": "booth_14",
+    "name": { "EN": "Collector's Eye", "CN": "藏家之眼" },
+    "number": "C04",
+    "matchReason": {
+      "EN": "You approach art with discernment and intention — this booth offers works with strong provenance and investment clarity.",
+      "CN": "你以辨别力和意图接触艺术——这个展位提供具有强大来源和投资清晰度的作品。"
+    },
+    "dims": [3, 1, 5, 4, 2, 3]
+  },
+  {
+    "id": "booth_15",
+    "name": { "EN": "Blush & Ash", "CN": "腮红与灰烬" },
+    "number": "C05",
+    "matchReason": {
+      "EN": "Your palette is delicate and emotionally charged — this booth balances fragility with quiet intensity.",
+      "CN": "你的调色板微妙而情感充沛——这个展位在脆弱与安静强度之间取得平衡。"
+    },
+    "dims": [2, 1, 3, 2, 5, 3]
+  },
+  {
+    "id": "booth_16",
+    "name": { "EN": "Depth Protocol", "CN": "深度协议" },
+    "number": "D01",
+    "matchReason": {
+      "EN": "You are drawn to complex layering — this booth presents densely constructed works that reward sustained attention.",
+      "CN": "你被复杂的层叠所吸引——这个展位呈现需要持续关注才能回报的密集构成作品。"
+    },
+    "dims": [5, 3, 2, 4, 3, 4]
+  },
+  {
+    "id": "booth_17",
+    "name": { "EN": "Open System", "CN": "开放系统" },
+    "number": "D02",
+    "matchReason": {
+      "EN": "You are curious and unpredictable — this booth features participatory and open-ended works that respond to the viewer.",
+      "CN": "你好奇且不可预测——这个展位呈现回应观者的参与性与开放性作品。"
+    },
+    "dims": [2, 4, 2, 3, 4, 3]
+  },
+  {
+    "id": "booth_18",
+    "name": { "EN": "Gilded Tension", "CN": "镀金张力" },
+    "number": "D03",
+    "matchReason": {
+      "EN": "You appreciate the opulent and the uncomfortable coexisting — this booth presents works that seduce and disturb.",
+      "CN": "你欣赏奢华与不适共存——这个展位呈现既诱惑又令人不安的作品。"
+    },
+    "dims": [4, 3, 4, 3, 4, 5]
+  },
+  {
+    "id": "booth_19",
+    "name": { "EN": "Zero Point", "CN": "零点" },
+    "number": "D04",
+    "matchReason": {
+      "EN": "You seek reduction to essence — this booth presents rigorously minimal works that hold maximum conceptual weight.",
+      "CN": "你寻求还原至本质——这个展位呈现极度简约却具有最大概念重量的作品。"
+    },
+    "dims": [1, 1, 3, 1, 5, 1]
+  },
+  {
+    "id": "booth_20",
+    "name": { "EN": "Savage Garden", "CN": "野生花园" },
+    "number": "D05",
+    "matchReason": {
+      "EN": "Your instincts are primal and lush — this booth celebrates nature as a force rather than a subject.",
+      "CN": "你的本能是原始而丰茂的——这个展位将自然颂扬为力量而非主题。"
+    },
+    "dims": [4, 4, 1, 3, 4, 4]
+  },
+  {
+    "id": "booth_21",
+    "name": { "EN": "Mirror Stage", "CN": "镜像阶段" },
+    "number": "E01",
+    "matchReason": {
+      "EN": "You are drawn to introspection — this booth presents works that use reflection, doubles, and the uncanny self.",
+      "CN": "你被内省所吸引——这个展位呈现使用倒影、分身与诡异自我的作品。"
+    },
+    "dims": [3, 2, 2, 2, 5, 3]
+  },
+  {
+    "id": "booth_22",
+    "name": { "EN": "Systematic Beauty", "CN": "系统美学" },
+    "number": "E02",
+    "matchReason": {
+      "EN": "Your eye finds order within complexity — this booth showcases generative and algorithmic art practices.",
+      "CN": "你的眼睛在复杂中发现秩序——这个展位展示生成式与算法艺术实践。"
+    },
+    "dims": [3, 3, 4, 5, 2, 3]
+  },
+  {
+    "id": "booth_23",
+    "name": { "EN": "Burn Rate", "CN": "燃烧速率" },
+    "number": "E03",
+    "matchReason": {
+      "EN": "You live at high intensity — this booth presents work made under extreme conditions, urgency, and physical risk.",
+      "CN": "你生活在高强度中——这个展位呈现在极端条件、紧迫性与身体风险下创作的作品。"
+    },
+    "dims": [5, 5, 1, 2, 3, 4]
+  },
+  {
+    "id": "booth_24",
+    "name": { "EN": "Pale Fire", "CN": "苍白之火" },
+    "number": "E04",
+    "matchReason": {
+      "EN": "You are moved by cool, literary emotion — this booth features restrained works that burn with inner light.",
+      "CN": "你被冷静的文学情感所打动——这个展位呈现以内在光芒燃烧的克制作品。"
+    },
+    "dims": [2, 2, 3, 3, 5, 1]
+  },
+  {
+    "id": "booth_25",
+    "name": { "EN": "Market Value", "CN": "市场价值" },
+    "number": "E05",
+    "matchReason": {
+      "EN": "You see art as both culture and asset — this booth presents blue-chip emerging names with clear commercial trajectory.",
+      "CN": "你将艺术视为文化与资产——这个展位呈现具有清晰商业轨迹的蓝筹新兴名字。"
+    },
+    "dims": [3, 2, 5, 3, 1, 3]
+  },
+  {
+    "id": "booth_26",
+    "name": { "EN": "Frequency Bath", "CN": "频率浴" },
+    "number": "F01",
+    "matchReason": {
+      "EN": "You seek total sensory immersion — this booth creates sound-and-light environments that dissolve the boundary of self.",
+      "CN": "你寻求完全的感官沉浸——这个展位创造声光环境，消解自我的边界。"
+    },
+    "dims": [3, 5, 1, 5, 5, 4]
+  },
+  {
+    "id": "booth_27",
+    "name": { "EN": "Surface Tension", "CN": "表面张力" },
+    "number": "F02",
+    "matchReason": {
+      "EN": "You are fascinated by the threshold moment — this booth presents works where materials are caught mid-transformation.",
+      "CN": "你着迷于临界时刻——这个展位呈现材料被捕捉在转化中途的作品。"
+    },
+    "dims": [4, 3, 2, 3, 4, 3]
+  },
+  {
+    "id": "booth_28",
+    "name": { "EN": "Soft Power", "CN": "软实力" },
+    "number": "F03",
+    "matchReason": {
+      "EN": "Your influence is subtle but lasting — this booth curates works that shift perception gently and permanently.",
+      "CN": "你的影响微妙而持久——这个展位策划轻柔而永久地改变感知的作品。"
+    },
+    "dims": [2, 2, 4, 3, 4, 2]
+  },
+  {
+    "id": "booth_29",
+    "name": { "EN": "Crash & Bloom", "CN": "碰撞与绽放" },
+    "number": "F04",
+    "matchReason": {
+      "EN": "You contain both destruction and renewal — this booth presents works that stage collapse as a form of growth.",
+      "CN": "你同时包含毁灭与更新——这个展位呈现将崩塌作为成长形式的作品。"
+    },
+    "dims": [5, 5, 2, 3, 5, 5]
+  },
+  {
+    "id": "booth_30",
+    "name": { "EN": "The Long View", "CN": "长远之望" },
+    "number": "F05",
+    "matchReason": {
+      "EN": "You think in decades — this booth presents artists whose practice has deepened over years into a singular vision.",
+      "CN": "你以十年为单位思考——这个展位呈现其实践在多年中深化为独特愿景的艺术家。"
+    },
+    "dims": [3, 1, 4, 4, 3, 2]
+  }
+]

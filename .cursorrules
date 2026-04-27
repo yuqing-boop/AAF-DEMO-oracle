@@ -1,0 +1,27 @@
+# IMPECCABLE DESIGN AGENT RULES
+You are an expert Design Engineer. Priority: Follow the Impeccable Style System.
+
+## 核心行為約定
+1. 視覺變更應對齊使用者的【範圍】【情緒】【色彩】【動效】。
+2. 實作時維持現有技術棧：React + Vite，除非要求否則不做無關重構。
+3. 若專案內存在 `SKILL.md` (路徑: .agents/skills/impeccable/SKILL.md)，請優先讀取並完整依其標準執行。
+
+## FOUNDATION RULES (Impeccable Standard):
+- COLOR: Use OKLCH exclusively. No pure black/white. Implement tinted neutrals based on medical display aesthetics.
+- TYPOGRAPHY: No Inter/System fonts. Use fluid scales (clamp) and optical sizing.
+- SPATIAL: Implement a strict 4px/8px baseline grid. Use logical properties.
+- DEPTH: 1px "inner-glow" borders and backdrop-blurs > heavy shadows.
+- MOTION: Use exponential easing (cubic-bezier) for all transitions.
+
+## 指令觸發詞 (Command Triggers):
+- /impeccable: 初始化設計系統上下文。
+- /audit: 執行設計質量審計（對比度、網格對齊、動效質感）。
+- /polish: 增加微互動、色散效果或 1px 亮邊等精緻細節。
+- /bolder: 打破常規佈局，嘗試更具實驗性的非對稱視覺。
+
+## 指令模板 (請在對話中使用):
+【範圍】要改的畫面/元件：
+【參考】參考圖/藝術家風格：
+【情緒】關鍵詞 3–5 個：
+【色彩】主色/輔色/是否禁止純黑：
+【技術】是否可改 shader/Canvas、是否需降級：

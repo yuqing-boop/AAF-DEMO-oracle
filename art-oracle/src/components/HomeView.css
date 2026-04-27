@@ -1,0 +1,635 @@
+/* ─────────────────────────────────────────────────────────────
+   HomeView — Aura Metaballs + Organic Glassmorphism
+   Aesthetic: contemplative · chromatic · fluid · oracular
+   Mobile portrait: vertical stack · Tablet landscape: side-by-side
+───────────────────────────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;400;500&display=swap');
+
+/* ── Design tokens ──────────────────────────────────────────── */
+:root {
+  /* Background — deep wine-magenta (matches canvas BG #120710) */
+  --clr-bg:            oklch(9% 0.07 340);
+
+  /* Text */
+  --clr-text-primary:  oklch(95% 0.008 75);   /* warm near-white */
+  --clr-text-dim:      oklch(78% 0.006 75);
+
+  /* Accent palette (for glows, numerals, active states) */
+  --clr-rust:          oklch(52% 0.22 25);
+  --clr-mustard:       oklch(70% 0.18 75);
+  --clr-blue:          oklch(55% 0.26 264);
+
+  /* Glass surfaces */
+  --glass-fill:        oklch(100% 0 0 / 0.06);
+  --glass-fill-hover:  oklch(100% 0 0 / 0.10);
+  --glass-border:      oklch(100% 0 0 / 0.12);
+  --glass-border-hi:   oklch(100% 0 0 / 0.22);
+
+  /* Typography */
+  --font-display:      'Neuzeit 2', system-ui, sans-serif;
+  --font-body:         'DM Sans', system-ui, sans-serif;
+
+  /* Motion */
+  --ease-expo:         cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* ── Shader Lab background (full-viewport) ─────────────────── */
+.home-shader-bg {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  display: block;
+}
+
+/* ── Root ───────────────────────────────────────────────────── */
+.home-root {
+  position: relative;
+  min-height: 100dvh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-body);
+  background: transparent;
+  overscroll-behavior: none;
+}
+
+/* ── Shell (centers the card stack) ────────────────────────── */
+.home-shell {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 96px 24px calc(80px + env(safe-area-inset-bottom, 0px));
+  position: relative;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Language dropdown — glass pill, no brutalist tilt
+───────────────────────────────────────────────────────────── */
+.lang-dropdown-wrap {
+  position: fixed;
+  top: max(16px, env(safe-area-inset-top, 0px) + 10px);
+  right: max(16px, env(safe-area-inset-right, 0px) + 10px);
+  z-index: 200;
+}
+
+.lang-dropdown-trigger {
+  background: var(--glass-fill);
+  color: var(--clr-text-primary);
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 9px 20px;
+  border: 1px solid var(--glass-border-hi);
+  border-radius: 100px;
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  line-height: 1.4;
+  transition:
+    background 0.35s var(--ease-expo),
+    border-color 0.35s var(--ease-expo),
+    transform 0.35s var(--ease-expo);
+}
+
+.lang-dropdown-trigger:hover {
+  background: var(--glass-fill-hover);
+  border-color: oklch(100% 0 0 / 0.3);
+  transform: translateY(-1px);
+}
+
+.lang-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  min-width: 110px;
+  list-style: none;
+  background: oklch(14% 0.04 285 / 0.92);
+  border: 1px solid var(--glass-border-hi);
+  border-radius: 16px;
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  padding: 6px;
+  margin: 0;
+  overflow: hidden;
+}
+
+.lang-dropdown-menu button {
+  width: 100%;
+  text-align: left;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.82rem;
+  padding: 10px 14px;
+  border: none;
+  background: transparent;
+  color: var(--clr-text-dim);
+  border-radius: 10px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.lang-dropdown-menu button:hover,
+.lang-dropdown-menu button:focus-visible {
+  background: var(--glass-fill-hover);
+  color: var(--clr-text-primary);
+  outline: none;
+}
+
+.lang-dropdown-menu button.is-active {
+  color: var(--clr-mustard);
+  font-weight: 500;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Card stack
+───────────────────────────────────────────────────────────── */
+.home-cards {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 460px;
+}
+
+/* Flow + CTA stack (portrait: centered column; landscape: right column beside title) */
+.home-side-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+/* Shared glass card ────────────────────────────────────────── */
+.card {
+  width: 100%;
+  padding: 40px 36px 36px;
+  position: relative;
+  word-break: break-word;
+  overflow: hidden;
+  /* Organic radii eat edge space; extra padding keeps copy inside the silhouette */
+  box-sizing: border-box;
+
+  /* Frosted glass */
+  background: var(--glass-fill);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid var(--glass-border);
+
+  /* Depth: drop shadow + inner highlight */
+  box-shadow:
+    0 8px 40px oklch(0% 0 0 / 0.35),
+    inset 0 1px 0 var(--glass-border-hi);
+
+  /* Organic default shape */
+  border-radius: 38% 62% 55% 45% / 41% 44% 58% 57%;
+  transition: box-shadow 0.5s var(--ease-expo);
+}
+
+.card:hover {
+  box-shadow:
+    0 12px 56px oklch(0% 0 0 / 0.45),
+    0 0 80px oklch(70% 0.18 75 / 0.06),
+    inset 0 1px 0 oklch(100% 0 0 / 0.28);
+}
+
+/* Title card — morphing pebble, 14s cycle */
+.title-card {
+  animation: morph-title 14s ease-in-out infinite;
+  height: 330px;
+  text-align: right;
+  /* top, right, bottom, left (logical: padding-inline-end 60px) */
+  padding: 80px 60px 80px 40px;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  box-shadow:
+    inset 1px 0px 3px 1px rgba(255, 112, 112, 0.15),
+    0px 4px 12px 0px rgba(0, 0, 0, 0.15);
+}
+
+.title-card:hover {
+  box-shadow:
+    inset 1px 0px 3px 1px rgba(255, 112, 112, 0.15),
+    0px 4px 12px 0px rgba(0, 0, 0, 0.15);
+}
+
+/* Flow card — different shape set, 11s cycle, offset phase */
+.flow-card {
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+  animation: morph-flow 11s ease-in-out infinite;
+  animation-delay: -4.5s;
+  color: var(--clr-text-primary);
+  /* Tighter now that the CTA lives in its own card below */
+  padding: 32px 28px 28px;
+  width: 350px;
+  max-width: 100%;
+  position: relative;
+  z-index: 1;
+  box-shadow:
+    0.7px 0 8px 2px rgba(82, 0, 0, 0.15),
+    inset 1px 1px 3px 1px rgba(254, 169, 169, 0.15);
+}
+
+.card.flow-card:hover {
+  box-shadow:
+    0.7px 0 8px 2px rgba(82, 0, 0, 0.15),
+    inset 1px 1px 3px 1px rgba(254, 169, 169, 0.15);
+}
+
+/* Start CTA card — same blob family as title-card, overlaps flow-card bottom */
+.start-card {
+  animation: morph-title 14s ease-in-out infinite;
+  animation-delay: -7s;
+  padding: 25px 36px;
+  position: relative;
+  z-index: 2;
+  margin-top: -18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  cursor: pointer;
+  /* Inherit font so the label renders correctly */
+  font-family: var(--font-display);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  /* Button reset — appearance handled by .card */
+  -webkit-appearance: none;
+  appearance: none;
+  transition:
+    transform 0.5s cubic-bezier(0.19, 1, 0.22, 1),
+    box-shadow 0.5s cubic-bezier(0.19, 1, 0.22, 1),
+    background 0.3s ease;
+}
+
+/* Interactive CTA — thinnest Neuzeit static face (300); label overrides .start-label 700 */
+button.start-card {
+  font-weight: 300;
+  color: rgba(255, 204, 204, 1);
+  border: none;
+  border-image: none;
+  box-shadow:
+    1px 1px 5px 2px rgba(102, 0, 0, 0.15),
+    inset 1px 0px 3px 1px rgba(255, 158, 158, 0.15);
+}
+
+button.start-card .start-label {
+  color: inherit;
+  font-weight: 300;
+}
+
+.start-card:hover {
+  box-shadow:
+    0 16px 56px oklch(0% 0 0 / 0.45),
+    0 0 80px oklch(70% 0.18 75 / 0.1),
+    inset 0 1px 0 oklch(100% 0 0 / 0.32);
+  background: oklch(100% 0 0 / 0.10);
+  /* Very slight speed-up of the morph on hover */
+  animation-duration: 9s;
+}
+
+.start-card:active {
+  transform: scale(0.95);
+  box-shadow:
+    0 4px 20px oklch(0% 0 0 / 0.35),
+    inset 0 2px 14px oklch(0% 0 0 / 0.28);
+  background: oklch(100% 0 0 / 0.04);
+  animation-play-state: paused;
+}
+
+.start-card:focus-visible {
+  outline: 2px solid oklch(100% 0 0 / 0.5);
+  outline-offset: 4px;
+}
+
+.start-label {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 4.2vw, 1.25rem);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--clr-text-primary);
+  text-shadow: 0 1px 8px oklch(0% 0 0 / 0.4);
+  pointer-events: none;
+}
+
+/* ── Organic shape keyframes ────────────────────────────────── */
+@keyframes morph-title {
+  0%   { border-radius: 38% 62% 55% 45% / 41% 44% 58% 57%; }
+  20%  { border-radius: 52% 48% 36% 64% / 56% 40% 62% 44%; }
+  45%  { border-radius: 44% 56% 62% 38% / 48% 60% 38% 52%; }
+  70%  { border-radius: 60% 40% 47% 53% / 37% 58% 46% 63%; }
+  100% { border-radius: 38% 62% 55% 45% / 41% 44% 58% 57%; }
+}
+
+@keyframes morph-flow {
+  0%   { border-radius: 55% 45% 38% 62% / 57% 58% 44% 41%; }
+  25%  { border-radius: 36% 64% 52% 48% / 45% 62% 40% 55%; }
+  55%  { border-radius: 62% 38% 44% 56% / 52% 38% 60% 48%; }
+  80%  { border-radius: 47% 53% 60% 40% / 62% 46% 58% 38%; }
+  100% { border-radius: 55% 45% 38% 62% / 57% 58% 44% 41%; }
+}
+
+/* ── Title card content ─────────────────────────────────────── */
+.title-display {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  text-align: end;
+  width: 320px;
+  max-width: 100%;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-style: normal;
+  line-height: 0.92;
+  color: var(--clr-text-primary);
+  /* Soft glow: no gradient-text, single solid color with text-shadow */
+  text-shadow:
+    0 0 48px oklch(70% 0.18 75 / 0.35),
+    0 2px 12px oklch(0% 0 0 / 0.55);
+}
+
+.title-line--primary {
+  font-size: clamp(2.8rem, 13vw, 65px);
+  font-weight: 200;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  width: 100%;
+  max-width: 100%;
+}
+
+.title-line--reading {
+  width: 100%;
+  font-size: clamp(2rem, 9.5vw, 3.4rem);
+  font-style: normal;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  margin-top: 0.1em;
+  color: rgba(255, 204, 204, 1);
+}
+
+/* ── Flow card content ──────────────────────────────────────── */
+.flow-steps {
+  list-style: none;
+  margin: 0;
+  padding: 20px 0;
+  color: rgba(255, 255, 255, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 12px;
+}
+
+.flow-steps li {
+  display: grid;
+  grid-template-columns: 2rem 1fr;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: clamp(0.82rem, 3.6vw, 0.96rem);
+  line-height: 1.45;
+}
+
+.flow-text {
+  color: rgba(255, 204, 204, 1);
+}
+
+.flow-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: oklch(100% 0 0 / 0.08);
+  border: 1px solid rgba(217, 175, 194, 1);
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: rgba(255, 204, 204, 1);
+  letter-spacing: 0;
+  text-shadow: 0 0 12px oklch(70% 0.18 75 / 0.6);
+}
+
+.flow-footer {
+  margin-top: 24px;
+}
+
+/* .start-btn removed — the entire .start-card is now the button */
+
+.transitioning-label {
+  display: block;
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  color: oklch(95% 0.008 75 / 0.55);
+  text-transform: uppercase;
+  animation: hv-pulse 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes hv-pulse {
+  from { opacity: 0.4; }
+  to   { opacity: 1;   }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Bottom nav — glass bar
+───────────────────────────────────────────────────────────── */
+.home-menu-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 150;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background: oklch(9% 0.07 340 / 0.82);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border-top: 1px solid var(--glass-border);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.home-menu-bar .menu-item {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  padding: 16px 10px;
+  color: oklch(95% 0.008 75 / 0.52);
+  border: none;
+  border-right: 1px solid var(--glass-border);
+  text-transform: uppercase;
+  background: transparent;
+  transition:
+    color 0.3s ease,
+    background 0.3s ease;
+}
+
+.home-menu-bar .menu-item:last-child {
+  border-right: none;
+}
+
+.home-menu-bar .menu-item:hover,
+.home-menu-bar .menu-item:focus-visible {
+  color: var(--clr-text-primary);
+  background: oklch(100% 0 0 / 0.05);
+  outline: none;
+}
+
+.home-menu-bar .menu-item.is-current {
+  color: var(--clr-mustard);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Tablet landscape
+═══════════════════════════════════════════════════════════ */
+@media (min-width: 768px) and (orientation: landscape) {
+  .home-shell {
+    padding: 60px 48px calc(72px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .home-cards {
+    --home-flow-col: min(340px, 30vw);
+    --home-title-col: calc(var(--home-flow-col) * 1.5);
+
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    max-width: 1000px;
+    gap: 32px 36px;
+  }
+
+  .home-side-stack {
+    flex: 0 0 var(--home-flow-col);
+    width: var(--home-flow-col);
+    max-width: 100%;
+    align-items: flex-end;
+    overflow: visible;
+    /* Sit lower than the title so the column reads as a secondary block */
+    margin-top: 72px;
+  }
+
+  .title-card {
+    flex: 0 0 var(--home-title-col);
+    width: var(--home-title-col);
+    max-width: 100%;
+    align-self: flex-start;
+    min-height: auto;
+    height: auto;
+    /* +70px vertical vs default landscape (35px top + 35px bottom) */
+    padding: 155px 75px 155px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+  }
+
+  .title-card .title-display {
+    width: 100%;
+  }
+
+  .title-line--primary {
+    font-size: clamp(2.5rem, 4vw, 3.8rem);
+  }
+
+  .title-line--reading {
+    font-size: clamp(1.85rem, 3vw, 2.75rem);
+  }
+
+  .flow-card {
+    flex: 0 1 auto;
+    width: 100%;
+    max-width: 100%;
+    min-height: auto;
+    /* +40px vertical vs previous (20px top + 20px bottom) */
+    padding: 55px 44px 65px;
+    align-self: flex-end;
+  }
+
+  /* Same width as title card; flex-end keeps right edge aligned with flow column */
+  .start-card {
+    width: var(--home-title-col);
+    max-width: none;
+    flex-shrink: 0;
+    margin-top: -40px;
+    margin-right: 0;
+    align-self: flex-end;
+    padding: 22px 28px;
+  }
+
+  .home-menu-bar .menu-item {
+    font-size: 0.75rem;
+    padding: 18px 16px;
+  }
+}
+
+@media (min-width: 1200px) and (orientation: landscape) {
+  .home-cards {
+    max-width: 1080px;
+    gap: 36px 44px;
+    --home-flow-col: 340px;
+    --home-title-col: calc(var(--home-flow-col) * 1.5);
+  }
+
+  .home-side-stack {
+    margin-top: 80px;
+  }
+
+  .title-card {
+    padding: 100px 80px 129px;
+  }
+
+  .title-line--primary {
+    font-size: clamp(2.75rem, 3.6vw, 4.2rem);
+  }
+
+  .title-line--reading {
+    font-size: clamp(2rem, 2.8vw, 3.1rem);
+  }
+
+  .flow-card {
+    padding: 50px 26px 48px;
+  }
+
+  .start-card {
+    margin-top: -18px;
+    padding: 24px 32px;
+  }
+}
+
+/* ── Accessibility: reduced motion ──────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .title-card,
+  .flow-card,
+  .start-card {
+    animation: none;
+    /* Freeze at a gentle, natural organic shape */
+    border-radius: 44% 56% 52% 48% / 46% 48% 54% 52%;
+  }
+
+  .start-card {
+    transition: none;
+    animation-duration: 14s; /* restore normal morph speed */
+  }
+
+  .lang-dropdown-trigger {
+    transition: background 0.2s ease;
+  }
+}

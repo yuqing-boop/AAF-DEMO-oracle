@@ -1,0 +1,39 @@
+/* Neuzeit Grotesk (URW++) — local files from Neuzeit 2 bundle; family name per product request */
+@font-face {
+  font-family: 'Neuzeit 2';
+  src: url('/fonts/neuzeit2/NeuzeitGro-Lig.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neuzeit 2';
+  src: url('/fonts/neuzeit2/NeuzeitGro-Reg.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neuzeit 2';
+  src: url('/fonts/neuzeit2/NeuzeitGro-Bol.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neuzeit 2';
+  src: url('/fonts/neuzeit2/NeuzeitGro-Bla.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Plain result / loading headings without view-scoped CSS */
+h1,
+h2,
+h3 {
+  font-family: 'Neuzeit 2', system-ui, sans-serif;
+}

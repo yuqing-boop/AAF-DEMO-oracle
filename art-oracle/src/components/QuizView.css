@@ -1,0 +1,189 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;400;500&display=swap');
+
+/* ═══════════════════════════════════════════════════════════
+   QuizView — base styles (non-motion questions)
+═══════════════════════════════════════════════════════════ */
+
+.quiz-view {
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  min-height: 100dvh;
+  width: 100%;
+  background: #b1b1b1;
+  color: oklch(20% 0.02 280);
+  padding: 24px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.quiz-view p {
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+}
+
+.quiz-view__prompt--inline {
+  font-family: 'Neuzeit 2', system-ui, sans-serif;
+  font-size: clamp(1.05rem, 3.2vw, 1.35rem);
+  font-weight: 400;
+  line-height: 1.42;
+  color: oklch(22% 0.04 300);
+  max-width: 34ch;
+}
+
+.quiz-view__options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 1rem;
+}
+
+.quiz-view button {
+  text-align: start;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid oklch(0% 0 0 / 0.2);
+  background: oklch(100% 0.01 280 / 0.45);
+  color: inherit;
+  transition: background 0.25s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.quiz-view button:hover {
+  background: oklch(100% 0.01 280 / 0.75);
+}
+
+.quiz-view button:focus-visible {
+  outline: 2px solid oklch(40% 0.08 280);
+  outline-offset: 2px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   QuizView — motion grid layout (all A–D quiz steps)
+   Light grey surround; grid fills almost all viewport.
+═══════════════════════════════════════════════════════════ */
+
+.quiz-view--motion {
+  background: #b1b1b1;
+  color: oklch(25% 0.03 300);
+  /* Side padding 0 so option grid margin is measured from viewport; header keeps its own inset */
+  padding-block-start: max(14px, env(safe-area-inset-top, 0px));
+  padding-inline: 0;
+  padding-block-end: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  min-height: 100dvh;
+  gap: 0;
+}
+
+/* Header: counter + prompt (read on light grey) */
+.quiz-view--motion .quiz-view__header {
+  flex-shrink: 0;
+  text-align: center;
+  padding: 4px max(16px, env(safe-area-inset-left, 0px)) 2px
+    max(16px, env(safe-area-inset-right, 0px));
+}
+
+.quiz-view--motion .quiz-view__counter {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(80, 76, 87, 0.75);
+  margin-bottom: 0.4rem;
+}
+
+.quiz-view--motion .quiz-view__prompt {
+  font-family: 'Neuzeit 2', system-ui, sans-serif;
+  font-size: clamp(1rem, 3vw, 1.22rem);
+  font-weight: 400;
+  line-height: 1.42;
+  color: oklch(22% 0.04 300);
+  margin: 30px auto 0;
+  max-width: 34ch;
+}
+
+/* Exploding placeholder on motion: same light surround */
+.quiz-view__exploding {
+  padding: 16px 8px 0;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.85rem;
+  color: oklch(40% 0.02 300 / 0.85);
+  margin-bottom: 0;
+  text-align: center;
+  max-width: 32ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Interstitial: same shader as home + vector ripples (between questions) */
+.quiz-view--interstitial {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  min-height: 100dvh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  /* App-level ExportedShader underlays entire quiz+loading; no solid fill to avoid a flash */
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.quiz-view__interstitial-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  pointer-events: none;
+}
+
+.quiz-view__visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Full-viewport 2×2 — transparent: the cards ARE the visual containers */
+.quiz-view__options--motion {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 20px;
+  width: auto;
+  align-self: stretch;
+  box-sizing: border-box;
+  /* 80px from viewport on every side (or safe-area when larger) */
+  margin-block-start: 80px;
+  margin-block-end: max(80px, env(safe-area-inset-bottom, 0px));
+  margin-inline-start: max(80px, env(safe-area-inset-left, 0px));
+  margin-inline-end: max(80px, env(safe-area-inset-right, 0px));
+  /* ~30px smaller cluster (15px per side); scales with viewport */
+  padding-inline: clamp(6px, 2.5vmin, 15px);
+  padding-block: clamp(6px, 2.5vmin, 15px);
+  /* No background, border, or shadow — cards stand alone */
+  background: none;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+/* Cards fill their grid cell; height driven by grid */
+.quiz-view__options--motion .motion-card {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
