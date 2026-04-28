@@ -1,7 +1,7 @@
 import { ShaderLabComposition } from '@basementstudio/shader-lab';
 
-/** Shader Lab export — animated gradient + optional stacked effects (off by default) */
-const homeShaderConfig = {
+/** @type {import('@basementstudio/shader-lab').ShaderLabConfig} */
+const config = {
   layers: [
     {
       blendMode: 'normal',
@@ -152,7 +152,7 @@ const homeShaderConfig = {
         mode: 'multiply',
         source: 'luminance',
       },
-      hue: -20,
+      hue: -11,
       id: 'a924d323-7026-4b54-8738-355ef0d17009',
       kind: 'source',
       name: 'Gradient',
@@ -160,25 +160,25 @@ const homeShaderConfig = {
       params: {
         preset: 'deep-ocean',
         activePoints: 4,
-        point1Color: '#FF9E9E',
-        point1Position: [-0.76, -0.33],
+        point1Color: '#119B0E',
+        point1Position: [-0.81, 0.15],
         point1Weight: 1.14,
         point2Color: '#F72A66',
-        point2Position: [-0.26, -0.15],
+        point2Position: [-0.74, -0.9],
         point2Weight: 1.86,
-        point3Color: '#FF3232',
+        point3Color: '#E61212',
         point3Position: [0.87, 0.31],
         point3Weight: 1.75,
         point4Color: '#93B837',
         point4Position: [-1.06, -0.73],
-        point4Weight: 0.65,
+        point4Weight: 1.3,
         point5Color: '#1a0a2e',
         point5Position: [-0.5, 0.7],
         point5Weight: 1,
         noiseType: 'voronoi',
-        noiseSeed: 81.3,
-        warpAmount: 0.49,
-        warpScale: 2.03,
+        noiseSeed: 59.4,
+        warpAmount: 0.67,
+        warpScale: 1.02,
         warpIterations: 3,
         warpDecay: 1.22,
         warpBias: 0.4,
@@ -195,7 +195,7 @@ const homeShaderConfig = {
         vignetteRadius: 1.3,
         vignetteSoftness: 0.7,
       },
-      saturation: 1.15,
+      saturation: 1.4,
       type: 'gradient',
       visible: true,
     },
@@ -211,7 +211,7 @@ export function ExportedShader() {
   return (
     <ShaderLabComposition
       className="home-shader-bg"
-      config={homeShaderConfig}
+      config={config}
       style={{
         position: 'fixed',
         inset: 0,
