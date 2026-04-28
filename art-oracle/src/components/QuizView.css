@@ -166,8 +166,8 @@
   width: auto;
   align-self: stretch;
   box-sizing: border-box;
-  /* 80px from viewport on every side (or safe-area when larger) */
-  margin-block-start: 80px;
+  /* 60px from top (was 80px); sides/bottom unchanged */
+  margin-block-start: 60px;
   margin-block-end: max(80px, env(safe-area-inset-bottom, 0px));
   margin-inline-start: max(80px, env(safe-area-inset-left, 0px));
   margin-inline-end: max(80px, env(safe-area-inset-right, 0px));

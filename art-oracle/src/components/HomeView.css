@@ -26,6 +26,13 @@
   --glass-border:      oklch(100% 0 0 / 0.12);
   --glass-border-hi:   oklch(100% 0 0 / 0.22);
 
+  /* Bottom navigation bar — shared with language drop-up */
+  --home-bar-panel-fill: oklch(26% 0.01 270 / 0.22);
+  --home-bar-panel-blur: blur(15px);
+  --home-bar-panel-edge: inset 0 1px 3px 1px rgba(255, 112, 112, 0.15);
+  --home-bar-panel-drop: 0 -4px 12px rgba(0, 0, 0, 0.15);
+  --home-bar-ink:        oklch(26% 0.005 285); /* matches #3b3b3b */
+
   /* Typography */
   --font-display:      'Neuzeit 2', system-ui, sans-serif;
   --font-body:         'DM Sans', system-ui, sans-serif;
@@ -86,81 +93,78 @@
 }
 
 /* ─────────────────────────────────────────────────────────────
-   Language dropdown — glass pill, no brutalist tilt
+   Language — fourth column in bottom bar (drop-up list)
 ───────────────────────────────────────────────────────────── */
-.lang-dropdown-wrap {
-  position: fixed;
-  top: max(16px, env(safe-area-inset-top, 0px) + 10px);
-  right: max(16px, env(safe-area-inset-right, 0px) + 10px);
-  z-index: 200;
+.menu-item-wrap--lang {
+  position: relative;
+  z-index: 160;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: stretch;
+  min-width: 0;
+  border-right: none;
 }
 
-.lang-dropdown-trigger {
-  background: var(--glass-fill);
-  color: var(--clr-text-primary);
-  font-family: var(--font-body);
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: 9px 20px;
-  border: 1px solid var(--glass-border-hi);
-  border-radius: 100px;
-  backdrop-filter: blur(16px) saturate(160%);
-  -webkit-backdrop-filter: blur(16px) saturate(160%);
-  line-height: 1.4;
-  transition:
-    background 0.35s var(--ease-expo),
-    border-color 0.35s var(--ease-expo),
-    transform 0.35s var(--ease-expo);
-}
-
-.lang-dropdown-trigger:hover {
-  background: var(--glass-fill-hover);
-  border-color: oklch(100% 0 0 / 0.3);
-  transform: translateY(-1px);
-}
-
-.lang-dropdown-menu {
-  position: absolute;
-  top: calc(100% + 10px);
-  right: 0;
-  min-width: 110px;
-  list-style: none;
-  background: oklch(14% 0.04 285 / 0.92);
-  border: 1px solid var(--glass-border-hi);
-  border-radius: 16px;
-  backdrop-filter: blur(24px) saturate(160%);
-  -webkit-backdrop-filter: blur(24px) saturate(160%);
-  padding: 6px;
-  margin: 0;
-  overflow: hidden;
-}
-
-.lang-dropdown-menu button {
+.menu-item-wrap--lang .menu-item--lang {
+  flex: 1;
   width: 100%;
-  text-align: left;
+}
+
+.lang-dropdown-menu--drop-up {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  top: auto;
+  min-width: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  /* Same translucent panel system as `.home-menu-bar` */
+  background: var(--home-bar-panel-fill);
+  -webkit-backdrop-filter: var(--home-bar-panel-blur);
+  backdrop-filter: var(--home-bar-panel-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: 6px 6px 0 0;
+  box-shadow:
+    var(--home-bar-panel-edge),
+    var(--home-bar-panel-drop);
+}
+
+.lang-dropdown-menu--drop-up li + li {
+  border-top: 1px solid var(--glass-border);
+}
+
+.lang-dropdown-menu--drop-up button {
+  width: 100%;
+  text-align: center;
   font-family: var(--font-body);
-  font-weight: 400;
-  font-size: 0.82rem;
-  padding: 10px 14px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 16px 10px;
   border: none;
   background: transparent;
-  color: var(--clr-text-dim);
-  border-radius: 10px;
-  transition: background 0.2s ease, color 0.2s ease;
+  border-radius: 0;
+  color: var(--home-bar-ink);
+  transition:
+    color 0.3s ease,
+    background 0.3s ease;
 }
 
-.lang-dropdown-menu button:hover,
-.lang-dropdown-menu button:focus-visible {
-  background: var(--glass-fill-hover);
-  color: var(--clr-text-primary);
+.lang-dropdown-menu--drop-up button:hover,
+.lang-dropdown-menu--drop-up button:focus-visible {
+  color: var(--home-bar-ink);
+  background: oklch(100% 0 0 / 0.08);
   outline: none;
 }
 
-.lang-dropdown-menu button.is-active {
-  color: var(--clr-mustard);
-  font-weight: 500;
+.lang-dropdown-menu--drop-up button.is-active {
+  font-weight: 600;
+  color: var(--home-bar-ink);
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -216,6 +220,13 @@
     0 12px 56px oklch(0% 0 0 / 0.45),
     0 0 80px oklch(70% 0.18 75 / 0.06),
     inset 0 1px 0 oklch(100% 0 0 / 0.28);
+}
+
+/* Shared grey shade on the three home cards */
+.title-card,
+.flow-card,
+.start-card {
+  background: oklch(26% 0.01 270 / 0.52);
 }
 
 /* Title card — morphing pebble, 14s cycle */
@@ -383,6 +394,8 @@ button.start-card .start-label {
   text-transform: uppercase;
   width: 100%;
   max-width: 100%;
+  /* Matches #FFCCCC */
+  color: oklch(88.5% 0.057 358);
 }
 
 .title-line--reading {
@@ -474,11 +487,15 @@ button.start-card .start-label {
   bottom: 0;
   z-index: 150;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  background: oklch(9% 0.07 340 / 0.82);
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  grid-template-columns: repeat(4, 1fr);
+  /* Matches `.title-card` / language panel tokens */
+  background: var(--home-bar-panel-fill);
+  backdrop-filter: var(--home-bar-panel-blur);
+  -webkit-backdrop-filter: var(--home-bar-panel-blur);
   border-top: 1px solid var(--glass-border);
+  box-shadow:
+    var(--home-bar-panel-edge),
+    var(--home-bar-panel-drop);
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
@@ -488,7 +505,8 @@ button.start-card .start-label {
   font-weight: 500;
   letter-spacing: 0.14em;
   padding: 16px 10px;
-  color: oklch(95% 0.008 75 / 0.52);
+  /* Matches `--home-bar-ink` / #3b3b3b */
+  color: var(--home-bar-ink);
   border: none;
   border-right: 1px solid var(--glass-border);
   text-transform: uppercase;
@@ -498,19 +516,15 @@ button.start-card .start-label {
     background 0.3s ease;
 }
 
-.home-menu-bar .menu-item:last-child {
-  border-right: none;
-}
-
 .home-menu-bar .menu-item:hover,
 .home-menu-bar .menu-item:focus-visible {
-  color: var(--clr-text-primary);
-  background: oklch(100% 0 0 / 0.05);
+  color: var(--home-bar-ink);
+  background: oklch(100% 0 0 / 0.08);
   outline: none;
 }
 
 .home-menu-bar .menu-item.is-current {
-  color: var(--clr-mustard);
+  color: var(--home-bar-ink);
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -590,7 +604,8 @@ button.start-card .start-label {
     padding: 22px 28px;
   }
 
-  .home-menu-bar .menu-item {
+  .home-menu-bar .menu-item,
+  .home-menu-bar .lang-dropdown-menu--drop-up button {
     font-size: 0.75rem;
     padding: 18px 16px;
   }
@@ -645,7 +660,7 @@ button.start-card .start-label {
     animation-duration: 14s; /* restore normal morph speed */
   }
 
-  .lang-dropdown-trigger {
-    transition: background 0.2s ease;
+  .home-menu-bar .menu-item {
+    transition: color 0.2s ease, background 0.2s ease;
   }
 }

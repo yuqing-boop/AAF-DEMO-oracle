@@ -6,6 +6,7 @@ import HomeVideoBackground from './components/HomeVideoBackground.jsx';
 import HomeView from './components/HomeView.jsx';
 import QuizView from './components/QuizView.jsx';
 import LoadingView from './components/LoadingView.jsx';
+import OracleRevealView from './components/OracleRevealView.jsx';
 import ResultView from './components/ResultView.jsx';
 
 // --- Timing constants (ms) — swap these when wiring real animations ---
@@ -71,13 +72,14 @@ export default function App() {
     [answers, currentQIndex, selectedQs]
   );
 
-  const handleLoadingComplete = useCallback(
-    (computedTopBooths) => {
-      setTopBooths(computedTopBooths);
-      setView('result');
-    },
-    []
-  );
+  const handleLoadingComplete = useCallback((computedTopBooths) => {
+    setTopBooths(computedTopBooths);
+    setView('oracleReveal');
+  }, []);
+
+  const handleOracleRevealComplete = useCallback(() => {
+    setView('result');
+  }, []);
 
   const handleRestart = useCallback(() => {
     setView(INITIAL_STATE.view);
@@ -122,6 +124,9 @@ export default function App() {
           loadingDuration={LOADING_DURATION_MS}
           onComplete={handleLoadingComplete}
         />
+      )}
+      {view === 'oracleReveal' && (
+        <OracleRevealView language={language} topBooths={topBooths} onComplete={handleOracleRevealComplete} />
       )}
       {view === 'result' && (
         <ResultView

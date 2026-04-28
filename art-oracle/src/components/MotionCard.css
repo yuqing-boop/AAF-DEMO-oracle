@@ -41,7 +41,7 @@
   outline: none;
 }
 
-/* Frost: blur what’s below, add hue-matched translucency (not flat glass) */
+/* Frost: blur what's below, add hue-matched translucency (not flat glass) */
 .motion-card__veil {
   position: absolute;
   inset: 0;

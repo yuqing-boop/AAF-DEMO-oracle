@@ -57,44 +57,6 @@ export default function HomeView({ language, isTransitioning, onLanguageChange, 
       <HomeVideoBackground />
 
       <div className="home-shell">
-        <div className="lang-dropdown-wrap" ref={langWrapRef}>
-          <button
-            type="button"
-            className="lang-dropdown-trigger"
-            aria-expanded={langOpen}
-            aria-haspopup="listbox"
-            onClick={() => setLangOpen((v) => !v)}
-          >
-            {t.langLabel}
-          </button>
-          {langOpen && (
-            <ul className="lang-dropdown-menu" role="listbox">
-              <li role="presentation">
-                <button
-                  type="button"
-                  role="option"
-                  aria-selected={language === 'EN'}
-                  className={language === 'EN' ? 'is-active' : ''}
-                  onClick={() => pickLang('EN')}
-                >
-                  EN
-                </button>
-              </li>
-              <li role="presentation">
-                <button
-                  type="button"
-                  role="option"
-                  aria-selected={language === 'CN'}
-                  className={language === 'CN' ? 'is-active' : ''}
-                  onClick={() => pickLang('CN')}
-                >
-                  中文
-                </button>
-              </li>
-            </ul>
-          )}
-        </div>
-
         <main className="home-cards">
           <article className="card title-card" aria-label="Art Oracle Reading">
             <h1 className="title-display">
@@ -149,6 +111,43 @@ export default function HomeView({ language, isTransitioning, onLanguageChange, 
         <button type="button" className="menu-item">
           {t.about}
         </button>
+        <div className="menu-item-wrap menu-item-wrap--lang" ref={langWrapRef}>
+          <button
+            type="button"
+            className="menu-item menu-item--lang"
+            aria-expanded={langOpen}
+            aria-haspopup="listbox"
+            onClick={() => setLangOpen((v) => !v)}
+          >
+            {t.langLabel}
+          </button>
+          {langOpen && (
+            <ul className="lang-dropdown-menu lang-dropdown-menu--drop-up" role="listbox">
+              <li role="presentation">
+                <button
+                  type="button"
+                  role="option"
+                  aria-selected={language === 'EN'}
+                  className={language === 'EN' ? 'is-active' : ''}
+                  onClick={() => pickLang('EN')}
+                >
+                  EN
+                </button>
+              </li>
+              <li role="presentation">
+                <button
+                  type="button"
+                  role="option"
+                  aria-selected={language === 'CN'}
+                  className={language === 'CN' ? 'is-active' : ''}
+                  onClick={() => pickLang('CN')}
+                >
+                  中文
+                </button>
+              </li>
+            </ul>
+          )}
+        </div>
       </nav>
     </div>
   );

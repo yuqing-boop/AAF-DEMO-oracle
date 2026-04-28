@@ -1,0 +1,447 @@
+/* OracleRevealView — quiz grey backdrop, triple masked blooms, neon OKLCH, SMIL turbulence */
+
+.oracle-reveal-view {
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  min-height: 100dvh;
+  width: 100%;
+  padding: max(16px, env(safe-area-inset-top, 0px)) clamp(16px, 4vw, 28px)
+    max(24px, env(safe-area-inset-bottom, 0px));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1rem, 3vh, 1.75rem);
+  background: oklch(76.5% 0.009 286);
+  color: oklch(96% 0.02 300);
+}
+
+.oracle-reveal-view__filter-defs {
+  position: fixed;
+  left: -4000px;
+  top: 0;
+}
+
+.oracle-reveal-stage {
+  position: relative;
+  width: min(3560px, 100%);
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.oracle-reveal-stage__row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  width: 100%;
+}
+
+/* ─── Card containers (geometry + stacking) ───────────────── */
+.oracle-card-container {
+  --oracle-origin: 50% 45%;
+  position: relative;
+  flex-shrink: 0;
+  width: min(92vw, clamp(800px, 92vw, 1200px));   /* 2× original */
+  aspect-ratio: 595 / 842;
+}
+
+.oracle-card-shell {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.oracle-card-shell--wing {
+  filter: drop-shadow(0 6px 18px oklch(42% 0.05 296 / 0.18))
+    drop-shadow(0 0 3px oklch(75% 0.12 348 / 0.35));
+}
+
+.oracle-card-shell--core {
+  filter: drop-shadow(0 12px 30px oklch(38% 0.05 298 / 0.26))
+    drop-shadow(-3px 0 0 oklch(45% 0.04 300 / 0.12));
+}
+
+.oracle-card {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 0;
+  transform-origin: var(--oracle-origin);
+  -webkit-mask-image: var(--mask-url);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+  mask-image: var(--mask-url);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+}
+
+.oracle-card--1 {
+  --oracle-origin: 48% 44%;
+}
+
+.oracle-card--2 {
+  --oracle-origin: 56% 46%;
+}
+
+.oracle-card--3 {
+  --oracle-origin: 44% 48%;
+}
+
+/* Optical-lens radial: white-hot centre → neon pink → deep edge */
+.oracle-card__gradient {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 78% 72% at 50% 42%,
+    oklch(100% 0 0) 0%,
+    oklch(82% 0.29 335) 22%,
+    oklch(66% 0.30 325) 46%,
+    oklch(50% 0.24 318) 68%,
+    oklch(34% 0.18 310) 88%,
+    oklch(22% 0.12 305) 100%
+  );
+  pointer-events: none;
+}
+
+/* Film-grain noise: SVG fractalNoise via data-URI, soft-light blends with gradient */
+.oracle-card__grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.22;
+  mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72 0.68' numOctaves='4' stitchTiles='stitch' result='n'/%3E%3CfeColorMatrix type='saturate' values='0' in='n'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23g)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 170px 170px;
+  background-repeat: repeat;
+}
+
+.oracle-card__pixel-shell {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  image-rendering: pixelated;
+  mix-blend-mode: screen;
+  opacity: 0.48;
+  box-shadow:
+    inset 0 0 0 3px oklch(90% 0.12 320 / 0.55),
+    inset 12px 12px 0 -6px oklch(70% 0.14 348 / 0.25),
+    inset -12px -12px 0 -9px oklch(40% 0.1 300 / 0.45);
+}
+
+/* Ripple burst — true center-point expansion with radial gradient blobs */
+.oracle-card__ripple-group {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/*
+  Each ripple is a radial-gradient blob anchored at card centre.
+  Starts as a ~1% white pinpoint, expands outward while shifting pink,
+  then dissolves into a blurred halo at the edge.
+  Different widths on ripple layers 1-4 create stacked depth.
+*/
+.oracle-card__ripple {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 130%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: none;
+  background: radial-gradient(
+    circle at center,
+    oklch(100% 0 0 / 0.96) 0%,
+    oklch(85% 0.26 335 / 0.80) 20%,
+    oklch(68% 0.30 325 / 0.50) 46%,
+    oklch(52% 0.22 315 / 0.20) 66%,
+    transparent 80%
+  );
+  transform: translate(-50%, -50%) scale(0.012);
+  animation: oracle-ripple-expand 2.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.oracle-card__ripple--2 {
+  animation-delay: 0.15s;
+  width: 106%;
+  background: radial-gradient(
+    circle at center,
+    oklch(98% 0.01 320 / 0.80) 0%,
+    oklch(78% 0.28 330 / 0.65) 22%,
+    oklch(60% 0.26 318 / 0.32) 52%,
+    transparent 74%
+  );
+}
+
+.oracle-card__ripple--3 {
+  animation-delay: 0.30s;
+  width: 84%;
+  background: radial-gradient(
+    circle at center,
+    oklch(96% 0.02 315 / 0.70) 0%,
+    oklch(74% 0.28 328 / 0.55) 24%,
+    oklch(56% 0.24 316 / 0.25) 56%,
+    transparent 76%
+  );
+}
+
+.oracle-card__ripple--4 {
+  animation-delay: 0.46s;
+  width: 64%;
+  background: radial-gradient(
+    circle at center,
+    oklch(100% 0 0 / 0.88) 0%,
+    oklch(82% 0.26 332 / 0.60) 26%,
+    oklch(62% 0.22 320 / 0.20) 58%,
+    transparent 78%
+  );
+}
+
+/* Delayed group — card 2 (Resonance) */
+.oracle-card__ripple-group--delayed-1 .oracle-card__ripple--1 { animation-delay: 0.40s; }
+.oracle-card__ripple-group--delayed-1 .oracle-card__ripple--2 { animation-delay: 0.55s; }
+.oracle-card__ripple-group--delayed-1 .oracle-card__ripple--3 { animation-delay: 0.70s; }
+.oracle-card__ripple-group--delayed-1 .oracle-card__ripple--4 { animation-delay: 0.86s; }
+
+/* Delayed group — card 3 (Echo) */
+.oracle-card__ripple-group--delayed-2 .oracle-card__ripple--1 { animation-delay: 0.65s; }
+.oracle-card__ripple-group--delayed-2 .oracle-card__ripple--2 { animation-delay: 0.80s; }
+.oracle-card__ripple-group--delayed-2 .oracle-card__ripple--3 { animation-delay: 0.95s; }
+.oracle-card__ripple-group--delayed-2 .oracle-card__ripple--4 { animation-delay: 1.10s; }
+
+@keyframes oracle-ripple-expand {
+  0% {
+    transform: translate(-50%, -50%) scale(0.012);
+    opacity: 1;
+    filter: blur(0px);
+  }
+  30% {
+    opacity: 0.92;
+    filter: blur(1.5px);
+  }
+  65% {
+    opacity: 0.45;
+    filter: blur(5px);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+    filter: blur(14px);
+  }
+}
+
+.oracle-card__final-content {
+  position: absolute;
+  inset: clamp(14%, 22%, 26%) clamp(10%, 12%, 16%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(6px, 1.8vh, 10px);
+  text-align: center;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.oracle-card__badge {
+  font-family: 'Neuzeit 2', 'DM Sans', system-ui, sans-serif;
+  font-size: clamp(0.78rem, 2.35vw, 1.05rem);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: oklch(97% 0.03 300);
+  text-shadow:
+    0 1px 0 oklch(32% 0.08 300 / 0.55),
+    0 -1px 0 oklch(90% 0.08 320 / 0.35);
+}
+
+.oracle-card__title {
+  margin: 0;
+  font-family: 'Neuzeit 2', 'DM Sans', system-ui, sans-serif;
+  font-size: clamp(0.95rem, 2.85vw, 1.28rem);
+  font-weight: 500;
+  line-height: 1.32;
+  max-width: 18ch;
+  color: oklch(98% 0.015 300);
+  text-shadow:
+    2px 2px 0 oklch(36% 0.1 310 / 0.65),
+    -1px -1px 0 oklch(78% 0.1 340 / 0.45);
+}
+
+.oracle-card__title--bit {
+  image-rendering: pixelated;
+  letter-spacing: 0.04em;
+}
+
+/* Landscape — height-driven: cards fill the viewport vertically, pulled tight */
+@media (orientation: landscape) {
+  /*
+    Cards are portrait-ratio (595 ∶ 842 ≈ 0.707 wide-to-tall).
+    Drive size from the scarce axis (height), let aspect-ratio resolve width.
+    78vh tall → width ≈ 55vh per card.  Feels genuinely large on any landscape screen.
+  */
+  .oracle-card-container {
+    width: auto;
+    height: 78vh;
+  }
+
+  /*
+    Pull the three cards together with a strong negative margin.
+    3 × ~55vh width minus 2 × 12vw overlap ≈ fits snugly in 100vw.
+  */
+  .oracle-card-container--2 {
+    z-index: 2;
+    margin-inline-end: clamp(-60px, -12vw, -180px);
+    transform: none;
+    animation: oracle-ls-enter 0.88s cubic-bezier(0.16, 1, 0.3, 1) 0.18s both;
+  }
+
+  .oracle-card-container--1 {
+    z-index: 3;
+    margin-inline: clamp(-60px, -12vw, -180px);
+    animation: oracle-ls-enter 0.88s cubic-bezier(0.16, 1, 0.3, 1) 0s both;
+  }
+
+  .oracle-card-container--3 {
+    z-index: 2;
+    margin-inline-start: clamp(-60px, -12vw, -180px);
+    transform: none;
+    animation: oracle-ls-enter 0.88s cubic-bezier(0.16, 1, 0.3, 1) 0.34s both;
+  }
+}
+
+@keyframes oracle-ls-enter {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Portrait — all three cards form a tidy stacked deck */
+@media (orientation: portrait) {
+  .oracle-reveal-stage__row {
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    min-height: min(96vh, 1680px);
+    width: 100%;
+  }
+
+  /* All cards share the same footprint, sized to fit comfortably */
+  .oracle-card-container {
+    position: absolute;
+    left: 50%;
+    top: 46%;
+    width: min(88vw, clamp(520px, 88vw, 800px));
+  }
+
+  /* Card 1 — front of deck, centered */
+  .oracle-card-container--1 {
+    z-index: 3;
+    transform: translate(-50%, -50%);
+    animation: oracle-deck-front 0.72s cubic-bezier(0.16, 1, 0.3, 1) 0s both;
+  }
+
+  /* Card 2 — second layer, slightly behind-left */
+  .oracle-card-container--2 {
+    z-index: 2;
+    transform: translate(calc(-50% - 14px), calc(-50% + 14px)) rotate(-2.8deg) scale(0.97);
+    animation: oracle-deck-mid 0.78s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
+  }
+
+  /* Card 3 — back of deck, behind-right */
+  .oracle-card-container--3 {
+    z-index: 1;
+    transform: translate(calc(-50% + 12px), calc(-50% + 26px)) rotate(3.5deg) scale(0.94);
+    animation: oracle-deck-back 0.84s cubic-bezier(0.16, 1, 0.3, 1) 0.22s both;
+  }
+
+  /* Ripple groups on wings still animate but are subtler */
+  .oracle-card-container--2 .oracle-card__ripple-group,
+  .oracle-card-container--3 .oracle-card__ripple-group {
+    opacity: 0.55;
+  }
+}
+
+@keyframes oracle-deck-front {
+  from { opacity: 0; transform: translate(-50%, -44%) scale(0.94); }
+  to   { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+@keyframes oracle-deck-mid {
+  from { opacity: 0; transform: translate(calc(-50% - 14px), calc(-50% + 6px)) rotate(-1deg) scale(0.94); }
+  to   { opacity: 1; transform: translate(calc(-50% - 14px), calc(-50% + 14px)) rotate(-2.8deg) scale(0.97); }
+}
+
+@keyframes oracle-deck-back {
+  from { opacity: 0; transform: translate(calc(-50% + 12px), calc(-50% + 18px)) rotate(2deg) scale(0.91); }
+  to   { opacity: 1; transform: translate(calc(-50% + 12px), calc(-50% + 26px)) rotate(3.5deg) scale(0.94); }
+}
+
+.oracle-reveal-view__footer {
+  flex-shrink: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.oracle-reveal-view__skip {
+  font-family: 'Neuzeit 2', 'DM Sans', system-ui, sans-serif;
+  font-size: clamp(0.85rem, 2.4vw, 1rem);
+  font-weight: 500;
+  padding: 12px 28px;
+  border-radius: 10px;
+  border: 1px solid oklch(45% 0.06 300 / 0.45);
+  background: oklch(92% 0.02 290 / 0.45);
+  color: oklch(28% 0.04 300);
+  cursor: pointer;
+  transition:
+    background 0.32s cubic-bezier(0.19, 1, 0.22, 1),
+    transform 0.32s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.oracle-reveal-view__skip:hover {
+  background: oklch(96% 0.02 290 / 0.65);
+}
+
+.oracle-reveal-view__skip:focus-visible {
+  outline: 2px solid oklch(55% 0.16 330);
+  outline-offset: 3px;
+}
+
+.oracle-reveal-view__skip:active {
+  transform: scale(0.98);
+}
+
+/* ── Accessibility: reduced motion ─────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .oracle-card__ripple {
+    animation: none;
+    opacity: 0;
+  }
+
+  .oracle-card-container--1,
+  .oracle-card-container--2,
+  .oracle-card-container--3 {
+    animation: none;
+  }
+
+  /* Ensure portrait cards are visible without animation */
+  @media (orientation: portrait) {
+    .oracle-card-container--1 { transform: translate(-50%, -50%); opacity: 1; }
+    .oracle-card-container--2 { transform: translate(calc(-50% - 14px), calc(-50% + 14px)) rotate(-2.8deg) scale(0.97); opacity: 1; }
+    .oracle-card-container--3 { transform: translate(calc(-50% + 12px), calc(-50% + 26px)) rotate(3.5deg) scale(0.94); opacity: 1; }
+  }
+
+  .oracle-card__grain {
+    opacity: 0.10;
+  }
+}
