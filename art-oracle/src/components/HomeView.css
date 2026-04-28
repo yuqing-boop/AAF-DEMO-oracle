@@ -34,13 +34,16 @@
   --ease-expo:         cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-/* ── Shader Lab background (full-viewport) ─────────────────── */
-.home-shader-bg {
+/* ── Full-viewport WebM background (`public/homebg.webm`) ───── */
+.home-video-bg {
   position: fixed;
   inset: 0;
+  z-index: 0;
   width: 100%;
   height: 100%;
-  z-index: 0;
+  max-width: none;
+  max-height: none;
+  object-fit: cover;
   pointer-events: none;
   display: block;
 }

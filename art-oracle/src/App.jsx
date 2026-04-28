@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 import questions from './data/questions.js';
 import booths from './data/booths.json';
 import { selectQuestions, computeUserVector, rankBooths } from './utils/algorithm.js';
-import { ExportedShader } from './components/HomeShaderBackground.jsx';
+import HomeVideoBackground from './components/HomeVideoBackground.jsx';
 import HomeView from './components/HomeView.jsx';
 import QuizView from './components/QuizView.jsx';
 import LoadingView from './components/LoadingView.jsx';
@@ -91,11 +91,11 @@ export default function App() {
   }, [language]);
 
   // --- View router ---
-  const usePersistentShader = view === 'quiz' || view === 'loading';
+  const usePersistentVideoBg = view === 'quiz' || view === 'loading';
 
   return (
     <div>
-      {usePersistentShader && <ExportedShader />}
+      {usePersistentVideoBg && <HomeVideoBackground />}
       {view === 'home' && (
         <HomeView
           language={language}

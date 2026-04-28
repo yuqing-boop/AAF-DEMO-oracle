@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { ExportedShader } from './HomeShaderBackground.jsx';
+import HomeVideoBackground from './HomeVideoBackground.jsx';
 import './HomeView.css';
 
 const UI_TEXT = {
@@ -54,7 +54,7 @@ export default function HomeView({ language, isTransitioning, onLanguageChange, 
 
   return (
     <div className="home-root">
-      <ExportedShader />
+      <HomeVideoBackground />
 
       <div className="home-shell">
         <div className="lang-dropdown-wrap" ref={langWrapRef}>

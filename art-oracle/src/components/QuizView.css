@@ -116,7 +116,7 @@
   margin-right: auto;
 }
 
-/* Interstitial: same shader as home + vector ripples (between questions) */
+/* Interstitial: same WebM as home + vector ripples (between questions) */
 .quiz-view--interstitial {
   position: fixed;
   inset: 0;
@@ -125,7 +125,7 @@
   width: 100%;
   margin: 0;
   padding: 0;
-  /* App-level ExportedShader underlays entire quiz+loading; no solid fill to avoid a flash */
+  /* App-level HomeVideoBackground underlays entire quiz+loading; no solid fill to avoid a flash */
   background: transparent;
   display: flex;
   align-items: center;
