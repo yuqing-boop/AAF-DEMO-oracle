@@ -675,6 +675,20 @@ button.start-card .start-label {
   }
 }
 
+/* iOS/Safari mobile compositing fallback:
+   avoid rectangular backdrop-filter bounds on flow/start cards */
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 767px) {
+    .flow-card,
+    .start-card {
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      background: oklch(26% 0.01 270 / 0.68);
+      border-color: oklch(100% 0 0 / 0.16);
+    }
+  }
+}
+
 /* ═══════════════════════════════════════════════════════════
    Tablet landscape
 ═══════════════════════════════════════════════════════════ */
