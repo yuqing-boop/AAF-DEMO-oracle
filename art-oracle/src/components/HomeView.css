@@ -201,6 +201,7 @@
   box-sizing: border-box;
 
   border: 1px solid var(--glass-border);
+  contain: style;
 
   /* Organic default shape */
   border-radius: 38% 62% 55% 45% / 41% 44% 58% 57%;
@@ -216,9 +217,9 @@
   border-color: oklch(100% 0 0 / 0.16);
 }
 
-/* Title card — morphing pebble, 14s cycle */
+/* Title card — morphing pebble, 18s cycle */
 .title-card {
-  animation: morph-title 15s ease-in-out infinite;
+  animation: morph-title 18s ease-in-out infinite alternate;
   height: 330px;
   text-align: right;
   /* top, right, bottom, left (logical: padding-inline-end 60px) */
@@ -234,10 +235,10 @@
     0px 4px 12px 0px rgba(0, 0, 0, 0.15);
 }
 
-/* Flow card — different shape set, 11s cycle, offset phase */
+/* Flow card — offset phase keeps cards out of sync */
 .flow-card {
-  animation: morph-title 14s ease-in-out infinite;
-  animation-delay: -4.5s;
+  animation: morph-title 18s ease-in-out infinite alternate;
+  animation-delay: -6s;
   color: var(--clr-text-primary);
   /* Tighter now that the CTA lives in its own card below */
   padding: 32px 28px 28px;
@@ -258,8 +259,8 @@
 
 /* Start CTA card — same blob family as title-card, overlaps flow-card bottom */
 .start-card {
-  animation: morph-title 14s ease-in-out infinite;
-  animation-delay: -7s;
+  animation: morph-title 18s ease-in-out infinite alternate;
+  animation-delay: -11s;
   padding: 25px 36px;
   position: relative;
   z-index: 2;
@@ -326,13 +327,10 @@ button.start-card .start-label {
   pointer-events: none;
 }
 
-/* ── Organic shape keyframes ────────────────────────────────── */
+/* ── Organic shape keyframes — 2-stop alternate keeps morph fluid with less interpolation work ── */
 @keyframes morph-title {
-  0%   { border-radius: 38% 62% 55% 45% / 41% 44% 58% 57%; }
-  20%  { border-radius: 52% 48% 36% 64% / 56% 40% 62% 44%; }
-  45%  { border-radius: 44% 56% 62% 38% / 48% 60% 38% 52%; }
-  70%  { border-radius: 60% 40% 47% 53% / 37% 58% 46% 63%; }
-  100% { border-radius: 38% 62% 55% 45% / 41% 44% 58% 57%; }
+  from { border-radius: 38% 62% 55% 45% / 41% 44% 58% 57%; }
+  to   { border-radius: 52% 48% 36% 64% / 56% 40% 62% 44%; }
 }
 
 
