@@ -528,6 +528,154 @@ button.start-card .start-label {
 }
 
 /* ═══════════════════════════════════════════════════════════
+   Mobile portrait layout
+═══════════════════════════════════════════════════════════ */
+@media (max-width: 767px) and (orientation: portrait) {
+  .home-shell {
+    justify-content: flex-start;
+    padding: 20px 16px calc(68px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .home-cards {
+    max-width: 100%;
+    gap: 12px;
+    margin-top: 40px;
+  }
+
+  .card {
+    padding: 24px 20px;
+  }
+
+  .title-card {
+    height: auto;
+    min-height: 220px;
+    padding: 42px 28px 34px 22px;
+  }
+
+  .title-display {
+    width: 100%;
+    transform: translateY(30px);
+  }
+
+  .title-line--primary {
+    font-size: clamp(2.1rem, 12vw, 2.7rem);
+  }
+
+  .title-line--reading {
+    font-size: clamp(1.5rem, 8.3vw, 2rem);
+  }
+
+  .flow-card {
+    width: 100%;
+    padding: 20px 18px 18px;
+  }
+
+  .flow-steps {
+    padding: 8px 0 4px;
+    gap: 10px;
+  }
+
+  .flow-steps li {
+    gap: 10px;
+    grid-template-columns: 1.75rem 1fr;
+    font-size: clamp(0.78rem, 3.8vw, 0.9rem);
+    line-height: 1.35;
+  }
+
+  .flow-num {
+    width: 1.75rem;
+    height: 1.75rem;
+    font-size: 0.66rem;
+  }
+
+  .start-card {
+    margin-top: -10px;
+    padding: 18px 22px;
+  }
+
+  .start-label {
+    font-size: clamp(0.9rem, 3.9vw, 1.05rem);
+    letter-spacing: 0.08em;
+  }
+
+  .home-menu-bar .menu-item,
+  .lang-dropdown-menu--drop-up button {
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    padding: 13px 6px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Mobile landscape layout
+═══════════════════════════════════════════════════════════ */
+@media (max-width: 767px) and (orientation: landscape) {
+  .home-shell {
+    justify-content: flex-start;
+    padding: 10px 14px calc(60px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .home-cards {
+    max-width: 100%;
+    gap: 10px;
+  }
+
+  .card {
+    padding: 18px 16px;
+  }
+
+  .title-card {
+    min-height: 160px;
+    padding: 26px 22px 22px 16px;
+  }
+
+  .title-line--primary {
+    font-size: clamp(1.75rem, 6.2vw, 2.15rem);
+  }
+
+  .title-line--reading {
+    font-size: clamp(1.2rem, 4.5vw, 1.5rem);
+  }
+
+  .flow-card {
+    padding: 14px 14px 12px;
+  }
+
+  .flow-steps {
+    padding: 2px 0;
+    gap: 7px;
+  }
+
+  .flow-steps li {
+    gap: 8px;
+    font-size: clamp(0.72rem, 2.5vw, 0.82rem);
+    line-height: 1.25;
+  }
+
+  .flow-num {
+    width: 1.45rem;
+    height: 1.45rem;
+    font-size: 0.58rem;
+  }
+
+  .start-card {
+    margin-top: -8px;
+    padding: 12px 18px;
+  }
+
+  .start-label {
+    font-size: clamp(0.82rem, 2.8vw, 0.95rem);
+  }
+
+  .home-menu-bar .menu-item,
+  .lang-dropdown-menu--drop-up button {
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+    padding: 10px 6px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
    Tablet landscape
 ═══════════════════════════════════════════════════════════ */
 @media (min-width: 768px) and (orientation: landscape) {
