@@ -4,29 +4,27 @@
   position: relative;
   z-index: 1;
   box-sizing: border-box;
-  min-height: 100dvh;
+  height: 100dvh;
+  max-height: 100dvh;
   width: 100%;
-  padding: max(16px, env(safe-area-inset-top, 0px)) clamp(16px, 4vw, 28px)
-    max(24px, env(safe-area-inset-bottom, 0px));
+  overflow: hidden;
+  padding: max(12px, env(safe-area-inset-top, 0px)) clamp(16px, 4vw, 28px)
+    max(16px, env(safe-area-inset-bottom, 0px));
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: clamp(1rem, 3vh, 1.75rem);
+  gap: clamp(0.5rem, 1.5vh, 1rem);
   background: oklch(76.5% 0.009 286);
   color: oklch(96% 0.02 300);
-}
-
-.oracle-reveal-view__filter-defs {
-  position: fixed;
-  left: -4000px;
-  top: 0;
 }
 
 .oracle-reveal-stage {
   position: relative;
   width: min(3560px, 100%);
   flex: 1;
+  min-height: 0;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -47,7 +45,7 @@
   --oracle-origin: 50% 45%;
   position: relative;
   flex-shrink: 0;
-  width: min(92vw, clamp(800px, 92vw, 1200px));   /* 2× original */
+  width: min(92vw, 1200px);
   aspect-ratio: 595 / 842;
 }
 
@@ -83,6 +81,7 @@
   mask-size: contain;
 }
 
+
 .oracle-card--1 {
   --oracle-origin: 48% 44%;
 }
@@ -95,33 +94,23 @@
   --oracle-origin: 44% 48%;
 }
 
-/* Optical-lens radial: white-hot centre → neon pink → deep edge */
 .oracle-card__gradient {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    ellipse 78% 72% at 50% 42%,
-    oklch(100% 0 0) 0%,
-    oklch(82% 0.29 335) 22%,
-    oklch(66% 0.30 325) 46%,
-    oklch(50% 0.24 318) 68%,
-    oklch(34% 0.18 310) 88%,
-    oklch(22% 0.12 305) 100%
-  );
-  pointer-events: none;
+  display: none;
 }
 
-/* Film-grain noise: SVG fractalNoise via data-URI, soft-light blends with gradient */
-.oracle-card__grain {
+.oracle-card__video {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   pointer-events: none;
-  z-index: 2;
-  opacity: 0.22;
-  mix-blend-mode: soft-light;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72 0.68' numOctaves='4' stitchTiles='stitch' result='n'/%3E%3CfeColorMatrix type='saturate' values='0' in='n'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23g)' opacity='1'/%3E%3C/svg%3E");
-  background-size: 170px 170px;
-  background-repeat: repeat;
+  z-index: 0;
+}
+
+/* Film-grain noise — disabled */
+.oracle-card__grain {
+  display: none;
 }
 
 .oracle-card__pixel-shell {
@@ -135,109 +124,6 @@
     inset 0 0 0 3px oklch(90% 0.12 320 / 0.55),
     inset 12px 12px 0 -6px oklch(70% 0.14 348 / 0.25),
     inset -12px -12px 0 -9px oklch(40% 0.1 300 / 0.45);
-}
-
-/* Ripple burst — true center-point expansion with radial gradient blobs */
-.oracle-card__ripple-group {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-}
-
-/*
-  Each ripple is a radial-gradient blob anchored at card centre.
-  Starts as a ~1% white pinpoint, expands outward while shifting pink,
-  then dissolves into a blurred halo at the edge.
-  Different widths on ripple layers 1-4 create stacked depth.
-*/
-.oracle-card__ripple {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 130%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  border: none;
-  background: radial-gradient(
-    circle at center,
-    oklch(100% 0 0 / 0.96) 0%,
-    oklch(85% 0.26 335 / 0.80) 20%,
-    oklch(68% 0.30 325 / 0.50) 46%,
-    oklch(52% 0.22 315 / 0.20) 66%,
-    transparent 80%
-  );
-  transform: translate(-50%, -50%) scale(0.012);
-  animation: oracle-ripple-expand 2.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.oracle-card__ripple--2 {
-  animation-delay: 0.15s;
-  width: 106%;
-  background: radial-gradient(
-    circle at center,
-    oklch(98% 0.01 320 / 0.80) 0%,
-    oklch(78% 0.28 330 / 0.65) 22%,
-    oklch(60% 0.26 318 / 0.32) 52%,
-    transparent 74%
-  );
-}
-
-.oracle-card__ripple--3 {
-  animation-delay: 0.30s;
-  width: 84%;
-  background: radial-gradient(
-    circle at center,
-    oklch(96% 0.02 315 / 0.70) 0%,
-    oklch(74% 0.28 328 / 0.55) 24%,
-    oklch(56% 0.24 316 / 0.25) 56%,
-    transparent 76%
-  );
-}
-
-.oracle-card__ripple--4 {
-  animation-delay: 0.46s;
-  width: 64%;
-  background: radial-gradient(
-    circle at center,
-    oklch(100% 0 0 / 0.88) 0%,
-    oklch(82% 0.26 332 / 0.60) 26%,
-    oklch(62% 0.22 320 / 0.20) 58%,
-    transparent 78%
-  );
-}
-
-/* Delayed group — card 2 (Resonance) */
-.oracle-card__ripple-group--delayed-1 .oracle-card__ripple--1 { animation-delay: 0.40s; }
-.oracle-card__ripple-group--delayed-1 .oracle-card__ripple--2 { animation-delay: 0.55s; }
-.oracle-card__ripple-group--delayed-1 .oracle-card__ripple--3 { animation-delay: 0.70s; }
-.oracle-card__ripple-group--delayed-1 .oracle-card__ripple--4 { animation-delay: 0.86s; }
-
-/* Delayed group — card 3 (Echo) */
-.oracle-card__ripple-group--delayed-2 .oracle-card__ripple--1 { animation-delay: 0.65s; }
-.oracle-card__ripple-group--delayed-2 .oracle-card__ripple--2 { animation-delay: 0.80s; }
-.oracle-card__ripple-group--delayed-2 .oracle-card__ripple--3 { animation-delay: 0.95s; }
-.oracle-card__ripple-group--delayed-2 .oracle-card__ripple--4 { animation-delay: 1.10s; }
-
-@keyframes oracle-ripple-expand {
-  0% {
-    transform: translate(-50%, -50%) scale(0.012);
-    opacity: 1;
-    filter: blur(0px);
-  }
-  30% {
-    opacity: 0.92;
-    filter: blur(1.5px);
-  }
-  65% {
-    opacity: 0.45;
-    filter: blur(5px);
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0;
-    filter: blur(14px);
-  }
 }
 
 .oracle-card__final-content {
@@ -260,9 +146,6 @@
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: oklch(97% 0.03 300);
-  text-shadow:
-    0 1px 0 oklch(32% 0.08 300 / 0.55),
-    0 -1px 0 oklch(90% 0.08 320 / 0.35);
 }
 
 .oracle-card__title {
@@ -273,9 +156,6 @@
   line-height: 1.32;
   max-width: 18ch;
   color: oklch(98% 0.015 300);
-  text-shadow:
-    2px 2px 0 oklch(36% 0.1 310 / 0.65),
-    -1px -1px 0 oklch(78% 0.1 340 / 0.45);
 }
 
 .oracle-card__title--bit {
@@ -283,40 +163,88 @@
   letter-spacing: 0.04em;
 }
 
+.oracle-float-wrapper {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: inherit;
+}
+
 /* Landscape — height-driven: cards fill the viewport vertically, pulled tight */
 @media (orientation: landscape) {
   /*
+    Float wrappers must re-enter the flex row in landscape.
+    The base style sets position: absolute which removes them from flow — override it.
+  */
+  .oracle-float-wrapper {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: auto;
+    height: min(60vh, 500px);
+    flex-shrink: 0;
+  }
+
+  /* Float animation + stacking order in landscape.
+     z-index on the wrappers (position: relative) controls which flower is visually front. */
+  .oracle-float-wrapper--1 { animation: oracle-float 4.2s ease-in-out 0.9s infinite; z-index: 3; }
+  .oracle-float-wrapper--2 { animation: oracle-float 4.2s ease-in-out 1.4s infinite; z-index: 1; }
+  .oracle-float-wrapper--3 { animation: oracle-float 4.2s ease-in-out 1.9s infinite; z-index: 1; }
+
+  /*
     Cards are portrait-ratio (595 ∶ 842 ≈ 0.707 wide-to-tall).
     Drive size from the scarce axis (height), let aspect-ratio resolve width.
-    78vh tall → width ≈ 55vh per card.  Feels genuinely large on any landscape screen.
   */
   .oracle-card-container {
     width: auto;
-    height: 78vh;
+    height: 100%;
   }
 
   /*
-    Pull the three cards together with a strong negative margin.
-    3 × ~55vh width minus 2 × 12vw overlap ≈ fits snugly in 100vw.
+    Pull the three cards together with a moderate negative margin overlap.
   */
   .oracle-card-container--2 {
     z-index: 2;
-    margin-inline-end: clamp(-60px, -12vw, -180px);
+    margin-inline-end: clamp(-24px, -5vw, -72px);
     transform: none;
     animation: oracle-ls-enter 0.88s cubic-bezier(0.16, 1, 0.3, 1) 0.18s both;
   }
 
   .oracle-card-container--1 {
     z-index: 3;
-    margin-inline: clamp(-60px, -12vw, -180px);
+    margin-inline: clamp(-24px, -5vw, -72px);
     animation: oracle-ls-enter 0.88s cubic-bezier(0.16, 1, 0.3, 1) 0s both;
   }
 
   .oracle-card-container--3 {
     z-index: 2;
-    margin-inline-start: clamp(-60px, -12vw, -180px);
+    margin-inline-start: clamp(-24px, -5vw, -72px);
     transform: none;
     animation: oracle-ls-enter 0.88s cubic-bezier(0.16, 1, 0.3, 1) 0.34s both;
+  }
+
+  /*
+    Landscape transformative motion: SVG flower masks stay intact.
+    CSS transform (scale + rotate + skew) is applied to each .oracle-card element.
+    Because the mask is in the element's local coordinate space, it transforms
+    with the element — the flower silhouette itself breathes and shifts organically.
+    Each card gets a unique cycle duration and start phase so they never sync.
+  */
+  .oracle-card--1 {
+    animation: oracle-warp-a 11s cubic-bezier(0.37, 0, 0.21, 1) infinite;
+    transform-origin: 48% 44%;
+  }
+
+  .oracle-card--2 {
+    animation: oracle-warp-b 8.5s cubic-bezier(0.37, 0, 0.21, 1) infinite;
+    animation-delay: -3.2s;
+    transform-origin: 56% 46%;
+  }
+
+  .oracle-card--3 {
+    animation: oracle-warp-c 13s cubic-bezier(0.37, 0, 0.21, 1) infinite;
+    animation-delay: -6.5s;
+    transform-origin: 44% 48%;
   }
 }
 
@@ -325,123 +253,240 @@
   to   { opacity: 1; }
 }
 
-/* Portrait — all three cards form a tidy stacked deck */
+/* Organic warp transforms for landscape flower cards — each a unique movement family */
+@keyframes oracle-warp-a {
+  0%,  100% { transform: scale(1)    rotate(0deg)   skewX(0deg)   skewY(0deg);   }
+  22%        { transform: scale(1.04) rotate(1.4deg)  skewX(0.8deg)  skewY(0.4deg);  }
+  48%        { transform: scale(0.97) rotate(-0.8deg) skewX(-0.5deg) skewY(-0.6deg); }
+  74%        { transform: scale(1.02) rotate(0.5deg)  skewX(0.3deg)  skewY(0.7deg);  }
+}
+
+@keyframes oracle-warp-b {
+  0%,  100% { transform: scale(1)    rotate(0deg)   skewX(0deg)    skewY(0deg);   }
+  18%        { transform: scale(0.96) rotate(-1.6deg) skewX(-0.9deg) skewY(0.5deg);  }
+  52%        { transform: scale(1.05) rotate(0.9deg)  skewX(0.6deg)  skewY(-0.4deg); }
+  78%        { transform: scale(0.98) rotate(-0.4deg) skewX(-0.3deg) skewY(0.8deg);  }
+}
+
+@keyframes oracle-warp-c {
+  0%,  100% { transform: scale(1)    rotate(0deg)   skewX(0deg)   skewY(0deg);   }
+  30%        { transform: scale(1.03) rotate(-1.1deg) skewX(0.7deg)  skewY(-0.5deg); }
+  58%        { transform: scale(0.96) rotate(1.8deg)  skewX(-0.6deg) skewY(0.3deg);  }
+  82%        { transform: scale(1.04) rotate(0.3deg)  skewX(0.4deg)  skewY(-0.7deg); }
+}
+
+/* Portrait — swiping deck */
 @media (orientation: portrait) {
   .oracle-reveal-stage__row {
     position: relative;
     justify-content: center;
     align-items: center;
-    min-height: min(96vh, 1680px);
+    height: 100%;
     width: 100%;
+    overflow: hidden;
   }
 
-  /* All cards share the same footprint, sized to fit comfortably */
+  /* Float wrappers fill the full stage so card containers anchor to stage coords */
+  .oracle-float-wrapper {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Reset base width so height-driven sizing takes over */
   .oracle-card-container {
+    width: auto;
+  }
+
+  /* All deck cards share the same base footprint — height-driven so card never overflows dvh */
+  .oracle-deck--front,
+  .oracle-deck--mid,
+  .oracle-deck--back,
+  .oracle-deck--gone {
     position: absolute;
     left: 50%;
-    top: 46%;
-    width: min(88vw, clamp(520px, 88vw, 800px));
+    top: 50%;
+    height: min(62vh, 520px);
+    width: auto;
+    aspect-ratio: 595 / 842;
+    will-change: transform, opacity;
+    transition:
+      transform 0.52s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity   0.52s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  /* Card 1 — front of deck, centered */
-  .oracle-card-container--1 {
+  /* Front card — largest, lowest in the stack, draggable */
+  .oracle-deck--front {
     z-index: 3;
-    transform: translate(-50%, -50%);
-    animation: oracle-deck-front 0.72s cubic-bezier(0.16, 1, 0.3, 1) 0s both;
+    transform: translate(-50%, calc(-48% + 30px));
+    cursor: grab;
+    touch-action: none;
+    animation: oracle-portrait-float 4.2s ease-in-out 0.8s infinite;
   }
 
-  /* Card 2 — second layer, slightly behind-left */
-  .oracle-card-container--2 {
+  /* Second card — rises behind, slightly smaller, gentle tilt left */
+  .oracle-deck--mid {
     z-index: 2;
-    transform: translate(calc(-50% - 14px), calc(-50% + 14px)) rotate(-2.8deg) scale(0.97);
-    animation: oracle-deck-mid 0.78s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
+    transform: translate(-50%, calc(-50% - 38px)) rotate(-1.7deg) scale(0.9);
+    animation: oracle-portrait-float 4.8s ease-in-out 1.6s infinite;
   }
 
-  /* Card 3 — back of deck, behind-right */
-  .oracle-card-container--3 {
+  /* Third / back card — highest, smallest, tilt right */
+  .oracle-deck--back {
     z-index: 1;
-    transform: translate(calc(-50% + 12px), calc(-50% + 26px)) rotate(3.5deg) scale(0.94);
-    animation: oracle-deck-back 0.84s cubic-bezier(0.16, 1, 0.3, 1) 0.22s both;
+    transform: translate(-50%, calc(-50% - 136px)) rotate(2.4deg) scale(0.8);
+    animation: oracle-portrait-float 5.4s ease-in-out 2.2s infinite;
   }
 
-  /* Ripple groups on wings still animate but are subtler */
-  .oracle-card-container--2 .oracle-card__ripple-group,
-  .oracle-card-container--3 .oracle-card__ripple-group {
-    opacity: 0.55;
+  /* Card has been swiped away — fades up and shrinks behind the stack */
+  .oracle-deck--gone {
+    z-index: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, calc(-50% - 56px)) scale(0.72);
+    transition: none;
+    animation: none;
+  }
+
+  /* Not visible at all (rank > 2) */
+  .oracle-deck--hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Pause the float while the user is dragging */
+  .oracle-deck--dragging {
+    animation-play-state: paused;
+    cursor: grabbing;
   }
 }
 
-@keyframes oracle-deck-front {
-  from { opacity: 0; transform: translate(-50%, -44%) scale(0.94); }
-  to   { opacity: 1; transform: translate(-50%, -50%); }
+/* Gentle vertical float using the composable `translate` property —
+   stacks on top of `transform` so centering and rotation are unaffected */
+@keyframes oracle-portrait-float {
+  0%, 100% { translate: 0 0;    }
+  50%       { translate: 0 -9px; }
 }
 
-@keyframes oracle-deck-mid {
-  from { opacity: 0; transform: translate(calc(-50% - 14px), calc(-50% + 6px)) rotate(-1deg) scale(0.94); }
-  to   { opacity: 1; transform: translate(calc(-50% - 14px), calc(-50% + 14px)) rotate(-2.8deg) scale(0.97); }
+/* Swipe-up hint arrow — portrait only, sits below the card stack */
+@media (orientation: portrait) {
+  .oracle-swipe-hint {
+    position: absolute;
+    bottom: 6%;
+    left: 50%;
+    z-index: 10;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    color: oklch(96% 0.04 300 / 0.55);
+    transform: translateX(-50%);
+    animation: oracle-hint-bob 1.8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+    transition: opacity 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
+  .oracle-swipe-hint__label {
+    font-family: 'Neuzeit 2', 'DM Sans', system-ui, sans-serif;
+    font-size: clamp(0.65rem, 1.8vw, 0.78rem);
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  @keyframes oracle-hint-bob {
+    0%, 100% { transform: translateX(-50%) translateY(0);     opacity: 0.55; }
+    50%       { transform: translateX(-50%) translateY(-11px); opacity: 0.25; }
+  }
 }
 
-@keyframes oracle-deck-back {
-  from { opacity: 0; transform: translate(calc(-50% + 12px), calc(-50% + 18px)) rotate(2deg) scale(0.91); }
-  to   { opacity: 1; transform: translate(calc(-50% + 12px), calc(-50% + 26px)) rotate(3.5deg) scale(0.94); }
+/* Landscape keeps its own float on the wrappers */
+@keyframes oracle-float {
+  0%, 100% { transform: translateY(0);   }
+  50%       { transform: translateY(-8px); }
 }
 
-.oracle-reveal-view__footer {
-  flex-shrink: 0;
-  width: 100%;
-  display: flex;
-  justify-content: center;
+.oracle-reveal-menu-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 150;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: oklch(26% 0.01 270 / 0.22);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+  border-top: 1px solid oklch(100% 0 0 / 0.12);
+  box-shadow:
+    inset 0 1px 3px 1px rgba(255, 112, 112, 0.15),
+    0 -4px 12px rgba(0, 0, 0, 0.15);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
-.oracle-reveal-view__skip {
-  font-family: 'Neuzeit 2', 'DM Sans', system-ui, sans-serif;
-  font-size: clamp(0.85rem, 2.4vw, 1rem);
+.oracle-reveal-menu-item {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.7rem;
   font-weight: 500;
-  padding: 12px 28px;
-  border-radius: 10px;
-  border: 1px solid oklch(45% 0.06 300 / 0.45);
-  background: oklch(92% 0.02 290 / 0.45);
-  color: oklch(28% 0.04 300);
+  letter-spacing: 0.14em;
+  padding: 16px 10px;
+  color: oklch(26% 0.005 285);
+  border: none;
+  border-right: 1px solid oklch(100% 0 0 / 0.12);
+  text-transform: uppercase;
+  background: transparent;
   cursor: pointer;
   transition:
-    background 0.32s cubic-bezier(0.19, 1, 0.22, 1),
-    transform 0.32s cubic-bezier(0.19, 1, 0.22, 1);
+    color 0.3s ease,
+    background 0.3s ease;
 }
 
-.oracle-reveal-view__skip:hover {
-  background: oklch(96% 0.02 290 / 0.65);
+.oracle-reveal-menu-item:hover,
+.oracle-reveal-menu-item:focus-visible {
+  color: oklch(26% 0.005 285);
+  background: oklch(100% 0 0 / 0.08);
+  outline: none;
 }
 
-.oracle-reveal-view__skip:focus-visible {
-  outline: 2px solid oklch(55% 0.16 330);
-  outline-offset: 3px;
+.oracle-reveal-menu-item.is-current {
+  color: oklch(26% 0.005 285);
 }
 
-.oracle-reveal-view__skip:active {
-  transform: scale(0.98);
+.oracle-reveal-menu-item--lang {
+  border-right: none;
 }
 
 /* ── Accessibility: reduced motion ─────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  .oracle-card__ripple {
-    animation: none;
-    opacity: 0;
-  }
-
   .oracle-card-container--1,
   .oracle-card-container--2,
-  .oracle-card-container--3 {
+  .oracle-card-container--3,
+  .oracle-float-wrapper--1,
+  .oracle-float-wrapper--2,
+  .oracle-float-wrapper--3,
+  .oracle-deck--front,
+  .oracle-deck--mid,
+  .oracle-deck--back {
     animation: none;
   }
 
-  /* Ensure portrait cards are visible without animation */
-  @media (orientation: portrait) {
-    .oracle-card-container--1 { transform: translate(-50%, -50%); opacity: 1; }
-    .oracle-card-container--2 { transform: translate(calc(-50% - 14px), calc(-50% + 14px)) rotate(-2.8deg) scale(0.97); opacity: 1; }
-    .oracle-card-container--3 { transform: translate(calc(-50% + 12px), calc(-50% + 26px)) rotate(3.5deg) scale(0.94); opacity: 1; }
+  /* Freeze landscape warp transforms at neutral position */
+  @media (orientation: landscape) {
+    .oracle-card--1,
+    .oracle-card--2,
+    .oracle-card--3 {
+      animation: none;
+      transform: none;
+    }
   }
 
-  .oracle-card__grain {
-    opacity: 0.10;
+  /* Ensure portrait deck cards are visible without animation */
+  @media (orientation: portrait) {
+    .oracle-deck--front { transform: translate(-50%, calc(-48% + 30px)); opacity: 1; }
+    .oracle-deck--mid   { transform: translate(-50%, calc(-50% - 38px)) rotate(-1.7deg) scale(0.9); opacity: 1; }
+    .oracle-deck--back  { transform: translate(-50%, calc(-50% - 136px)) rotate(2.4deg) scale(0.8); opacity: 1; }
+    .oracle-swipe-hint  { animation: none; }
   }
+
 }

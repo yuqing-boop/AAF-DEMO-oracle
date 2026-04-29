@@ -77,10 +77,6 @@ export default function App() {
     setView('oracleReveal');
   }, []);
 
-  const handleOracleRevealComplete = useCallback(() => {
-    setView('result');
-  }, []);
-
   const handleRestart = useCallback(() => {
     setView(INITIAL_STATE.view);
     setLanguage(language); // preserve language choice on restart
@@ -126,7 +122,7 @@ export default function App() {
         />
       )}
       {view === 'oracleReveal' && (
-        <OracleRevealView language={language} topBooths={topBooths} onComplete={handleOracleRevealComplete} />
+        <OracleRevealView language={language} topBooths={topBooths} onHome={handleRestart} />
       )}
       {view === 'result' && (
         <ResultView
