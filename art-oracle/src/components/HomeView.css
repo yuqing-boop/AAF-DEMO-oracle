@@ -203,8 +203,8 @@
   border: 1px solid var(--glass-border);
   contain: style;
 
-  /* Organic default shape */
-  border-radius: 38% 62% 55% 45% / 41% 44% 58% 57%;
+  /* Organic default shape — matches morph-title `from` to avoid first-paint jump */
+  border-radius: 28% 72% 62% 38% / 38% 40% 62% 60%;
   transition: box-shadow 0.5s var(--ease-expo);
 }
 
@@ -217,7 +217,7 @@
   border-color: oklch(100% 0 0 / 0.16);
 }
 
-/* Title card — morphing pebble, 18s cycle */
+/* Title card — 18s diagonal lean */
 .title-card {
   animation: morph-title 18s ease-in-out infinite alternate;
   height: 330px;
@@ -235,10 +235,10 @@
     0px 4px 12px 0px rgba(0, 0, 0, 0.15);
 }
 
-/* Flow card — offset phase keeps cards out of sync */
+/* Flow card — 23s vertical squeeze, never syncs with title (18) or start (15) */
 .flow-card {
-  animation: morph-title 18s ease-in-out infinite alternate;
-  animation-delay: -6s;
+  animation: morph-flow 23s ease-in-out infinite alternate;
+  animation-delay: -8s;
   color: var(--clr-text-primary);
   /* Tighter now that the CTA lives in its own card below */
   padding: 32px 28px 28px;
@@ -257,10 +257,10 @@
     0px 4px 12px 0px rgba(0, 0, 0, 0.15);
 }
 
-/* Start CTA card — same blob family as title-card, overlaps flow-card bottom */
+/* Start CTA card — 15s rotational wobble, never syncs with title (18) or flow (23) */
 .start-card {
-  animation: morph-title 18s ease-in-out infinite alternate;
-  animation-delay: -11s;
+  animation: morph-start 15s ease-in-out infinite alternate;
+  animation-delay: -5s;
   padding: 25px 36px;
   position: relative;
   z-index: 2;
@@ -327,10 +327,27 @@ button.start-card .start-label {
   pointer-events: none;
 }
 
-/* ── Organic shape keyframes — 2-stop alternate keeps morph fluid with less interpolation work ── */
+/* ── Organic shape keyframes ───────────────────────────────────
+   Three distinct shape personalities + non-divisible durations
+   so the cards never fall back into sync.
+─────────────────────────────────────────────────────────────── */
+
+/* Title card — diagonal lean: top-right heavy ↔ bottom-left heavy */
 @keyframes morph-title {
-  from { border-radius: 38% 62% 55% 45% / 41% 44% 58% 57%; }
-  to   { border-radius: 52% 48% 36% 64% / 56% 40% 62% 44%; }
+  from { border-radius: 28% 72% 62% 38% / 38% 40% 62% 60%; }
+  to   { border-radius: 72% 28% 38% 62% / 62% 60% 38% 40%; }
+}
+
+/* Flow card — vertical squeeze: tall-narrow ↔ wide-flat */
+@keyframes morph-flow {
+  from { border-radius: 55% 45% 30% 70% / 65% 30% 70% 35%; }
+  to   { border-radius: 35% 65% 70% 30% / 30% 70% 35% 65%; }
+}
+
+/* Start card — rotational wobble: clockwise lean ↔ counter-clockwise */
+@keyframes morph-start {
+  from { border-radius: 42% 58% 25% 75% / 72% 42% 58% 28%; }
+  to   { border-radius: 75% 25% 58% 42% / 28% 58% 42% 72%; }
 }
 
 
@@ -528,7 +545,8 @@ button.start-card .start-label {
   }
 
   .flow-card {
-    width: 100%;
+    width: calc(100% - 30px);
+    max-width: calc(100% - 30px);
     padding: 20px 18px 18px;
   }
 
@@ -762,8 +780,8 @@ button.start-card .start-label {
   .flow-card,
   .start-card {
     animation: none;
-    /* Freeze at a gentle, natural organic shape */
-    border-radius: 44% 56% 52% 48% / 46% 48% 54% 52%;
+    /* Freeze at the midpoint of the morph range */
+    border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%;
   }
 
   .start-card {
