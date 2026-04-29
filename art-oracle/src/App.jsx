@@ -57,16 +57,20 @@ export default function App() {
     (questionId, selectedOption) => {
       const updatedAnswers = { ...answers, [questionId]: selectedOption };
       setAnswers(updatedAnswers);
+      const isLastQuestion = currentQIndex === selectedQs.length - 1;
+
+      if (isLastQuestion) {
+        // Skip the short quiz interstitial on the final answer.
+        setIsExploding(false);
+        setView('loading');
+        return;
+      }
+
       setIsExploding(true);
 
       setTimeout(() => {
         setIsExploding(false);
-        const isLastQuestion = currentQIndex === selectedQs.length - 1;
-        if (isLastQuestion) {
-          setView('loading');
-        } else {
-          setCurrentQIndex((prev) => prev + 1);
-        }
+        setCurrentQIndex((prev) => prev + 1);
       }, EXPLOSION_DURATION_MS);
     },
     [answers, currentQIndex, selectedQs]
@@ -113,7 +117,6 @@ export default function App() {
       )}
       {view === 'loading' && (
         <LoadingView
-          language={language}
           answers={answers}
           questions={selectedQs}
           booths={booths}
