@@ -12,7 +12,7 @@ import ResultView from './components/ResultView.jsx';
 // --- Timing constants (ms) — swap these when wiring real animations ---
 const TRANSITION_HOME_TO_QUIZ_MS = 1000;
 const EXPLOSION_DURATION_MS = 600;
-const LOADING_DURATION_MS = 4500;
+const LOADING_DURATION_MS = 3000;
 
 const INITIAL_STATE = {
   view: 'home',

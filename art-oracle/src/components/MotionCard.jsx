@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import './MotionCard.css';
 
 /** Maps option key → motion visual variant (same grid for every quiz step). */
@@ -7,6 +8,9 @@ export const Q1_VARIANTS = {
   C: 'silver-silk',
   D: 'color-noise',
 };
+
+/** Staggered starts so four simultaneous loops don’t look identical */
+const VIDEO_OFFSET_BY_KEY = { A: 0, B: 2.5, C: 5, D: 7.5 };
 
 function Stage({ variant }) {
   if (variant === 'deep-ink') {
@@ -56,6 +60,25 @@ function Stage({ variant }) {
  * @param {{ variant: string, optionKey: string, label: string, hideLabel?: boolean, onClick: () => void }} props
  */
 export default function MotionCard({ variant, optionKey, label, hideLabel = false, onClick }) {
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const sync = () => {
+      if (mq.matches) {
+        el.pause();
+        return;
+      }
+      el.currentTime = VIDEO_OFFSET_BY_KEY[optionKey] ?? 0;
+      el.play().catch(() => {});
+    };
+    sync();
+    mq.addEventListener('change', sync);
+    return () => mq.removeEventListener('change', sync);
+  }, [optionKey]);
+
   return (
     <button
       type="button"
@@ -64,7 +87,18 @@ export default function MotionCard({ variant, optionKey, label, hideLabel = fals
       aria-label={`${optionKey}: ${label}`}
     >
       <div className="motion-card__stage" aria-hidden="true">
-        <Stage variant={variant} />
+        <video
+          ref={videoRef}
+          className="motion-card__bg-video"
+          src="/card-bg.webm"
+          muted
+          playsInline
+          loop
+          aria-hidden="true"
+        />
+        <div className="motion-card__effects">
+          <Stage variant={variant} />
+        </div>
       </div>
 
       {/* Frosted tint over motion: purposeful translucency, not generic glass UI */}

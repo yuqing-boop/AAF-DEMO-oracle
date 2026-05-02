@@ -7,7 +7,8 @@
   height: 100dvh;
   max-height: 100dvh;
   width: 100%;
-  overflow: hidden;
+  /* visible so filter:drop-shadow on .oracle-card-shell is not clipped (portrait wheel + deck) */
+  overflow: visible;
   padding: max(12px, env(safe-area-inset-top, 0px)) clamp(16px, 4vw, 28px)
     max(16px, env(safe-area-inset-bottom, 0px));
   display: flex;
@@ -24,7 +25,7 @@
   width: min(3560px, 100%);
   flex: 1;
   min-height: 0;
-  overflow: hidden;
+  overflow: visible;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -137,6 +138,7 @@
   text-align: center;
   pointer-events: none;
   z-index: 3;
+  transform: translateY(15px);
 }
 
 .oracle-card__badge {
@@ -151,9 +153,9 @@
 .oracle-card__title {
   margin: 0;
   font-family: 'Neuzeit 2', 'DM Sans', system-ui, sans-serif;
-  font-size: clamp(0.95rem, 2.85vw, 1.28rem);
-  font-weight: 500;
-  line-height: 1.32;
+  font-size: clamp(0.7rem, 2.05vw, 0.95rem);
+  font-weight: 300;
+  line-height: 1.36;
   max-width: 18ch;
   color: oklch(98% 0.015 300);
 }
@@ -203,11 +205,12 @@
   /*
     Pull the three cards together with a moderate negative margin overlap.
   */
+  /* Final reveal: center (#1) → left (#2) +1s → right (#3) +2s */
   .oracle-card-container--2 {
     z-index: 2;
     margin-inline-end: clamp(-24px, -5vw, -72px);
     transform: none;
-    animation: oracle-ls-enter 0.88s cubic-bezier(0.16, 1, 0.3, 1) 0.18s both;
+    animation: oracle-ls-enter 0.88s cubic-bezier(0.16, 1, 0.3, 1) 1s both;
   }
 
   .oracle-card-container--1 {
@@ -220,7 +223,7 @@
     z-index: 2;
     margin-inline-start: clamp(-24px, -5vw, -72px);
     transform: none;
-    animation: oracle-ls-enter 0.88s cubic-bezier(0.16, 1, 0.3, 1) 0.34s both;
+    animation: oracle-ls-enter 0.88s cubic-bezier(0.16, 1, 0.3, 1) 2s both;
   }
 
   /*
@@ -249,6 +252,11 @@
 }
 
 @keyframes oracle-ls-enter {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes oracle-portrait-reveal {
   from { opacity: 0; }
   to   { opacity: 1; }
 }
@@ -283,7 +291,7 @@
     align-items: center;
     height: 100%;
     width: 100%;
-    overflow: hidden;
+    overflow: visible;
   }
 
   /* Float wrappers fill the full stage so card containers anchor to stage coords */
@@ -359,6 +367,19 @@
   .oracle-deck--dragging {
     animation-play-state: paused;
     cursor: grabbing;
+  }
+
+  /* Staggered match to landscape: center → left (+1s) → right (+2s); shell avoids clashing with deck float */
+  .oracle-card-container--1 .oracle-card-shell {
+    animation: oracle-portrait-reveal 0.88s cubic-bezier(0.16, 1, 0.3, 1) 0s both;
+  }
+
+  .oracle-card-container--2 .oracle-card-shell {
+    animation: oracle-portrait-reveal 0.88s cubic-bezier(0.16, 1, 0.3, 1) 1s both;
+  }
+
+  .oracle-card-container--3 .oracle-card-shell {
+    animation: oracle-portrait-reveal 0.88s cubic-bezier(0.16, 1, 0.3, 1) 2s both;
   }
 }
 
@@ -457,6 +478,75 @@
   border-right: none;
 }
 
+/* ── Vertical-phone wheel layout (portrait ≤767px) ──────────────
+   Three cards stacked vertically:
+     rank 2 (top)    — 3rd most relevant, 50% scale, peeks from above
+     rank 0 (center) — 1st most relevant, 90% scale, full reveal
+     rank 1 (bottom) — 2nd most relevant, 50% scale, peeks from below
+   Swipe up = bottom→center, center→top, top→bottom (infinite wheel)
+   Swipe down = reverse
+─────────────────────────────────────────────────────────────── */
+@media (orientation: portrait) and (max-width: 767px) {
+  /* Shared sizing + smooth transition across all three wheel positions */
+  .oracle-deck--front,
+  .oracle-deck--mid,
+  .oracle-deck--back {
+    height: min(56vh, 450px);
+    transition:
+      transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity   0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Center — most relevant; 90% visual scale, gentle float */
+  .oracle-deck--front {
+    z-index: 3;
+    transform: translate(-50%, -50%) scale(0.9);
+    cursor: default;
+    touch-action: none;
+    animation: oracle-portrait-float 5s ease-in-out 0.8s infinite;
+  }
+
+  /* Bottom peek — 2nd most relevant; 50% scale, slightly cropped below */
+  .oracle-deck--mid {
+    z-index: 1;
+    transform: translate(-50%, calc(-50% + 38vh)) scale(0.5);
+    animation: none;
+  }
+
+  /* Top peek — 3rd most relevant; 50% scale, slightly cropped above */
+  .oracle-deck--back {
+    z-index: 1;
+    transform: translate(-50%, calc(-50% - 38vh)) scale(0.5);
+    animation: none;
+  }
+
+  /* Heavier shadow on peek cards — signals visual distance from viewer */
+  .oracle-deck--mid .oracle-card-shell,
+  .oracle-deck--back .oracle-card-shell {
+    filter:
+      drop-shadow(0 22px 48px oklch(12% 0.06 278 / 0.72))
+      drop-shadow(0 0 8px oklch(16% 0.06 278 / 0.45));
+  }
+
+  /*
+    Scroll hint: sits in the gap between center card (~50%/50%) and bottom peek (~+38vh).
+    Adjusted slightly below the geometric midpoint for optical balance with card shapes.
+  */
+  .oracle-swipe-hint--wheel {
+    bottom: auto;
+    top: calc(50% + 22vh);
+    transform: translate(-50%, -50%);
+    gap: 5px;
+    color: oklch(97% 0.03 296 / 0.88);
+    animation: oracle-hint-bob-wheel 1.8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  }
+
+  @keyframes oracle-hint-bob-wheel {
+    0%, 100% { transform: translate(-50%, -50%) translateY(0);     opacity: 0.93; }
+    50%       { transform: translate(-50%, -50%) translateY(-10px); opacity: 0.78; }
+  }
+}
+
 /* ── Accessibility: reduced motion ─────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .oracle-card-container--1,
@@ -487,6 +577,156 @@
     .oracle-deck--mid   { transform: translate(-50%, calc(-50% - 38px)) rotate(-1.7deg) scale(0.9); opacity: 1; }
     .oracle-deck--back  { transform: translate(-50%, calc(-50% - 136px)) rotate(2.4deg) scale(0.8); opacity: 1; }
     .oracle-swipe-hint  { animation: none; }
+    .oracle-card-container--1 .oracle-card-shell,
+    .oracle-card-container--2 .oracle-card-shell,
+    .oracle-card-container--3 .oracle-card-shell {
+      animation: none;
+      opacity: 1;
+    }
   }
 
+  /* Wheel mode: freeze at correct positions without animation */
+  @media (orientation: portrait) and (max-width: 767px) {
+    .oracle-deck--front { transform: translate(-50%, -50%) scale(0.9); opacity: 1; }
+    .oracle-deck--mid   { transform: translate(-50%, calc(-50% + 38vh)) scale(0.5); opacity: 1; }
+    .oracle-deck--back  { transform: translate(-50%, calc(-50% - 38vh)) scale(0.5); opacity: 1; }
+  }
+
+}
+
+/* ── Fullscreen card focus + export actions ──────────────────── */
+.oracle-card-focus {
+  position: fixed;
+  inset: 0;
+  z-index: 180;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding:
+    max(16px, env(safe-area-inset-top, 0px))
+    clamp(16px, 4vw, 28px)
+    max(24px, env(safe-area-inset-bottom, 0px));
+  pointer-events: auto;
+}
+
+.oracle-card-focus__scrim {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  background: oklch(28% 0.02 286 / 0.72);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+
+.oracle-card-focus__panel {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(16px, 3.5vh, 22px);
+  width: 100%;
+  max-width: min(560px, 100%);
+}
+
+.oracle-card-focus__x {
+  position: absolute;
+  top: -8px;
+  inset-inline-end: clamp(0px, 2vw, 12px);
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid oklch(94% 0.02 300 / 0.35);
+  border-radius: 0;
+  background: oklch(96% 0.015 295 / 0.14);
+  color: oklch(96% 0.02 300);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 1.35rem;
+  font-weight: 400;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    color 0.38s cubic-bezier(0.19, 1, 0.22, 1),
+    background 0.38s cubic-bezier(0.19, 1, 0.22, 1),
+    border-color 0.38s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.oracle-card-focus__x:hover,
+.oracle-card-focus__x:focus-visible {
+  background: oklch(98% 0.012 298 / 0.22);
+  color: oklch(99% 0.02 300);
+  outline: none;
+}
+
+.oracle-card-focus__slot {
+  position: relative;
+  width: min(82vw, 520px);
+  aspect-ratio: 595 / 842;
+  flex-shrink: 0;
+  filter: drop-shadow(0 14px 36px oklch(22% 0.05 298 / 0.45))
+    drop-shadow(0 0 6px oklch(72% 0.1 320 / 0.28));
+}
+
+.oracle-card-focus__slot .oracle-card-shell {
+  width: 100%;
+  height: 100%;
+}
+
+.oracle-card-focus__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.oracle-card-focus__btn {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: clamp(0.62rem, 1.6vw, 0.72rem);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 12px 18px;
+  border: 1px solid oklch(88% 0.03 296 / 0.42);
+  background: oklch(96% 0.012 294 / 0.16);
+  color: oklch(96% 0.02 300);
+  cursor: pointer;
+  transition:
+    color 0.38s cubic-bezier(0.19, 1, 0.22, 1),
+    background 0.38s cubic-bezier(0.19, 1, 0.22, 1),
+    border-color 0.38s cubic-bezier(0.19, 1, 0.22, 1),
+    opacity 0.38s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.oracle-card-focus__btn:hover:not(:disabled),
+.oracle-card-focus__btn:focus-visible:not(:disabled) {
+  background: oklch(97% 0.015 296 / 0.26);
+  border-color: oklch(92% 0.04 312 / 0.55);
+  outline: none;
+}
+
+.oracle-card-focus__btn:disabled {
+  opacity: 0.45;
+  cursor: wait;
+}
+
+.oracle-card-focus__btn--primary {
+  border-color: oklch(78% 0.08 328 / 0.55);
+  background: oklch(52% 0.06 305 / 0.35);
+}
+
+.oracle-card-focus__hint {
+  margin: 0;
+  max-width: 36ch;
+  text-align: center;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: clamp(0.68rem, 1.8vw, 0.8rem);
+  font-weight: 400;
+  line-height: 1.45;
+  color: oklch(94% 0.025 300 / 0.88);
 }
