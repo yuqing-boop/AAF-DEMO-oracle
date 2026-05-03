@@ -435,12 +435,14 @@ export default function OracleRevealView({ language, topBooths, onHome }) {
                       <video
                         ref={el => { videoRefs.current[domIdx] = el; }}
                         className="oracle-card__video"
-                        src="/card-bg.webm"
                         muted
                         playsInline
                         loop
                         aria-hidden="true"
-                      />
+                      >
+                        <source src="/card-bg.mp4" type="video/mp4" />
+                        <source src="/card-bg.webm" type="video/webm" />
+                      </video>
                       <div className="oracle-card__gradient" />
                       <div className="oracle-card__grain" aria-hidden />
                       <div className="oracle-card__pixel-shell" aria-hidden />
@@ -499,12 +501,14 @@ export default function OracleRevealView({ language, topBooths, onHome }) {
                   <video
                     ref={overlayVideoRef}
                     className="oracle-card__video"
-                    src="/card-bg.webm"
                     muted
                     playsInline
                     loop
                     aria-hidden="true"
-                  />
+                  >
+                    <source src="/card-bg.mp4" type="video/mp4" />
+                    <source src="/card-bg.webm" type="video/webm" />
+                  </video>
                   <div className="oracle-card__gradient" />
                   <div className="oracle-card__grain" aria-hidden />
                   <div className="oracle-card__pixel-shell" aria-hidden />

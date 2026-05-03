@@ -7,14 +7,16 @@ export default function HomeVideoBackground() {
     <>
       <video
         className="home-video-bg"
-        src="/card-bg.webm"
         muted
         playsInline
         autoPlay
         loop
         preload="auto"
         aria-hidden="true"
-      />
+      >
+        <source src="/card-bg.mp4" type="video/mp4" />
+        <source src="/card-bg.webm" type="video/webm" />
+      </video>
       {/* SVG fractal noise grain — hides compression artefacts */}
       <div className="home-noise-overlay" aria-hidden="true" />
     </>

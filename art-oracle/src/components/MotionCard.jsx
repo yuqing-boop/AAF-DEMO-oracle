@@ -90,12 +90,14 @@ export default function MotionCard({ variant, optionKey, label, hideLabel = fals
         <video
           ref={videoRef}
           className="motion-card__bg-video"
-          src="/card-bg.webm"
           muted
           playsInline
           loop
           aria-hidden="true"
-        />
+        >
+          <source src="/card-bg.mp4" type="video/mp4" />
+          <source src="/card-bg.webm" type="video/webm" />
+        </video>
         <div className="motion-card__effects">
           <Stage variant={variant} />
         </div>
