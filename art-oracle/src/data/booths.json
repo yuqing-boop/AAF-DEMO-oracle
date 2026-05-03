@@ -10,7 +10,7 @@
       "EN": "Your energy resonates with contemplative structural silence — this space turns conceptual emptiness into a physical presence.",
       "CN": "你的能量与沉思的结构性寂静产生共鸣——这个空间将概念上的虚空转化为物理上的存在。"
     },
-    "dims": [4, 1, 2, 1, 5, 2]
+    "dims": [4, 1, 1, 1, 5, 2]
   },
   {
     "id": "Sam_Gilliam_Stitched",
@@ -23,7 +23,7 @@
       "EN": "You appreciate the rhythmic texture of history — this gallery presents works where the material itself tells a story of assembly.",
       "CN": "你欣赏历史的韵律纹理——这个画廊呈现了材料本身讲述组装故事的作品。"
     },
-    "dims": [2, 2, 5, 1, 5, 4]
+    "dims": [2, 2, 4, 1, 5, 4]
   },
   {
     "id": "Chuck_Close_On_Paper",
@@ -49,7 +49,7 @@
       "EN": "You are drawn to high-vibrancy eclecticism — this store curates a dynamic collision of past and present lifestyles.",
       "CN": "你被高频的折衷主义所吸引——这家店策划了过去与现在生活方式的动态碰撞。"
     },
-    "dims": [4, 5, 5, 1, 2, 2]
+    "dims": [4, 5, 3, 1, 2, 2]
   },
   {
     "id": "Yuko_Mohri_Falling_Water",
@@ -62,7 +62,7 @@
       "EN": "You find beauty in fragile systems — this installation captures the delicate balance between gravity and fluidity.",
       "CN": "你在脆弱的系统中发现美——这个装置捕捉了重力与流动性之间微妙的平衡。"
     },
-    "dims": [2, 2, 5, 1, 5, 4]
+    "dims": [2, 2, 2, 1, 5, 4]
   },
   {
     "id": "Thea_Grant",
@@ -75,7 +75,7 @@
       "EN": "Your aesthetic is deeply rooted in spatial storytelling — this space treats vintage objects as fragments of a larger narrative.",
       "CN": "你的审美深植于空间叙事——这个空间将复古物件视为宏大叙事的碎片。"
     },
-    "dims": [4, 2, 5, 5, 4, 2]
+    "dims": [4, 2, 3, 5, 4, 2]
   },
   {
     "id": "Cinga_Samson_Ukuphuthelwa",
@@ -88,7 +88,7 @@
       "EN": "You resonate with deep, chromatic emotionality — this exhibition creates a space for intense, quiet introspection.",
       "CN": "你与深沉的色彩情感产生共鸣——这个展览创造了一个进行强烈、安静内省的空间。"
     },
-    "dims": [5, 1, 5, 5, 5, 1]
+    "dims": [5, 1, 4, 5, 5, 1]
   },
   {
     "id": "Analog_30th_Anniversary_Exhibition",
@@ -101,7 +101,7 @@
       "EN": "You value the persistence of the tangible — this group show celebrates three decades of tactile artistic practice.",
       "CN": "你重视有形事物的持久性——这场群展庆祝了三十年来触感艺术的实践。"
     },
-    "dims": [2, 2, 5, 2, 4, 2]
+    "dims": [2, 2, 3, 2, 4, 2]
   },
   {
     "id": "Grigoris_Semitecolo",
@@ -114,7 +114,7 @@
       "EN": "You are intrigued by spatial logic and emotional restraint — these works challenge the limits of the frame.",
       "CN": "你对空间逻辑和情感克制很感兴趣——这些作品挑战了画框的极限。"
     },
-    "dims": [4, 1, 5, 5, 2, 4]
+    "dims": [4, 1, 1, 5, 2, 4]
   },
   {
     "id": "Eric_White_Vignettes_Mutations",
@@ -127,7 +127,7 @@
       "EN": "Your vision explores the distortion of reality — this booth presents mutations that redefine visual perception.",
       "CN": "你的视觉探索了现实的扭曲——这个展位呈现了重新定义视觉感知的突变。"
     },
-    "dims": [4, 1, 5, 5, 2, 2]
+    "dims": [4, 1, 3, 5, 2, 2]
   },
   {
     "id": "Louise_Bourgeois_Gathering_Wool",
@@ -153,7 +153,7 @@
       "EN": "You seek clarity in complex visuals — this gallery presents sharp, spatial photographs that trigger unexpected emotions.",
       "CN": "你在复杂的视觉中寻求清晰——这个画廊呈现了触发意想不到情感的犀利空间摄影。"
     },
-    "dims": [4, 1, 5, 5, 2, 2]
+    "dims": [4, 1, 4, 5, 2, 2]
   },
   {
     "id": "Deborah_Roberts",
@@ -166,7 +166,7 @@
       "EN": "You are drawn to the dynamic reconstruction of identity — this space showcases the power of the fragmented image.",
       "CN": "你被身份的动态重建所吸引——这个空间展示了碎片化图像的力量。"
     },
-    "dims": [2, 4, 5, 4, 2, 4]
+    "dims": [2, 4, 2, 4, 2, 4]
   },
   {
     "id": "Curtis_Mitchell",
@@ -179,7 +179,7 @@
       "EN": "Your energy favors the raw and the unrefined — this space challenges traditional boundaries of material beauty.",
       "CN": "你的能量偏爱原始和未加工的事物——这个空间挑战了物质美的传统边界。"
     },
-    "dims": [2, 4, 5, 5, 4, 2]
+    "dims": [2, 4, 2, 5, 4, 2]
   },
   {
     "id": "Miguel_Angel_Payano_Jr",
@@ -192,6 +192,71 @@
       "EN": "You appreciate hybrid identities and playful form — this booth merges cultural symbols into a cohesive spatial experience.",
       "CN": "你欣赏混合身份和俏皮的形式——这个展位将文化符号融合进一个凝聚的空间体验中。"
     },
-    "dims": [2, 4, 5, 2, 2, 2]
+    "dims": [2, 4, 3, 2, 2, 2]
+  },
+  {
+    "id": "Sam Jablon: Luck or Else",
+    "name": {
+      "EN": "Morgan Presents",
+      "CN": "Morgan Presents"
+    },
+    "number": "16",
+    "matchReason": {
+      "EN": "You appreciate hybrid identities and playful form — this booth merges cultural symbols into a cohesive spatial experience.",
+      "CN": "你欣赏混合身份和俏皮的形式——这个展位将文化符号融合进一个凝聚的空间体验中。"
+    },
+    "dims": [2, 4, 3, 5, 2, 4]
+  },
+  {
+    "id": "Letha Wilson ",
+    "name": {
+      "EN": "Grimm",
+      "CN": "Grimm"
+    },
+    "number": "17",
+    "matchReason": {
+      "EN": "You appreciate hybrid identities and playful form — this booth merges cultural symbols into a cohesive spatial experience.",
+      "CN": "你欣赏混合身份和俏皮的形式——这个展位将文化符号融合进一个凝聚的空间体验中。"
+    },
+    "dims": [4, 4, 3, 1, 4, 2]
+  },
+  {
+    "id": "Letha Wilson",
+    "name": {
+      "EN": "Grimm",
+      "CN": "Grimm"
+    },
+    "number": "18",
+    "matchReason": {
+      "EN": "You appreciate hybrid identities and playful form — this booth merges cultural symbols into a cohesive spatial experience.",
+      "CN": "你欣赏混合身份和俏皮的形式——这个展位将文化符号融合进一个凝聚的空间体验中。"
+    },
+    "dims": [4, 4, 3, 1, 4, 2]
+  },
+  {
+    "id": "Roy Lichtenstein ",
+    "name": {
+      "EN": "Gagosian",
+      "CN": "Gagosian"
+    },
+    "number": "19",
+    "matchReason": {
+      "EN": "You appreciate hybrid identities and playful form — this booth merges cultural symbols into a cohesive spatial experience.",
+      "CN": "你欣赏混合身份和俏皮的形式——这个展位将文化符号融合进一个凝聚的空间体验中。"
+    },
+    "dims": [4, 5, 5, 5, 5, 2]
+  },
+  {
+    "id": "Robert Mapplethorpe ",
+    "name": {
+      "EN": "Gladstone",
+      "CN": "Gladstone"
+    },
+    "number": "20",
+    "matchReason": {
+      "EN": "You appreciate hybrid identities and playful form — this booth merges cultural symbols into a cohesive spatial experience.",
+      "CN": "你欣赏混合身份和俏皮的形式——这个展位将文化符号融合进一个凝聚的空间体验中。"
+    },
+    "dims": [1, 2, 4, 5, 2, 1]
   }
 ]

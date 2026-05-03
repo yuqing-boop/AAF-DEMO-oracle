@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 import questions from './data/questions.js';
 import booths from './data/booths.json';
-import { selectQuestions, computeUserVector, rankBooths } from './utils/algorithm.js';
+import { computeUserVector, rankBooths } from './utils/algorithm.js';
 import HomeVideoBackground from './components/HomeVideoBackground.jsx';
 import HomeView from './components/HomeView.jsx';
 import QuizView from './components/QuizView.jsx';
@@ -42,8 +42,7 @@ export default function App() {
   }, []);
 
   const handleStart = useCallback(() => {
-    const drawn = selectQuestions(questions, 3);
-    setSelectedQs(drawn);
+    setSelectedQs(questions);
     setCurrentQIndex(0);
     setAnswers({});
     setIsTransitioning(true);

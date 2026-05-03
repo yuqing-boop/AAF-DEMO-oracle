@@ -12,21 +12,6 @@ const DIMENSION_DEFAULT = 3;
 const TOP_N = 3;
 
 /**
- * Fisher-Yates shuffle; returns a new array (does not mutate pool).
- * @param {Array} pool
- * @param {number} count
- * @returns {Array}
- */
-export function selectQuestions(pool, count = 3) {
-  const copy = [...pool];
-  for (let i = copy.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [copy[i], copy[j]] = [copy[j], copy[i]];
-  }
-  return copy.slice(0, count);
-}
-
-/**
  * Builds the user's 6D vector from answered questions.
  * answers: { [questionId]: 'A' | 'B' | 'C' | 'D' }
  * questions: the full pool (needed to look up dimensionScores by id)
@@ -67,10 +52,11 @@ export function computeUserVector(answers, questions) {
 /**
  * Ranks booths by Euclidean distance to the user vector.
  * booth.dims must be a 6-element array aligned to DIMENSIONS order.
+ * Deduplicates by gallery name (EN) so the same gallery never appears twice.
  *
  * @param {number[]} userVector
  * @param {Array}    booths
- * @returns {Array} — top TOP_N booths (closest first), each augmented with `.distance`
+ * @returns {Array} — top TOP_N booths (closest first, one per gallery), each augmented with `.distance`
  */
 export function rankBooths(userVector, booths) {
   const scored = booths.map((booth) => {
@@ -82,5 +68,15 @@ export function rankBooths(userVector, booths) {
   });
 
   scored.sort((a, b) => a.distance - b.distance);
-  return scored.slice(0, TOP_N);
+
+  const seen = new Set();
+  const results = [];
+  for (const booth of scored) {
+    const galleryKey = booth.name?.EN ?? booth.id;
+    if (seen.has(galleryKey)) continue;
+    seen.add(galleryKey);
+    results.push(booth);
+    if (results.length === TOP_N) break;
+  }
+  return results;
 }

@@ -5,14 +5,10 @@
 //
 // Bilingual copy keys: EN, CN — use pickString(..., language) in UI.
 //
-// Chart 影響維度 per question — each option splits 1–5 between the two axes by metaphor:
-// Q1: 能量動態 (energyDynamics) + 色彩深度 (colorDepth)
-// Q2: 空間結構 (spaceStructure) + 理性感性 (sensitivity)
-// Q3: 感性程度 (sensitivity) + 色彩飽和 (colorSaturation)
-// Q4: 色彩飽和 (colorSaturation) + 商業屬性 (commercialAttribute)
-// Q5: 能量動態 (energyDynamics) + 商業屬性 (commercialAttribute)
-//
-// Omitted dimensions get fault-tolerance default (3) in computeUserVector.
+// These 3 questions cover all 6 dimensions with zero overlap:
+// Q1: energyDynamics (1) + colorDepth (0)
+// Q2: spaceStructure (3) + sensitivity (4)
+// Q4: colorSaturation (5) + commercialAttribute (2)
 
 const questions = [
   {
@@ -98,47 +94,6 @@ const questions = [
     },
   },
   {
-    id: 'q3',
-    prompt: {
-      EN: 'Close your eyes—what texture leaves a trace on your fingertips?',
-      CN: '閉上眼，哪種質地在你的指尖留下了痕跡？',
-    },
-    options: {
-      A: {
-        label: { EN: 'Water gradient (silky)', CN: '水波漸變（絲滑）' },
-        score: 1,
-        dimensionScores: {
-          sensitivity: 1,
-          colorSaturation: 1,
-        },
-      },
-      B: {
-        label: { EN: 'Rock cracks (grainy)', CN: '岩石裂紋（顆粒）' },
-        score: 2,
-        dimensionScores: {
-          sensitivity: 2,
-          colorSaturation: 2,
-        },
-      },
-      C: {
-        label: { EN: 'Metal refraction (hard)', CN: '金屬折射（硬朗）' },
-        score: 4,
-        dimensionScores: {
-          sensitivity: 4,
-          colorSaturation: 3,
-        },
-      },
-      D: {
-        label: { EN: 'Soft brushwork (fluffy)', CN: '軟性筆觸（蓬鬆）' },
-        score: 5,
-        dimensionScores: {
-          sensitivity: 5,
-          colorSaturation: 4,
-        },
-      },
-    },
-  },
-  {
     id: 'q4',
     prompt: {
       EN: 'If your emotions turned into light, what state would they manifest?',
@@ -174,47 +129,6 @@ const questions = [
         score: 5,
         dimensionScores: {
           colorSaturation: 5,
-          commercialAttribute: 4,
-        },
-      },
-    },
-  },
-  {
-    id: 'q5',
-    prompt: {
-      EN: 'Within the flow of time, what rhythm do you pulse with?',
-      CN: '在時間的洪流中，你律動在哪種節奏？',
-    },
-    options: {
-      A: {
-        label: { EN: 'Extremely slow movement (eternal)', CN: '極慢移動（永恆）' },
-        score: 1,
-        dimensionScores: {
-          energyDynamics: 1,
-          commercialAttribute: 2,
-        },
-      },
-      B: {
-        label: { EN: 'Heartbeat pulse (regular)', CN: '心跳脈衝（規律）' },
-        score: 2,
-        dimensionScores: {
-          energyDynamics: 2,
-          commercialAttribute: 3,
-        },
-      },
-      C: {
-        label: { EN: 'Water surface dots (instantaneous)', CN: '水面圓點（瞬時）' },
-        score: 4,
-        dimensionScores: {
-          energyDynamics: 4,
-          commercialAttribute: 3,
-        },
-      },
-      D: {
-        label: { EN: 'Fractured geometry (realist)', CN: '破碎幾何（寫實）' },
-        score: 5,
-        dimensionScores: {
-          energyDynamics: 5,
           commercialAttribute: 4,
         },
       },
