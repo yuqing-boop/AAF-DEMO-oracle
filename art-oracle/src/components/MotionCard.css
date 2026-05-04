@@ -29,6 +29,10 @@
     inset 0 1px 0 oklch(100% 0.02 85 / 0.12);
   -webkit-tap-highlight-color: transparent;
   outline: none;
+  /* Promotes every card to its own GPU compositing layer so the browser clips
+     the blob border-radius correctly — prevents the white rectangular bleed
+     that appears on light-background variants (silver-threads, color-bands). */
+  will-change: transform;
   transition:
     box-shadow 0.45s cubic-bezier(0.19, 1, 0.22, 1),
     transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
