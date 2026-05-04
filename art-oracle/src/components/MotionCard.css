@@ -196,32 +196,29 @@
   display: none;
 }
 
-/* B — veil: warm amber tint over rich honey background */
+/* B — veil: warm amber tint, light so the inner glow reads clearly */
 .motion-card--amber-rings .motion-card__veil {
-  -webkit-backdrop-filter: blur(5px) saturate(1.5);
-  backdrop-filter: blur(5px) saturate(1.5);
-  background: oklch(30% 0.10 68 / 0.22);
-  box-shadow: inset 0 1px 0 oklch(88% 0.18 80 / 0.28);
+  -webkit-backdrop-filter: blur(4px) saturate(1.4);
+  backdrop-filter: blur(4px) saturate(1.4);
+  background: oklch(34% 0.14 68 / 0.16);
+  box-shadow: inset 0 1px 0 oklch(92% 0.22 84 / 0.32);
 }
 
 .motion-card--amber-rings .motion-card__stage {
   box-shadow:
-    inset 0 1px 0 oklch(88% 0.20 78 / 0.32),
-    inset 0 0 40px 0 oklch(10% 0.06 52 / 0.18);
+    inset 0 1px 0 oklch(92% 0.22 84 / 0.36),
+    inset 0 0 50px 12px oklch(44% 0.22 72 / 0.22);
 }
 
-/* C — silver-threads: minimal blur so SVG wave lines stay crisp */
+/* C — silver-threads: no blur — crisp SVG line must stay razor-sharp */
 .motion-card--silver-threads .motion-card__veil {
-  -webkit-backdrop-filter: blur(3px) saturate(1.15);
-  backdrop-filter: blur(3px) saturate(1.15);
-  background: oklch(45% 0.05 240 / 0.18);
-  box-shadow: inset 0 1px 0 oklch(100% 0.01 250 / 0.20);
+  background: transparent;
 }
 
 .motion-card--silver-threads .motion-card__stage {
   box-shadow:
-    inset 0 1px 0 oklch(88% 0.06 205 / 0.28),
-    inset 0 0 40px 0 oklch(0% 0 0 / 0.12);
+    inset 0 1px 0 oklch(99% 0.012 250 / 0.72),
+    inset 0 0 48px 0 oklch(58% 0.028 258 / 0.22);
 }
 
 .motion-card--color-noise .motion-card__veil {
@@ -246,19 +243,23 @@
 
 .motion-card--amber-rings {
   border-radius: 55% 45% 38% 62% / 57% 58% 44% 41%;
-  /* Rich dark honey-amber — rings glow against deep gold-brown */
+  /* Amber resin lit from within: warm honey centre, deep amber-brown at edges */
   background:
-    radial-gradient(ellipse 70% 70% at 50% 50%,
-      oklch(38% 0.18 68) 0%,
-      oklch(26% 0.13 60) 55%,
-      oklch(18% 0.09 52) 100%
+    radial-gradient(ellipse 65% 65% at 50% 50%,
+      oklch(44% 0.22 72) 0%,
+      oklch(28% 0.16 62) 50%,
+      oklch(14% 0.08 50) 100%
     );
 }
 
 .motion-card--silver-threads {
   border-radius: 42% 58% 48% 52% / 52% 46% 54% 48%;
-  /* Dark so the bright wave lines read as phosphor against dark screen */
-  background: oklch(11% 0.03 260);
+  /* Cool silver metal field — darker toward edges like brushed plate */
+  background: radial-gradient(ellipse 82% 62% at 48% 46%,
+    oklch(93% 0.014 252) 0%,
+    oklch(84% 0.018 254) 52%,
+    oklch(74% 0.024 258) 100%
+  );
 }
 
 .motion-card--color-noise {
@@ -309,106 +310,98 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   B — Amber Rings  (溫 · warm · breath rippling outward)
+   B — Amber Light  (溫 · warm · pooling golden warmth)
 ═══════════════════════════════════════════════════════════════ */
 
-/* Warm candleflame core — very bright against dark honey background */
-.mc-ring-core {
+/* Large warm honey pool — upper-left, drifts gently */
+.mc-blob--amber-a {
   position: absolute;
-  width: 16%;
+  width: 145%;
   aspect-ratio: 1;
-  top: 50%;
-  left: 50%;
-  border-radius: 50%;
+  top: -30%;
+  left: -28%;
   pointer-events: none;
-  background: radial-gradient(circle,
-    oklch(98% 0.18 90) 0%,
-    oklch(88% 0.28 72) 40%,
-    oklch(72% 0.26 58) 75%,
-    transparent 100%
+  background: radial-gradient(circle at 55% 48%,
+    oklch(82% 0.28 78) 0%,
+    oklch(68% 0.26 68 / 0.70) 38%,
+    transparent 70%
   );
-  box-shadow: 0 0 20px 8px oklch(75% 0.26 68 / 0.55);
-  animation: core-breathe 4.2s ease-in-out infinite alternate;
+  filter: blur(28px);
+  animation: amber-drift-a 26s ease-in-out infinite alternate;
 }
 
-@keyframes core-breathe {
-  from { opacity: 0.82; transform: translate(-50%, -50%) scale(0.88); }
-  to   { opacity: 1;    transform: translate(-50%, -50%) scale(1.14); }
-}
-
-/* Expanding rings — full-card width base so they visibly fill and overflow */
-.mc-ring {
+/* Deep amber-bronze pool — lower-right, counter-drifts */
+.mc-blob--amber-b {
   position: absolute;
   width: 120%;
   aspect-ratio: 1;
-  top: 50%;
-  left: 50%;
-  border-radius: 50%;
+  bottom: -26%;
+  right: -24%;
   pointer-events: none;
-  border: 2.5px solid oklch(80% 0.26 68 / 0.85);
-  box-shadow:
-    0 0 18px 4px oklch(72% 0.26 64 / 0.50),
-    0 0 40px 8px oklch(58% 0.22 52 / 0.25);
-  will-change: transform, opacity;
+  background: radial-gradient(circle at 45% 52%,
+    oklch(62% 0.28 58) 0%,
+    oklch(46% 0.22 50 / 0.65) 42%,
+    transparent 72%
+  );
+  filter: blur(22px);
+  animation: amber-drift-b 34s ease-in-out infinite alternate;
+  animation-delay: -14s;
 }
 
-/* Ten rings — one dispatched every 1s for dense, continuous radial flow */
-.mc-ring--1  { animation: ring-expand 10s linear  0s infinite; }
-.mc-ring--2  { animation: ring-expand 10s linear -1s infinite; }
-.mc-ring--3  { animation: ring-expand 10s linear -2s infinite; }
-.mc-ring--4  { animation: ring-expand 10s linear -3s infinite; }
-.mc-ring--5  { animation: ring-expand 10s linear -4s infinite; }
-.mc-ring--6  { animation: ring-expand 10s linear -5s infinite; }
-.mc-ring--7  { animation: ring-expand 10s linear -6s infinite; }
-.mc-ring--8  { animation: ring-expand 10s linear -7s infinite; }
-.mc-ring--9  { animation: ring-expand 10s linear -8s infinite; }
-.mc-ring--10 { animation: ring-expand 10s linear -9s infinite; }
+/* Bright golden highlight — centre, breathes slowly */
+.mc-blob--amber-c {
+  position: absolute;
+  width: 70%;
+  aspect-ratio: 1;
+  top: 18%;
+  left: 22%;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 50%,
+    oklch(94% 0.18 88) 0%,
+    oklch(84% 0.28 76 / 0.55) 40%,
+    transparent 72%
+  );
+  filter: blur(16px);
+  animation: amber-drift-c 20s ease-in-out infinite alternate;
+  animation-delay: -8s;
+}
 
-@keyframes ring-expand {
-  0%   { transform: translate(-50%, -50%) scale(0.06); opacity: 0.95; }
-  65%  { opacity: 0.30; }
-  100% { transform: translate(-50%, -50%) scale(2.8);  opacity: 0; }
+@keyframes amber-drift-a {
+  from { transform: translate(0%, 0%) scale(1.00); }
+  to   { transform: translate(6%, 8%)  scale(1.06); }
+}
+
+@keyframes amber-drift-b {
+  from { transform: translate(0%, 0%)  scale(1.04); }
+  to   { transform: translate(-5%, -7%) scale(1.00); }
+}
+
+@keyframes amber-drift-c {
+  from { transform: translate(0%, 0%)  scale(0.92); opacity: 0.70; }
+  to   { transform: translate(4%, -5%) scale(1.08); opacity: 1.00; }
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   C — Silver Threads  (動 · dynamic · oscilloscope sine waves)
+   C — Silver Threads  (動 · dynamic · ink trace on silver plate)
 ═══════════════════════════════════════════════════════════════ */
 
-/* Track: horizontal band that clips the scrolling SVG */
+/* Single centred track — the entire visual is one thread in a sea of dark */
 .mc-wave-track {
   position: absolute;
-  left: 0;
-  width: 100%;
-  height: 38%;
+  inset: 0;
   overflow: hidden;
   pointer-events: none;
 }
 
-/* Three bands — spread more evenly, slight overlap gives depth */
-.mc-wave-track--s1 { top: 10%; }
-.mc-wave-track--s2 { top: 38%; }
-.mc-wave-track--s3 { top: 64%; }
-
-/* SVG is double-wide for seamless horizontal loop */
+/* SVG double-wide for seamless loop; centred vertically */
 .mc-wave-svg {
   position: absolute;
   top: 50%;
   left: 0;
   width: 200%;
-  height: 100%;
+  height: 60%;
   overflow: visible;
-}
-
-/* Fast scroll speeds — alert, kinetic, oscilloscope-like */
-.mc-wave-track--s1 .mc-wave-svg {
-  animation: wave-scroll 2.8s linear infinite;
-}
-.mc-wave-track--s2 .mc-wave-svg {
-  animation: wave-scroll 3.8s linear infinite reverse;
-}
-.mc-wave-track--s3 .mc-wave-svg {
-  animation: wave-scroll 2.2s linear infinite;
-  animation-delay: -0.9s;
+  animation: wave-scroll 7s linear infinite;
 }
 
 @keyframes wave-scroll {
@@ -416,37 +409,26 @@
   to   { transform: translateY(-50%) translateX(-50%); }
 }
 
-/* Primary trace: bright electric silver-cyan with phosphor glow */
-.mc-wave-path--silver-1 {
+/* Persistence ghost — faint ink-blue trace under the primary wave */
+.mc-wave-path--echo {
   fill: none;
-  stroke: oklch(92% 0.05 195);
-  stroke-width: 4;
+  stroke: oklch(28% 0.07 262);
+  stroke-width: 1;
+  stroke-linecap: round;
+  opacity: 0.09;
+}
+
+/* Primary thread — near-black ink with blue bias; reads as engraved signal on silver */
+.mc-wave-path--primary {
+  fill: none;
+  stroke: oklch(20% 0.07 265);
+  stroke-width: 2;
   stroke-linecap: round;
   opacity: 1;
   filter:
-    drop-shadow(0 0 3px oklch(88% 0.08 200 / 0.95))
-    drop-shadow(0 0 10px oklch(76% 0.12 210 / 0.70))
-    drop-shadow(0 0 22px oklch(65% 0.14 215 / 0.40));
-}
-
-/* Second trace: slightly dimmer, lower frequency */
-.mc-wave-path--silver-2 {
-  fill: none;
-  stroke: oklch(72% 0.07 220);
-  stroke-width: 2.5;
-  stroke-linecap: round;
-  opacity: 0.75;
-  filter: drop-shadow(0 0 4px oklch(68% 0.10 220 / 0.55));
-}
-
-/* Third trace: fine detail line, highest frequency */
-.mc-wave-path--silver-3 {
-  fill: none;
-  stroke: oklch(62% 0.05 205);
-  stroke-width: 1.5;
-  stroke-linecap: round;
-  opacity: 0.55;
-  filter: drop-shadow(0 0 3px oklch(60% 0.08 210 / 0.40));
+    drop-shadow(0 0 1px oklch(16% 0.06 268 / 0.95))
+    drop-shadow(0 0 5px oklch(32% 0.09 258 / 0.35))
+    drop-shadow(0 0 14px oklch(42% 0.10 248 / 0.18));
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1126,28 +1108,15 @@
     animation: none;
   }
 
-  /* Freeze amber-rings: show rings at a mid-expand pose */
-  .mc-ring-core {
-    animation: none;
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0.85;
-  }
+  /* Freeze amber-light blobs at resting position */
+  .mc-blob--amber-a,
+  .mc-blob--amber-b,
+  .mc-blob--amber-c { animation: none; }
 
-  .mc-ring--1  { animation: none; transform: translate(-50%, -50%) scale(0.10); opacity: 0.80; }
-  .mc-ring--2  { animation: none; transform: translate(-50%, -50%) scale(0.38); opacity: 0.64; }
-  .mc-ring--3  { animation: none; transform: translate(-50%, -50%) scale(0.66); opacity: 0.50; }
-  .mc-ring--4  { animation: none; transform: translate(-50%, -50%) scale(0.94); opacity: 0.36; }
-  .mc-ring--5  { animation: none; transform: translate(-50%, -50%) scale(1.22); opacity: 0.24; }
-  .mc-ring--6  { animation: none; transform: translate(-50%, -50%) scale(1.50); opacity: 0.14; }
-  .mc-ring--7  { animation: none; transform: translate(-50%, -50%) scale(1.78); opacity: 0.08; }
-  .mc-ring--8  { animation: none; transform: translate(-50%, -50%) scale(2.06); opacity: 0.04; }
-  .mc-ring--9  { animation: none; transform: translate(-50%, -50%) scale(2.34); opacity: 0.02; }
-  .mc-ring--10 { animation: none; transform: translate(-50%, -50%) scale(2.62); opacity: 0.01; }
-
-  /* Freeze silver-threads: hold SVG in a neutral position */
+  /* Freeze silver-threads: hold the single thread at rest */
   .mc-wave-svg {
     animation: none;
-    transform: translateY(-50%) translateX(-20%);
+    transform: translateY(-50%) translateX(-15%);
   }
 
   /* Q2 / Q4 freeze states */

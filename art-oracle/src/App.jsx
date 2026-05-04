@@ -37,9 +37,8 @@ export default function App() {
 
   // --- Handlers ---
 
-  const handleLanguageChange = useCallback((lang) => {
-    setLanguage(lang);
-  }, []);
+  /** Chinese toggle UI stays on home; switching is disabled until copy is ready again. */
+  const handleLanguageChange = useCallback((_lang) => {}, []);
 
   const handleStart = useCallback(() => {
     setSelectedQs(questions);

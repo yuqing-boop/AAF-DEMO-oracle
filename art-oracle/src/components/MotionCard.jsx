@@ -42,43 +42,25 @@ function Stage({ variant }) {
   if (variant === 'amber-rings') {
     return (
       <>
-        <span className="mc-ring-core" />
-        <span className="mc-ring mc-ring--1" />
-        <span className="mc-ring mc-ring--2" />
-        <span className="mc-ring mc-ring--3" />
-        <span className="mc-ring mc-ring--4" />
-        <span className="mc-ring mc-ring--5" />
-        <span className="mc-ring mc-ring--6" />
-        <span className="mc-ring mc-ring--7" />
-        <span className="mc-ring mc-ring--8" />
-        <span className="mc-ring mc-ring--9" />
-        <span className="mc-ring mc-ring--10" />
+        <span className="mc-blob--amber-a" />
+        <span className="mc-blob--amber-b" />
+        <span className="mc-blob--amber-c" />
       </>
     );
   }
 
   if (variant === 'silver-threads') {
     return (
-      <>
-        <div className="mc-wave-track mc-wave-track--s1">
-          <svg className="mc-wave-svg" viewBox="0 0 1600 60" preserveAspectRatio="none" aria-hidden="true">
-            <path className="mc-wave-path mc-wave-path--silver-1"
-              d="M0,30 C33,5 67,5 100,30 S167,55 200,30 S267,5 300,30 S367,55 400,30 S467,5 500,30 S567,55 600,30 S667,5 700,30 S767,55 800,30 S867,5 900,30 S967,55 1000,30 S1067,5 1100,30 S1167,55 1200,30 S1267,5 1300,30 S1367,55 1400,30 S1467,5 1500,30 S1567,55 1600,30" />
-          </svg>
-        </div>
-        <div className="mc-wave-track mc-wave-track--s2">
-          <svg className="mc-wave-svg" viewBox="0 0 1600 60" preserveAspectRatio="none" aria-hidden="true">
-            <path className="mc-wave-path mc-wave-path--silver-2"
-              d="M0,30 C50,8 100,8 150,30 S250,52 300,30 S400,8 450,30 S550,52 600,30 S700,8 750,30 S850,52 900,30 S1000,8 1050,30 S1150,52 1200,30 S1300,8 1350,30 S1450,52 1500,30 S1600,8 1650,30" />
-          </svg>
-        </div>
-        <div className="mc-wave-track mc-wave-track--s3">
-          <svg className="mc-wave-svg" viewBox="0 0 1600 60" preserveAspectRatio="none" aria-hidden="true">
-            <path className="mc-wave-path mc-wave-path--silver-3"
-              d="M0,30 C25,14 50,14 75,30 S125,46 150,30 S200,14 225,30 S275,46 300,30 S350,14 375,30 S425,46 450,30 S500,14 525,30 S575,46 600,30 S650,14 675,30 S725,46 750,30 S800,14 825,30 S875,46 900,30 S950,14 975,30 S1025,46 1050,30 S1100,14 1125,30 S1175,46 1200,30 S1250,14 1275,30 S1325,46 1350,30 S1400,14 1425,30 S1475,46 1500,30 S1550,14 1575,30 S1600,46 1625,30" />
-          </svg>
-        </div>
-      </>
+      <div className="mc-wave-track" aria-hidden="true">
+        <svg className="mc-wave-svg" viewBox="0 0 1600 80" preserveAspectRatio="none">
+          {/* Ghost persistence echo — static, no animation */}
+          <path className="mc-wave-path--echo"
+            d="M0,40 C40,10 80,10 120,40 S200,70 240,40 S320,10 360,40 S440,70 480,40 S560,10 600,40 S680,70 720,40 S800,10 840,40 S920,70 960,40 S1040,10 1080,40 S1160,70 1200,40 S1280,10 1320,40 S1400,70 1440,40 S1520,10 1560,40 S1600,70 1600,40" />
+          {/* Primary thread — one crisp glowing line */}
+          <path className="mc-wave-path--primary"
+            d="M0,40 C40,10 80,10 120,40 S200,70 240,40 S320,10 360,40 S440,70 480,40 S560,10 600,40 S680,70 720,40 S800,10 840,40 S920,70 960,40 S1040,10 1080,40 S1160,70 1200,40 S1280,10 1320,40 S1400,70 1440,40 S1520,10 1560,40 S1600,70 1600,40" />
+        </svg>
+      </div>
     );
   }
 
