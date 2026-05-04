@@ -793,15 +793,63 @@ button.start-card .start-label {
   }
 }
 
-/* ── Safari iOS: extra bottom clearance for the browser tab bar ─────
-   env(safe-area-inset-bottom) only covers the hardware home indicator;
-   Safari's tab bar (~50px) sits on top of that and is not in the inset.
-   @supports (-webkit-touch-callout) targets WebKit/iOS without touching
-   Android Chrome or desktop. Portrait only — landscape tab bar is side. */
+/* ── Safari iOS: viewport height fix ────────────────────────────────
+   Safari on iOS often returns the *large* viewport value for dvh even
+   when the toolbar is visible, making the page taller than what is
+   actually on screen.  -webkit-fill-available correctly reflects the
+   current visible viewport, so the root never exceeds it.
+   Portrait only: in landscape the tab bar moves to the side.          */
 @supports (-webkit-touch-callout: none) {
   @media (max-width: 767px) and (orientation: portrait) {
-    .home-shell {
-      padding-bottom: calc(68px + env(safe-area-inset-bottom, 0px) + 52px);
+    .home-root {
+      min-height: -webkit-fill-available;
+      height: -webkit-fill-available;
     }
+    /* Restore correct bottom clearance (no +52px padding inflation).
+       The fill-available height already accounts for the toolbar. */
+    .home-shell {
+      padding-bottom: calc(68px + env(safe-area-inset-bottom, 0px));
+    }
+  }
+}
+
+/* ── Small-phone height compression (≤ 680px viewport height) ───────
+   iPhone SE / older Androids: compress cards so the start button is
+   always visible without scrolling.                                    */
+@media (max-height: 680px) and (max-width: 767px) and (orientation: portrait) {
+  .home-shell {
+    padding-top: 10px;
+  }
+
+  .home-cards {
+    margin-top: 48px;
+    gap: 8px;
+  }
+
+  .title-card {
+    min-height: 180px;
+    padding: 36px 22px 32px 18px;
+  }
+
+  .title-line--primary {
+    font-size: clamp(1.8rem, 10vw, 2.2rem);
+  }
+
+  .title-line--reading {
+    font-size: clamp(1.2rem, 7vw, 1.6rem);
+  }
+
+  .flow-card {
+    padding: 14px 16px 12px;
+  }
+
+  .flow-steps {
+    gap: 6px;
+    padding: 4px 0 2px;
+  }
+
+  .start-card {
+    padding: 14px 22px;
+    margin-top: -8px;
   }
 }
