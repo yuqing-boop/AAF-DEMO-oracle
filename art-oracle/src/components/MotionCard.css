@@ -249,12 +249,14 @@
 }
 
 .motion-card--silver-threads {
+  isolation: isolate;
   border-radius: 42% 58% 48% 52% / 52% 46% 54% 48%;
-  /* Cool silver metal field — darker toward edges like brushed plate */
+  /* Cool silver metal field — darker toward edges like brushed plate.
+     Lightness pulled from 93% → 82% to prevent near-white compositing bleed. */
   background: radial-gradient(ellipse 82% 62% at 48% 46%,
-    oklch(93% 0.014 252) 0%,
-    oklch(84% 0.018 254) 52%,
-    oklch(74% 0.024 258) 100%
+    oklch(82% 0.018 252) 0%,
+    oklch(74% 0.022 254) 52%,
+    oklch(64% 0.026 258) 100%
   );
 }
 
@@ -608,6 +610,7 @@
    spaceStructure: 4 · sensitivity: 3
 ═══════════════════════════════════════════════════════════════ */
 .motion-card--parallel-lines {
+  isolation: isolate;
   border-radius: 42% 58% 48% 52% / 52% 46% 54% 48%;
   background:
     linear-gradient(
@@ -914,9 +917,10 @@
    colorSaturation: 4 · commercialAttribute: 2
 ═══════════════════════════════════════════════════════════════ */
 .motion-card--color-bands {
+  isolation: isolate;
   border-radius: 42% 58% 48% 52% / 52% 46% 54% 48%;
-  /* Light warm-white base so pastel bands look airy */
-  background: oklch(96% 0.01 80);
+  /* Warm cream base — pulled from 96% → 88% to avoid near-white compositing bleed */
+  background: oklch(88% 0.01 80);
 }
 
 .motion-card--color-bands .motion-card__veil {

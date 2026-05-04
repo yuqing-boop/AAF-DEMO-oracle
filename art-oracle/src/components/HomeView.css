@@ -792,3 +792,16 @@ button.start-card .start-label {
     transition: color 0.2s ease, background 0.2s ease;
   }
 }
+
+/* ── Safari iOS: extra bottom clearance for the browser tab bar ─────
+   env(safe-area-inset-bottom) only covers the hardware home indicator;
+   Safari's tab bar (~50px) sits on top of that and is not in the inset.
+   @supports (-webkit-touch-callout) targets WebKit/iOS without touching
+   Android Chrome or desktop. Portrait only — landscape tab bar is side. */
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 767px) and (orientation: portrait) {
+    .home-shell {
+      padding-bottom: calc(68px + env(safe-area-inset-bottom, 0px) + 52px);
+    }
+  }
+}
