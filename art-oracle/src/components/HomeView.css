@@ -529,6 +529,7 @@ button.start-card .start-label {
     height: auto;
     min-height: 260px;
     padding: 62px 28px 54px 22px;
+    text-align: center;
   }
 
   .title-display {
