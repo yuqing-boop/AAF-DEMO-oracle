@@ -13,6 +13,7 @@
   overflow: hidden;
   border: none;
   padding: 0;
+  background: transparent;
   cursor: pointer;
   display: block;
   width: 100%;
@@ -42,7 +43,8 @@
   outline: none;
 }
 
-/* Frost: blur what's below, add hue-matched translucency (not flat glass) */
+/* Frost: hue-matched translucency (backdrop-filter removed — causes rectangular
+   compositing bleed on mobile WebKit when combined with border-radius + overflow:hidden) */
 .motion-card__veil {
   position: absolute;
   inset: 0;
@@ -50,8 +52,6 @@
   pointer-events: none;
   border-radius: inherit;
   opacity: 1;
-  -webkit-backdrop-filter: blur(14px) saturate(1.45);
-  backdrop-filter: blur(14px) saturate(1.45);
   transition: opacity 0.22s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
