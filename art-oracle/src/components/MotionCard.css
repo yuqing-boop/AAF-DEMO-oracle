@@ -11,6 +11,8 @@
   --mc-glow-ambient: oklch(72% 0.14 75 / 0.1);
   position: relative;
   overflow: hidden;
+  -webkit-appearance: none;
+  appearance: none;
   border: none;
   padding: 0;
   background: transparent;
@@ -170,8 +172,6 @@
 
 /* Per-variant veils: hue-matched translucency over motion */
 .motion-card--deep-ink .motion-card__veil {
-  -webkit-backdrop-filter: blur(8px) saturate(1.2);
-  backdrop-filter: blur(8px) saturate(1.2);
   background: oklch(22% 0.08 255 / 0.22);
   box-shadow: inset 0 1px 0 oklch(82% 0.08 240 / 0.22);
 }
@@ -198,8 +198,6 @@
 
 /* B — veil: warm amber tint, light so the inner glow reads clearly */
 .motion-card--amber-rings .motion-card__veil {
-  -webkit-backdrop-filter: blur(4px) saturate(1.4);
-  backdrop-filter: blur(4px) saturate(1.4);
   background: oklch(34% 0.14 68 / 0.16);
   box-shadow: inset 0 1px 0 oklch(92% 0.22 84 / 0.32);
 }
@@ -222,8 +220,6 @@
 }
 
 .motion-card--color-noise .motion-card__veil {
-  -webkit-backdrop-filter: blur(8px) saturate(1.3);
-  backdrop-filter: blur(8px) saturate(1.3);
   background: oklch(20% 0.08 28 / 0.22);
   box-shadow: inset 0 1px 0 oklch(86% 0.16 55 / 0.22);
 }
@@ -516,8 +512,6 @@
 }
 
 .motion-card--concentric-wrap .motion-card__veil {
-  -webkit-backdrop-filter: blur(4px) saturate(1.25);
-  backdrop-filter: blur(4px) saturate(1.25);
   background: oklch(42% 0.14 286 / 0.20);
   box-shadow: inset 0 1px 0 oklch(89% 0.08 318 / 0.28);
 }
@@ -578,8 +572,6 @@
 }
 
 .motion-card--grid-order .motion-card__veil {
-  -webkit-backdrop-filter: blur(6px) saturate(1.35);
-  backdrop-filter: blur(6px) saturate(1.35);
   background: linear-gradient(
     165deg,
     oklch(55% 0.12 250 / 0.14),
@@ -637,8 +629,6 @@
 }
 
 .motion-card--parallel-lines .motion-card__veil {
-  -webkit-backdrop-filter: blur(4px) saturate(1.25);
-  backdrop-filter: blur(4px) saturate(1.25);
   background: oklch(18% 0.05 270 / 0.14);
   box-shadow: inset 0 1px 0 oklch(96% 0.02 95 / 0.35);
 }
@@ -709,8 +699,6 @@
 }
 
 .motion-card--vapor-drift .motion-card__veil {
-  -webkit-backdrop-filter: blur(6px) saturate(1.1);
-  backdrop-filter: blur(6px) saturate(1.1);
   /* Near-transparent warm wash — no darkening */
   background: oklch(92% 0.04 108 / 0.10);
   box-shadow: inset 0 1px 0 oklch(98% 0.04 95 / 0.55);
@@ -790,8 +778,6 @@
 }
 
 .motion-card--purple-mist .motion-card__veil {
-  -webkit-backdrop-filter: blur(8px) saturate(1.15);
-  backdrop-filter: blur(8px) saturate(1.15);
   background: oklch(50% 0.06 196 / 0.20);
   box-shadow: inset 0 1px 0 oklch(76% 0.07 248 / 0.30);
 }
@@ -853,8 +839,6 @@
 }
 
 .motion-card--gray-gradient .motion-card__veil {
-  -webkit-backdrop-filter: blur(5px) saturate(1.1);
-  backdrop-filter: blur(5px) saturate(1.1);
   background: oklch(94% 0.02 60 / 0.12);
   box-shadow: inset 0 1px 0 oklch(100% 0.02 60 / 0.55);
 }
@@ -936,8 +920,6 @@
 }
 
 .motion-card--color-bands .motion-card__veil {
-  -webkit-backdrop-filter: blur(4px) saturate(1.1);
-  backdrop-filter: blur(4px) saturate(1.1);
   background: oklch(95% 0.01 80 / 0.10);
   box-shadow: inset 0 1px 0 oklch(100% 0.02 80 / 0.55);
 }
@@ -990,8 +972,6 @@
 }
 
 .motion-card--fluoro-glitch .motion-card__veil {
-  -webkit-backdrop-filter: blur(3px) saturate(1.8);
-  backdrop-filter: blur(3px) saturate(1.8);
   background: oklch(12% 0.03 180 / 0.20);
   box-shadow: inset 0 1px 0 oklch(100% 0.04 120 / 0.18);
 }
