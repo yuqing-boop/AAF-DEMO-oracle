@@ -534,6 +534,8 @@ button.start-card .start-label {
 
   .title-display {
     width: 100%;
+    align-items: center;
+    text-align: center;
     transform: translateY(40px);
   }
 
