@@ -511,14 +511,14 @@ button.start-card .start-label {
 ═══════════════════════════════════════════════════════════ */
 @media (max-width: 767px) and (orientation: portrait) {
   .home-shell {
-    justify-content: flex-start;
+    justify-content: center;
     padding: 20px 16px calc(68px + env(safe-area-inset-bottom, 0px));
   }
 
   .home-cards {
     max-width: 100%;
     gap: 12px;
-    margin-top: 70px;
+    margin-top: 0;
   }
 
   .card {
@@ -805,8 +805,8 @@ button.start-card .start-label {
       min-height: -webkit-fill-available;
       height: -webkit-fill-available;
     }
-    /* Restore correct bottom clearance (no +52px padding inflation).
-       The fill-available height already accounts for the toolbar. */
+    /* Restore correct bottom clearance — fill-available height already
+       accounts for the toolbar, so no extra padding needed.        */
     .home-shell {
       padding-bottom: calc(68px + env(safe-area-inset-bottom, 0px));
     }
