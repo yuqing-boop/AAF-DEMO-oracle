@@ -3,8 +3,23 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>art-oracle</title>
+
+    <!-- Extend layout under notch / Dynamic Island / home indicator -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+    <!-- iOS PWA: standalone fullscreen, no browser chrome -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!-- black-translucent: content bleeds under the status bar (we pad with env()) -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Art Oracle" />
+
+    <!-- Android PWA: standalone fullscreen -->
+    <meta name="mobile-web-app-capable" content="yes" />
+
+    <!-- Browser UI tint — matches deep wine-magenta shell background -->
+    <meta name="theme-color" content="#120710" />
+
+    <title>Art Oracle</title>
   </head>
   <body>
     <div id="root"></div>
