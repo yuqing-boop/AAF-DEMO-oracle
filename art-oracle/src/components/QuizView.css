@@ -206,3 +206,14 @@
     margin-block-end: max(100px, env(safe-area-inset-bottom, 0px));
   }
 }
+
+/* iOS Safari tab bar (~50px) is not included in safe-area-inset-bottom in normal browsing.
+   Bump bottom margin to clear it. @supports guard keeps this iOS-WebKit-only;
+   Android Chrome evaluates -webkit-touch-callout as unsupported and ignores the block. */
+@supports (-webkit-touch-callout: none) {
+  @media (orientation: portrait) and (max-width: 767px) {
+    .quiz-view__options--motion {
+      margin-block-end: max(150px, env(safe-area-inset-bottom, 0px));
+    }
+  }
+}
