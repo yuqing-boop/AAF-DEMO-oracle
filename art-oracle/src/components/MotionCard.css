@@ -1131,3 +1131,44 @@
   .mc-blob--fluoro-b,
   .mc-blob--fluoro-y { animation: none; }
 }
+
+/* ── Phone layout: rectangular grid tiles (≤600px) ─────────────
+   Replaces organic blob border-radius with a simple 16px radius.
+   Eliminates the GPU compositing bleed that makes light-background
+   variants (silver-threads, color-bands) show a white rectangle.
+   Desktop/tablet keeps the full blob aesthetic unchanged.        */
+@media (max-width: 600px) {
+  .motion-card,
+  .motion-card--deep-ink,
+  .motion-card--amber-rings,
+  .motion-card--silver-threads,
+  .motion-card--color-noise,
+  .motion-card--concentric-wrap,
+  .motion-card--grid-order,
+  .motion-card--parallel-lines,
+  .motion-card--vapor-drift,
+  .motion-card--purple-mist,
+  .motion-card--gray-gradient,
+  .motion-card--color-bands,
+  .motion-card--fluoro-glitch {
+    border-radius: 16px;
+  }
+}
+
+/* Reduced-motion on phone: also keep 16px, not the blob fallback */
+@media (max-width: 600px) and (prefers-reduced-motion: reduce) {
+  .motion-card--deep-ink,
+  .motion-card--amber-rings,
+  .motion-card--silver-threads,
+  .motion-card--color-noise,
+  .motion-card--concentric-wrap,
+  .motion-card--grid-order,
+  .motion-card--parallel-lines,
+  .motion-card--vapor-drift,
+  .motion-card--purple-mist,
+  .motion-card--gray-gradient,
+  .motion-card--color-bands,
+  .motion-card--fluoro-glitch {
+    border-radius: 16px;
+  }
+}
