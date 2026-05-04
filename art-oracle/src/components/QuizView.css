@@ -37,21 +37,21 @@
   margin-top: 1rem;
 }
 
-.quiz-view button {
+.quiz-view button:not(.motion-card) {
   text-align: start;
   padding: 12px 14px;
   border-radius: 8px;
-  border: 1px solid oklch(0% 0 0 / 0.2);
+  border: 1px solid oklch(88% 0.01 280 / 0.55);
   background: oklch(100% 0.01 280 / 0.45);
   color: inherit;
   transition: background 0.25s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-.quiz-view button:hover {
+.quiz-view button:not(.motion-card):hover {
   background: oklch(100% 0.01 280 / 0.75);
 }
 
-.quiz-view button:focus-visible {
+.quiz-view button:not(.motion-card):focus-visible {
   outline: 2px solid oklch(40% 0.08 280);
   outline-offset: 2px;
 }

@@ -1,7 +1,14 @@
 import { pickString, DEFAULT_LANGUAGE } from '../utils/i18n.js';
 import { RippleColor } from './loading-ui/RippleColor.jsx';
-import MotionCard, { Q1_VARIANTS } from './MotionCard.jsx';
+import MotionCard, { Q1_VARIANTS, Q2_VARIANTS, Q4_VARIANTS } from './MotionCard.jsx';
 import './QuizView.css';
+
+/** Each question ID gets its own dedicated visual set. */
+const VARIANT_MAP = {
+  q1: Q1_VARIANTS,
+  q2: Q2_VARIANTS,
+  q4: Q4_VARIANTS,
+};
 
 const UI_TEXT = {
   EN: {
@@ -51,6 +58,7 @@ export default function QuizView({
   }
 
   if (isMotion) {
+    const variantMap = VARIANT_MAP[currentQuestion.id] ?? Q1_VARIANTS;
     return (
       <div className="quiz-view quiz-view--motion">
         <div className="quiz-view__header">
@@ -68,7 +76,7 @@ export default function QuizView({
             return (
               <MotionCard
                 key={key}
-                variant={Q1_VARIANTS[key]}
+                variant={variantMap[key]}
                 optionKey={key}
                 label={pickString(option.label, language)}
                 hideLabel

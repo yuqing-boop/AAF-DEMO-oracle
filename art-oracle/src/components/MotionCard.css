@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════════
    MotionCard — quiz tiles: looping `public/card-bg.webm` + animated layers
-   4 variants: deep-ink · amber-pulse · silver-silk · color-noise
+   4 variants: deep-ink · amber-rings · silver-threads · color-noise
 ═══════════════════════════════════════════════════════════════ */
 
 /* Tinted shadow core (no pure black) — cool violet drift for depth */
@@ -21,6 +21,7 @@
   /* Shape driven per-variant by morph keyframes */
   border-radius: 42% 58% 54% 46% / 45% 48% 55% 52%;
   box-shadow:
+    0 0 0 1.5px oklch(88% 0.03 260 / 0.55),
     0 8px 40px var(--mc-shadow),
     inset 0 1px 0 oklch(100% 0.02 85 / 0.12);
   -webkit-tap-highlight-color: transparent;
@@ -65,7 +66,8 @@
   transition: transform 0.38s cubic-bezier(0.19, 1, 0.22, 1);
   transform: scale(1);
   transform-origin: center center;
-  box-shadow: inset 4px 4px 12px 6px rgba(232, 191, 191, 0.25);
+  /* Subtle neutral vignette — variant stage highlights override per-theme */
+  box-shadow: inset 0 0 40px 0 oklch(0% 0 0 / 0.08);
 }
 
 .motion-card__bg-video {
@@ -92,6 +94,7 @@
 .motion-card:hover {
   transform: translateY(-3px);
   box-shadow:
+    0 0 0 1.5px oklch(92% 0.03 260 / 0.70),
     0 16px 52px var(--mc-shadow-lift),
     0 0 72px var(--mc-glow-ambient),
     inset 0 1px 0 oklch(100% 0.02 85 / 0.16);
@@ -100,6 +103,7 @@
 .motion-card:active {
   transform: translateY(-1px) scale(0.982);
   box-shadow:
+    0 0 0 1.5px oklch(88% 0.03 260 / 0.55),
     0 6px 28px var(--mc-shadow-deep),
     inset 0 2px 12px oklch(18% 0.04 278 / 0.35),
     inset 0 1px 0 oklch(100% 0.02 85 / 0.08);
@@ -166,79 +170,103 @@
 
 /* Per-variant veils: hue-matched translucency over motion */
 .motion-card--deep-ink .motion-card__veil {
-  background: oklch(35% 0.11 255 / 0.38);
-  box-shadow: inset 0 1px 0 oklch(100% 0.02 255 / 0.18);
+  -webkit-backdrop-filter: blur(8px) saturate(1.2);
+  backdrop-filter: blur(8px) saturate(1.2);
+  background: oklch(22% 0.08 255 / 0.22);
+  box-shadow: inset 0 1px 0 oklch(82% 0.08 240 / 0.22);
 }
 
-.motion-card--amber-pulse .motion-card__veil {
-  background: oklch(52% 0.12 55 / 0.32);
-  box-shadow: inset 0 1px 0 oklch(100% 0.04 70 / 0.24);
+.motion-card--deep-ink .motion-card__stage {
+  box-shadow:
+    inset 0 1px 0 oklch(72% 0.10 240 / 0.30),
+    inset 0 0 40px 0 oklch(0% 0 0 / 0.10);
 }
 
-.motion-card--silver-silk .motion-card__veil {
-  background: oklch(58% 0.04 250 / 0.30);
-  box-shadow: inset 0 1px 0 oklch(100% 0.01 250 / 0.26);
+/* Q1 B/C and all Q2/Q4 variants are fully CSS-driven — no video bleed */
+.motion-card--amber-rings .motion-card__bg-video,
+.motion-card--silver-threads .motion-card__bg-video,
+.motion-card--concentric-wrap .motion-card__bg-video,
+.motion-card--grid-order .motion-card__bg-video,
+.motion-card--parallel-lines .motion-card__bg-video,
+.motion-card--vapor-drift .motion-card__bg-video,
+.motion-card--purple-mist .motion-card__bg-video,
+.motion-card--gray-gradient .motion-card__bg-video,
+.motion-card--color-bands .motion-card__bg-video,
+.motion-card--fluoro-glitch .motion-card__bg-video {
+  display: none;
+}
+
+/* B — veil: warm amber tint over rich honey background */
+.motion-card--amber-rings .motion-card__veil {
+  -webkit-backdrop-filter: blur(5px) saturate(1.5);
+  backdrop-filter: blur(5px) saturate(1.5);
+  background: oklch(30% 0.10 68 / 0.22);
+  box-shadow: inset 0 1px 0 oklch(88% 0.18 80 / 0.28);
+}
+
+.motion-card--amber-rings .motion-card__stage {
+  box-shadow:
+    inset 0 1px 0 oklch(88% 0.20 78 / 0.32),
+    inset 0 0 40px 0 oklch(10% 0.06 52 / 0.18);
+}
+
+/* C — silver-threads: minimal blur so SVG wave lines stay crisp */
+.motion-card--silver-threads .motion-card__veil {
+  -webkit-backdrop-filter: blur(3px) saturate(1.15);
+  backdrop-filter: blur(3px) saturate(1.15);
+  background: oklch(45% 0.05 240 / 0.18);
+  box-shadow: inset 0 1px 0 oklch(100% 0.01 250 / 0.20);
+}
+
+.motion-card--silver-threads .motion-card__stage {
+  box-shadow:
+    inset 0 1px 0 oklch(88% 0.06 205 / 0.28),
+    inset 0 0 40px 0 oklch(0% 0 0 / 0.12);
 }
 
 .motion-card--color-noise .motion-card__veil {
-  background: oklch(45% 0.08 310 / 0.34);
-  box-shadow: inset 0 1px 0 oklch(100% 0.02 300 / 0.18);
+  -webkit-backdrop-filter: blur(8px) saturate(1.3);
+  backdrop-filter: blur(8px) saturate(1.3);
+  background: oklch(20% 0.08 28 / 0.22);
+  box-shadow: inset 0 1px 0 oklch(86% 0.16 55 / 0.22);
 }
 
-/* ── Per-variant organic shape morph (matches HomeView title cards:
-      ease-in-out · infinite alternate · from/to only — lighter than multi-stop loops) ─ */
+.motion-card--color-noise .motion-card__stage {
+  box-shadow:
+    inset 0 1px 0 oklch(86% 0.16 55 / 0.28),
+    inset 0 0 40px 0 oklch(10% 0.06 28 / 0.20);
+}
+
+/* ── Per-variant border and background ─ */
 
 .motion-card--deep-ink {
-  animation: morph-mc-a 19s ease-in-out infinite alternate;
-  border: 1px solid oklch(55% 0.14 255 / 0.22);
-  background: oklch(7% 0.05 265);
+  border-radius: 38% 62% 55% 45% / 41% 44% 58% 57%;
+  background: oklch(14% 0.06 265);
 }
 
-.motion-card--amber-pulse {
-  animation: morph-mc-b 23s ease-in-out infinite alternate;
-  animation-delay: -5.5s;
-  border: 1px solid oklch(70% 0.18 66 / 0.25);
-  background: oklch(10% 0.06 45);
+.motion-card--amber-rings {
+  border-radius: 55% 45% 38% 62% / 57% 58% 44% 41%;
+  /* Rich dark honey-amber — rings glow against deep gold-brown */
+  background:
+    radial-gradient(ellipse 70% 70% at 50% 50%,
+      oklch(38% 0.18 68) 0%,
+      oklch(26% 0.13 60) 55%,
+      oklch(18% 0.09 52) 100%
+    );
 }
 
-.motion-card--silver-silk {
-  animation: morph-mc-c 17s ease-in-out infinite alternate;
-  animation-delay: -9s;
-  border: 1px solid oklch(78% 0.04 215 / 0.28);
-  background: radial-gradient(
-    ellipse at 38% 52%,
-    oklch(14% 0.04 255) 0%,
-    oklch(8% 0.04 270) 100%
-  );
+.motion-card--silver-threads {
+  border-radius: 42% 58% 48% 52% / 52% 46% 54% 48%;
+  /* Dark so the bright wave lines read as phosphor against dark screen */
+  background: oklch(11% 0.03 260);
 }
 
 .motion-card--color-noise {
-  animation: morph-mc-d 21s ease-in-out infinite alternate;
-  animation-delay: -6.5s;
-  border: 1px solid oklch(65% 0.1 310 / 0.22);
-  background: oklch(52% 0.18 30);
+  border-radius: 60% 40% 52% 48% / 44% 58% 46% 54%;
+  /* Deep rust-orange — blobs pop chromatically against dark ground */
+  background: oklch(18% 0.08 28);
 }
 
-/* Two rest poses per variant (extremes taken from the prior multi-step morphs) */
-@keyframes morph-mc-a {
-  from { border-radius: 38% 62% 55% 45% / 41% 44% 58% 57%; }
-  to   { border-radius: 60% 40% 47% 53% / 37% 58% 46% 63%; }
-}
-
-@keyframes morph-mc-b {
-  from { border-radius: 55% 45% 38% 62% / 57% 58% 44% 41%; }
-  to   { border-radius: 62% 38% 44% 56% / 52% 38% 60% 48%; }
-}
-
-@keyframes morph-mc-c {
-  from { border-radius: 42% 58% 48% 52% / 52% 46% 54% 48%; }
-  to   { border-radius: 36% 64% 44% 56% / 62% 40% 64% 36%; }
-}
-
-@keyframes morph-mc-d {
-  from { border-radius: 60% 40% 52% 48% / 44% 58% 46% 54%; }
-  to   { border-radius: 52% 48% 66% 34% / 38% 62% 44% 56%; }
-}
 
 /* ═══════════════════════════════════════════════════════════════
    A — Deep Ink  (靜 · still · prussian blue)
@@ -281,83 +309,144 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   B — Amber Pulse  (溫 · warm · breathing glow)
+   B — Amber Rings  (溫 · warm · breath rippling outward)
 ═══════════════════════════════════════════════════════════════ */
-.mc-blob--amber-core {
-  width: 78%;
+
+/* Warm candleflame core — very bright against dark honey background */
+.mc-ring-core {
+  position: absolute;
+  width: 16%;
   aspect-ratio: 1;
   top: 50%;
   left: 50%;
-  background: radial-gradient(circle at 50% 50%,
-    oklch(70% 0.22 66)  0%,
-    oklch(58% 0.25 48) 35%,
-    transparent 70%
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle,
+    oklch(98% 0.18 90) 0%,
+    oklch(88% 0.28 72) 40%,
+    oklch(72% 0.26 58) 75%,
+    transparent 100%
   );
-  transform: translate(-50%, -50%);
-  animation: amber-breathe 8.5s ease-in-out infinite alternate;
+  box-shadow: 0 0 20px 8px oklch(75% 0.26 68 / 0.55);
+  animation: core-breathe 4.2s ease-in-out infinite alternate;
 }
 
-.mc-blob--amber-halo {
-  width: 115%;
+@keyframes core-breathe {
+  from { opacity: 0.82; transform: translate(-50%, -50%) scale(0.88); }
+  to   { opacity: 1;    transform: translate(-50%, -50%) scale(1.14); }
+}
+
+/* Expanding rings — full-card width base so they visibly fill and overflow */
+.mc-ring {
+  position: absolute;
+  width: 120%;
   aspect-ratio: 1;
   top: 50%;
   left: 50%;
-  background: radial-gradient(circle at 50% 50%,
-    oklch(52% 0.19 54 / 0.42) 0%,
-    oklch(38% 0.15 40 / 0.18) 46%,
-    transparent 70%
-  );
-  transform: translate(-50%, -50%);
-  animation: amber-breathe 8.5s ease-in-out infinite alternate;
-  animation-delay: -4.25s;
+  border-radius: 50%;
+  pointer-events: none;
+  border: 2.5px solid oklch(80% 0.26 68 / 0.85);
+  box-shadow:
+    0 0 18px 4px oklch(72% 0.26 64 / 0.50),
+    0 0 40px 8px oklch(58% 0.22 52 / 0.25);
+  will-change: transform, opacity;
 }
 
-@keyframes amber-breathe {
-  0%, 100% {
-    transform: translate(-50%, -50%) scale(0.86);
-    opacity: 0.6;
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.16);
-    opacity: 1;
-  }
+/* Ten rings — one dispatched every 1s for dense, continuous radial flow */
+.mc-ring--1  { animation: ring-expand 10s linear  0s infinite; }
+.mc-ring--2  { animation: ring-expand 10s linear -1s infinite; }
+.mc-ring--3  { animation: ring-expand 10s linear -2s infinite; }
+.mc-ring--4  { animation: ring-expand 10s linear -3s infinite; }
+.mc-ring--5  { animation: ring-expand 10s linear -4s infinite; }
+.mc-ring--6  { animation: ring-expand 10s linear -5s infinite; }
+.mc-ring--7  { animation: ring-expand 10s linear -6s infinite; }
+.mc-ring--8  { animation: ring-expand 10s linear -7s infinite; }
+.mc-ring--9  { animation: ring-expand 10s linear -8s infinite; }
+.mc-ring--10 { animation: ring-expand 10s linear -9s infinite; }
+
+@keyframes ring-expand {
+  0%   { transform: translate(-50%, -50%) scale(0.06); opacity: 0.95; }
+  65%  { opacity: 0.30; }
+  100% { transform: translate(-50%, -50%) scale(2.8);  opacity: 0; }
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   C — Silver Silk  (動 · dynamic · sweeping metallic sheen)
+   C — Silver Threads  (動 · dynamic · oscilloscope sine waves)
 ═══════════════════════════════════════════════════════════════ */
-.silk-sweep,
-.silk-sweep-2 {
+
+/* Track: horizontal band that clips the scrolling SVG */
+.mc-wave-track {
   position: absolute;
-  inset: -35% -25%;
+  left: 0;
+  width: 100%;
+  height: 38%;
+  overflow: hidden;
   pointer-events: none;
-  background: linear-gradient(
-    108deg,
-    transparent 24%,
-    oklch(78% 0.02 215 / 0.10) 39%,
-    oklch(88% 0.01 212 / 0.68) 48.8%,
-    oklch(96% 0.005 205 / 0.90) 50%,
-    oklch(88% 0.01 212 / 0.68) 51.2%,
-    oklch(78% 0.02 215 / 0.10) 61%,
-    transparent 76%
-  );
 }
 
-.silk-sweep {
-  will-change: transform;
-  animation: silk-glide 14s ease-in-out infinite alternate;
+/* Three bands — spread more evenly, slight overlap gives depth */
+.mc-wave-track--s1 { top: 10%; }
+.mc-wave-track--s2 { top: 38%; }
+.mc-wave-track--s3 { top: 64%; }
+
+/* SVG is double-wide for seamless horizontal loop */
+.mc-wave-svg {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 200%;
+  height: 100%;
+  overflow: visible;
 }
 
-.silk-sweep-2 {
-  opacity: 0.45;
-  will-change: transform;
-  animation: silk-glide 14s ease-in-out infinite alternate;
-  animation-delay: -7s;
+/* Fast scroll speeds — alert, kinetic, oscilloscope-like */
+.mc-wave-track--s1 .mc-wave-svg {
+  animation: wave-scroll 2.8s linear infinite;
+}
+.mc-wave-track--s2 .mc-wave-svg {
+  animation: wave-scroll 3.8s linear infinite reverse;
+}
+.mc-wave-track--s3 .mc-wave-svg {
+  animation: wave-scroll 2.2s linear infinite;
+  animation-delay: -0.9s;
 }
 
-@keyframes silk-glide {
-  from { transform: translateX(-88%) skewX(-5deg); }
-  to   { transform: translateX(88%) skewX(-5deg); }
+@keyframes wave-scroll {
+  from { transform: translateY(-50%) translateX(0%); }
+  to   { transform: translateY(-50%) translateX(-50%); }
+}
+
+/* Primary trace: bright electric silver-cyan with phosphor glow */
+.mc-wave-path--silver-1 {
+  fill: none;
+  stroke: oklch(92% 0.05 195);
+  stroke-width: 4;
+  stroke-linecap: round;
+  opacity: 1;
+  filter:
+    drop-shadow(0 0 3px oklch(88% 0.08 200 / 0.95))
+    drop-shadow(0 0 10px oklch(76% 0.12 210 / 0.70))
+    drop-shadow(0 0 22px oklch(65% 0.14 215 / 0.40));
+}
+
+/* Second trace: slightly dimmer, lower frequency */
+.mc-wave-path--silver-2 {
+  fill: none;
+  stroke: oklch(72% 0.07 220);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  opacity: 0.75;
+  filter: drop-shadow(0 0 4px oklch(68% 0.10 220 / 0.55));
+}
+
+/* Third trace: fine detail line, highest frequency */
+.mc-wave-path--silver-3 {
+  fill: none;
+  stroke: oklch(62% 0.05 205);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  opacity: 0.55;
+  filter: drop-shadow(0 0 3px oklch(60% 0.08 210 / 0.40));
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -429,6 +518,556 @@
 @keyframes cn-m { to { transform: translate(-34%, -28%) scale(1.12); } }
 @keyframes cn-c { to { transform: translate(40%, -20%) scale(1.18); } }
 
+/* ═══════════════════════════════════════════════════════════════
+   Q2-A — Concentric Wrap  (包覆 · enclosed · deep violet)
+   spaceStructure: 2 · sensitivity: 1
+   Distinct: vivid purple rings breathing inward/outward
+═══════════════════════════════════════════════════════════════ */
+.motion-card--concentric-wrap {
+  border-radius: 38% 62% 55% 45% / 41% 44% 58% 57%;
+  /* Deep violet ≈ #5920F2 — centre slightly lifted, edge vignette */
+  background:
+    radial-gradient(ellipse 80% 80% at 50% 50%,
+      oklch(51% 0.27 286) 0%,
+      oklch(44% 0.25 286) 100%
+    );
+}
+
+.motion-card--concentric-wrap .motion-card__veil {
+  -webkit-backdrop-filter: blur(4px) saturate(1.25);
+  backdrop-filter: blur(4px) saturate(1.25);
+  background: oklch(42% 0.14 286 / 0.20);
+  box-shadow: inset 0 1px 0 oklch(89% 0.08 318 / 0.28);
+}
+
+/* Stage: soft top rim in #F1B7FA family */
+.motion-card--concentric-wrap .motion-card__stage {
+  box-shadow:
+    inset 0 1px 0 oklch(89% 0.08 318 / 0.32),
+    inset 0 0 56px 0 oklch(38% 0.18 286 / 0.18);
+}
+
+/* Concentric rings — light orchid ≈ #F1B7FA */
+.mc-cring {
+  position: absolute;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  pointer-events: none;
+  border: 2px solid oklch(89% 0.08 318 / 0.92);
+  box-shadow:
+    0 0 14px 4px oklch(84% 0.10 318 / 0.48),
+    0 0 30px 8px oklch(72% 0.12 300 / 0.22);
+  will-change: transform, opacity;
+}
+
+/* Rings breath with 24% scale swing — very visible pulse */
+.mc-cring--1 { width: 16%;  aspect-ratio: 1; animation: cring-pulse 8s ease-in-out  0s infinite alternate; }
+.mc-cring--2 { width: 36%;  aspect-ratio: 1; animation: cring-pulse 8s ease-in-out -1.6s infinite alternate; }
+.mc-cring--3 { width: 60%;  aspect-ratio: 1; animation: cring-pulse 8s ease-in-out -3.2s infinite alternate; }
+.mc-cring--4 { width: 86%;  aspect-ratio: 1; animation: cring-pulse 8s ease-in-out -4.8s infinite alternate; }
+.mc-cring--5 { width: 116%; aspect-ratio: 1; animation: cring-pulse 8s ease-in-out -6.4s infinite alternate; }
+
+@keyframes cring-pulse {
+  from { transform: translate(-50%, -50%) scale(0.86); opacity: 0.38; }
+  to   { transform: translate(-50%, -50%) scale(1.14); opacity: 0.95; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Q2-B — Grid Order  (秩序 · checker · saturated blue + powder blue)
+   spaceStructure: 5 · sensitivity: 2
+═══════════════════════════════════════════════════════════════ */
+.motion-card--grid-order {
+  isolation: isolate;
+  border-radius: 55% 45% 38% 62% / 57% 58% 44% 41%;
+  background: oklch(42% 0.22 258);
+}
+
+/* Opaque stack — stops quiz-view grey bleeding through any sub-pixel gap */
+.motion-card--grid-order .motion-card__stage {
+  background: oklch(42% 0.22 258);
+  box-shadow:
+    inset 0 1px 0 oklch(82% 0.10 220 / 0.28),
+    inset 0 0 40px 0 oklch(28% 0.18 258 / 0.20);
+}
+
+.motion-card--grid-order .motion-card__effects {
+  background: oklch(42% 0.22 258);
+}
+
+.motion-card--grid-order .motion-card__veil {
+  -webkit-backdrop-filter: blur(6px) saturate(1.35);
+  backdrop-filter: blur(6px) saturate(1.35);
+  background: linear-gradient(
+    165deg,
+    oklch(55% 0.12 250 / 0.14),
+    oklch(42% 0.14 258 / 0.12)
+  );
+  box-shadow: inset 0 1px 0 oklch(92% 0.06 235 / 0.38);
+}
+
+/* Checker fills clip rect; pattern moves via background-position (transform uncovered gaps) */
+.mc-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    conic-gradient(
+      at 50% 50%,
+      oklch(42% 0.22 258) 0deg 90deg,
+      oklch(82% 0.08 235) 90deg 180deg,
+      oklch(42% 0.22 258) 180deg 270deg,
+      oklch(82% 0.08 235) 270deg 360deg
+    );
+  background-size: 128px 128px;
+  background-repeat: repeat;
+  animation: grid-bg-shift 18s linear infinite;
+}
+
+@keyframes grid-bg-shift {
+  from { background-position: 0 0; }
+  to   { background-position: 128px 128px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Q2-C — Parallel Lines  (開闊 · thin yellow + thick warm-white bands)
+   spaceStructure: 4 · sensitivity: 3
+═══════════════════════════════════════════════════════════════ */
+.motion-card--parallel-lines {
+  border-radius: 42% 58% 48% 52% / 52% 46% 54% 48%;
+  background:
+    linear-gradient(
+      180deg,
+      oklch(20% 0.05 265) 0%,
+      oklch(15% 0.04 275) 100%
+    );
+}
+
+.motion-card--parallel-lines .motion-card__stage {
+  background: oklch(17% 0.04 270);
+  box-shadow:
+    inset 0 1px 0 oklch(90% 0.16 88 / 0.30),
+    inset 0 0 40px 0 oklch(8% 0.04 270 / 0.18);
+}
+
+.motion-card--parallel-lines .motion-card__effects {
+  background: oklch(17% 0.04 270);
+}
+
+.motion-card--parallel-lines .motion-card__veil {
+  -webkit-backdrop-filter: blur(4px) saturate(1.25);
+  backdrop-filter: blur(4px) saturate(1.25);
+  background: oklch(18% 0.05 270 / 0.14);
+  box-shadow: inset 0 1px 0 oklch(96% 0.02 95 / 0.35);
+}
+
+/* Prominent amber-yellow rules — thicker stroke, richer colour, stronger glow */
+.mc-parallels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    0deg,
+    oklch(70% 0.26 72) 0px,
+    oklch(70% 0.26 72) 4px,
+    oklch(96% 0.014 92) 4px,
+    oklch(96% 0.014 92) 102px,
+    oklch(70% 0.26 72) 102px,
+    oklch(70% 0.26 72) 106px,
+    oklch(96% 0.014 92) 106px,
+    oklch(96% 0.014 92) 208px
+  );
+  background-repeat: repeat;
+  animation: parallels-bg-shift 20s linear infinite;
+  filter:
+    drop-shadow(0 0 5px oklch(70% 0.26 72 / 0.70))
+    drop-shadow(0 0 14px oklch(68% 0.24 72 / 0.40));
+}
+
+@keyframes parallels-bg-shift {
+  from { background-position: 0 0; }
+  to { background-position: 0 204px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Q2-D — Vapor Drift  (自由 · pastel open sky · warm chartreuse mist)
+   spaceStructure: 1 · sensitivity: 5
+═══════════════════════════════════════════════════════════════ */
+.motion-card--vapor-drift {
+  border-radius: 60% 40% 52% 48% / 44% 58% 46% 54%;
+  /* Soft warm cream-chartreuse — light and airy, no dark vignette */
+  background:
+    radial-gradient(ellipse 90% 85% at 42% 38%,
+      oklch(94% 0.05 105) 0%,
+      oklch(88% 0.07 110) 100%
+    );
+  /* Replace dark drop-shadow with warm glow rim */
+  box-shadow:
+    0 0 0 1px oklch(92% 0.10 108 / 0.55),
+    0 0 18px 4px oklch(84% 0.14 112 / 0.22),
+    0 6px 24px oklch(70% 0.10 108 / 0.18),
+    inset 0 1px 0 oklch(98% 0.05 100 / 0.65);
+}
+
+.motion-card--vapor-drift:hover {
+  box-shadow:
+    0 0 0 1.5px oklch(88% 0.14 112 / 0.65),
+    0 0 24px 5px oklch(80% 0.16 112 / 0.28),
+    0 10px 32px oklch(68% 0.10 108 / 0.22),
+    inset 0 1px 0 oklch(98% 0.05 100 / 0.70);
+}
+
+.motion-card--vapor-drift:active {
+  box-shadow:
+    0 0 0 1px oklch(90% 0.10 108 / 0.50),
+    0 0 12px 2px oklch(80% 0.12 112 / 0.18),
+    0 3px 14px oklch(68% 0.08 108 / 0.15),
+    inset 0 2px 12px oklch(76% 0.10 108 / 0.18),
+    inset 0 1px 0 oklch(98% 0.05 100 / 0.55);
+}
+
+.motion-card--vapor-drift .motion-card__veil {
+  -webkit-backdrop-filter: blur(6px) saturate(1.1);
+  backdrop-filter: blur(6px) saturate(1.1);
+  /* Near-transparent warm wash — no darkening */
+  background: oklch(92% 0.04 108 / 0.10);
+  box-shadow: inset 0 1px 0 oklch(98% 0.04 95 / 0.55);
+}
+
+/* Stage: bright top rim, no dark vignette */
+.motion-card--vapor-drift .motion-card__stage {
+  box-shadow:
+    inset 0 1px 0 oklch(98% 0.06 95 / 0.60);
+}
+
+/* Pastel chartreuse blobs — opaque enough to pop, blurred to stay dreamy */
+.mc-blob--vapor-a {
+  width: 145%;
+  aspect-ratio: 1;
+  top: -35%;
+  left: -25%;
+  background: radial-gradient(circle,
+    oklch(82% 0.18 112 / 0.62) 0%,
+    oklch(74% 0.15 112 / 0.38) 48%,
+    transparent 72%
+  );
+  filter: blur(28px);
+  animation: vapor-a 38s ease-in-out infinite alternate;
+}
+
+.mc-blob--vapor-b {
+  width: 120%;
+  aspect-ratio: 1;
+  bottom: -28%;
+  right: -22%;
+  background: radial-gradient(circle,
+    oklch(86% 0.14 98 / 0.52) 0%,
+    oklch(78% 0.12 108 / 0.36) 48%,
+    transparent 70%
+  );
+  filter: blur(24px);
+  animation: vapor-b 46s ease-in-out infinite alternate;
+  animation-delay: -18s;
+}
+
+.mc-blob--vapor-c {
+  width: 95%;
+  aspect-ratio: 1;
+  top: 20%;
+  right: -15%;
+  background: radial-gradient(circle,
+    oklch(90% 0.10 115 / 0.45) 0%,
+    transparent 65%
+  );
+  filter: blur(20px);
+  animation: vapor-c 32s ease-in-out infinite alternate;
+  animation-delay: -10s;
+}
+
+@keyframes vapor-a {
+  from { transform: translate(0%, 0%) scale(1); }
+  to   { transform: translate(5%, 7%) scale(1.06); }
+}
+@keyframes vapor-b {
+  from { transform: translate(0%, 0%) scale(1.03); }
+  to   { transform: translate(-6%, -4%) scale(0.98); }
+}
+@keyframes vapor-c {
+  from { transform: translate(0%, 0%) scale(1); }
+  to   { transform: translate(-4%, 6%) scale(1.08); }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Q4-A — Blue Mist  (憂鬱 · melancholy · deep navy + slow light-blue blobs)
+   colorSaturation: 1 · commercialAttribute: 2
+═══════════════════════════════════════════════════════════════ */
+.motion-card--purple-mist {
+  border-radius: 38% 62% 55% 45% / 41% 44% 58% 57%;
+  /* #689FA1 ≈ oklch(63% 0.07 196) — muted teal, melancholy but not black */
+  background: oklch(55% 0.07 196);
+}
+
+.motion-card--purple-mist .motion-card__veil {
+  -webkit-backdrop-filter: blur(8px) saturate(1.15);
+  backdrop-filter: blur(8px) saturate(1.15);
+  background: oklch(50% 0.06 196 / 0.20);
+  box-shadow: inset 0 1px 0 oklch(76% 0.07 248 / 0.30);
+}
+
+.motion-card--purple-mist .motion-card__stage {
+  box-shadow:
+    inset 0 1px 0 oklch(76% 0.07 248 / 0.35),
+    inset 0 0 40px 0 oklch(40% 0.06 196 / 0.22);
+}
+
+/* Blob A: periwinkle-blue ≈ #AFBADF */
+.mc-blob--mist-a {
+  width: 165%;
+  aspect-ratio: 1;
+  top: -40%;
+  left: -32%;
+  background: radial-gradient(circle,
+    oklch(76% 0.07 248 / 0.60) 0%,
+    oklch(66% 0.07 248 / 0.38) 45%,
+    transparent 70%
+  );
+  filter: blur(28px);
+  animation: mist-a 48s ease-in-out infinite alternate;
+}
+
+/* Blob B: lighter teal/periwinkle blend */
+.mc-blob--mist-b {
+  width: 140%;
+  aspect-ratio: 1;
+  bottom: -35%;
+  right: -28%;
+  background: radial-gradient(circle,
+    oklch(76% 0.07 248 / 0.52) 0%,
+    oklch(63% 0.07 196 / 0.34) 45%,
+    transparent 70%
+  );
+  filter: blur(24px);
+  animation: mist-b 62s ease-in-out infinite alternate;
+  animation-delay: -24s;
+}
+
+@keyframes mist-a {
+  from { transform: translate(0%, 0%) scale(1); }
+  to   { transform: translate(4%, 5%) scale(1.04); }
+}
+@keyframes mist-b {
+  from { transform: translate(0%, 0%) scale(1.06); }
+  to   { transform: translate(-3%, -6%) scale(1.01); }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Q4-B — Tone Balance  (平衡 · balance · pastel taiji slowly rotating)
+   colorSaturation: 2 · commercialAttribute: 3
+═══════════════════════════════════════════════════════════════ */
+.motion-card--gray-gradient {
+  border-radius: 55% 45% 38% 62% / 57% 58% 44% 41%;
+  /* Warm cream field so the vibrant taiji pops cleanly */
+  background: oklch(96% 0.03 60);
+}
+
+.motion-card--gray-gradient .motion-card__veil {
+  -webkit-backdrop-filter: blur(5px) saturate(1.1);
+  backdrop-filter: blur(5px) saturate(1.1);
+  background: oklch(94% 0.02 60 / 0.12);
+  box-shadow: inset 0 1px 0 oklch(100% 0.02 60 / 0.55);
+}
+
+.motion-card--gray-gradient .motion-card__stage {
+  box-shadow:
+    inset 0 1px 0 oklch(100% 0.02 60 / 0.65),
+    inset 0 0 30px 0 oklch(88% 0.06 40 / 0.14);
+}
+
+/* ── Taiji container — centred, slowly rotates ── */
+.mc-taiji {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  /* 200% × 200% guarantees coverage in both landscape and portrait card shapes.
+     The circular edge is always hidden by the card's blob clip, so the
+     elliptical container is visually identical to a circle. */
+  width: 200%;
+  height: 200%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  overflow: hidden;
+  animation: taiji-spin 28s linear infinite;
+  will-change: transform;
+}
+
+/* Left half — warm coral-rose */
+.mc-taiji__half--light {
+  position: absolute;
+  inset: 0 50% 0 0;
+  background: oklch(72% 0.22 22);
+}
+
+/* Right half — hot pink ≈ #ED6CC6 */
+.mc-taiji__half--dark {
+  position: absolute;
+  inset: 0 0 0 50%;
+  background: oklch(68% 0.22 338);
+}
+
+/* Small dot on the light half — hot pink */
+.mc-taiji__dot--light {
+  position: absolute;
+  width: 25%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  top: 25%;
+  left: 37.5%;
+  transform: translateX(-50%);
+  background: oklch(68% 0.22 338);
+}
+
+/* Small dot on the dark half — coral */
+.mc-taiji__dot--dark {
+  position: absolute;
+  width: 25%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  bottom: 25%;
+  right: 37.5%;
+  transform: translateX(50%);
+  background: oklch(72% 0.22 22);
+}
+
+@keyframes taiji-spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Q4-C — Color Bands  (歡快 · joyful · muted diagonal spectrum)
+   colorSaturation: 4 · commercialAttribute: 2
+═══════════════════════════════════════════════════════════════ */
+.motion-card--color-bands {
+  border-radius: 42% 58% 48% 52% / 52% 46% 54% 48%;
+  /* Light warm-white base so pastel bands look airy */
+  background: oklch(96% 0.01 80);
+}
+
+.motion-card--color-bands .motion-card__veil {
+  -webkit-backdrop-filter: blur(4px) saturate(1.1);
+  backdrop-filter: blur(4px) saturate(1.1);
+  background: oklch(95% 0.01 80 / 0.10);
+  box-shadow: inset 0 1px 0 oklch(100% 0.02 80 / 0.55);
+}
+
+.motion-card--color-bands .motion-card__stage {
+  box-shadow:
+    inset 0 1px 0 oklch(100% 0.02 80 / 0.65),
+    inset 0 0 30px 0 oklch(88% 0.04 80 / 0.10);
+}
+
+/* Pastel rainbow bands — high lightness, low chroma = lighthearted */
+.mc-bands {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background-image: repeating-linear-gradient(
+    -48deg,
+    oklch(76% 0.22 22)   0px,
+    oklch(76% 0.22 22)   60px,
+    oklch(82% 0.20 68)   60px,
+    oklch(82% 0.20 68)   120px,
+    oklch(86% 0.19 100)  120px,
+    oklch(86% 0.19 100)  180px,
+    oklch(78% 0.18 148)  180px,
+    oklch(78% 0.18 148)  240px,
+    oklch(74% 0.16 220)  240px,
+    oklch(74% 0.16 220)  300px,
+    oklch(76% 0.20 280)  300px,
+    oklch(76% 0.20 280)  360px,
+    oklch(78% 0.22 330)  360px,
+    oklch(78% 0.22 330)  420px
+  );
+  background-size: 600px 600px;
+  animation: bands-bg-scroll 8s linear infinite;
+}
+
+@keyframes bands-bg-scroll {
+  from { background-position: 0 0; }
+  to   { background-position: 420px 420px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Q4-D — Fluoro Glitch  (緊張 · tense · neon electric blobs)
+   colorSaturation: 5 · commercialAttribute: 4
+═══════════════════════════════════════════════════════════════ */
+.motion-card--fluoro-glitch {
+  border-radius: 60% 40% 52% 48% / 44% 58% 46% 54%;
+  background: oklch(11% 0.03 180);
+}
+
+.motion-card--fluoro-glitch .motion-card__veil {
+  -webkit-backdrop-filter: blur(3px) saturate(1.8);
+  backdrop-filter: blur(3px) saturate(1.8);
+  background: oklch(12% 0.03 180 / 0.20);
+  box-shadow: inset 0 1px 0 oklch(100% 0.04 120 / 0.18);
+}
+
+.motion-card--fluoro-glitch .motion-card__stage {
+  box-shadow:
+    inset 0 1px 0 oklch(82% 0.18 140 / 0.28),
+    inset 0 0 40px 0 oklch(0% 0 0 / 0.14);
+}
+
+.mc-blob--fluoro-r {
+  width: 110%;
+  aspect-ratio: 1;
+  top: -22%;
+  left: -18%;
+  background: radial-gradient(circle, oklch(72% 0.30 145) 0%, oklch(66% 0.28 142) 38%, transparent 68%);
+  filter: blur(4px);
+  animation: fl-r 2.8s ease-in-out infinite alternate;
+}
+
+.mc-blob--fluoro-g {
+  width: 100%;
+  aspect-ratio: 1;
+  bottom: -18%;
+  right: -16%;
+  background: radial-gradient(circle, oklch(78% 0.26 185) 0%, oklch(72% 0.24 182) 40%, transparent 68%);
+  filter: blur(4px);
+  animation: fl-g 2.1s ease-in-out infinite alternate;
+  animation-delay: -0.8s;
+}
+
+.mc-blob--fluoro-b {
+  width: 95%;
+  aspect-ratio: 1;
+  top: 10%;
+  right: -20%;
+  background: radial-gradient(circle, oklch(82% 0.22 92) 0%, oklch(76% 0.20 88) 40%, transparent 68%);
+  filter: blur(3px);
+  animation: fl-b 3.4s ease-in-out infinite alternate;
+  animation-delay: -1.5s;
+}
+
+.mc-blob--fluoro-y {
+  width: 88%;
+  aspect-ratio: 1;
+  bottom: -10%;
+  left: -14%;
+  background: radial-gradient(circle, oklch(66% 0.30 350) 0%, oklch(58% 0.28 352) 42%, transparent 68%);
+  filter: blur(3px);
+  animation: fl-y 1.8s ease-in-out infinite alternate;
+  animation-delay: -0.4s;
+}
+
+@keyframes fl-r { to { transform: translate(28%, 36%) scale(1.18); } }
+@keyframes fl-g { to { transform: translate(-26%, -32%) scale(0.88); } }
+@keyframes fl-b { to { transform: translate(-30%, 28%) scale(1.14); } }
+@keyframes fl-y { to { transform: translate(32%, -24%) scale(0.92); } }
+
 /* ── Accessibility: reduced motion ─────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .motion-card {
@@ -456,25 +1095,28 @@
   }
 
   .motion-card--deep-ink,
-  .motion-card--amber-pulse,
-  .motion-card--silver-silk,
-  .motion-card--color-noise {
+  .motion-card--amber-rings,
+  .motion-card--silver-threads,
+  .motion-card--color-noise,
+  .motion-card--concentric-wrap,
+  .motion-card--grid-order,
+  .motion-card--parallel-lines,
+  .motion-card--vapor-drift,
+  .motion-card--purple-mist,
+  .motion-card--gray-gradient,
+  .motion-card--color-bands,
+  .motion-card--fluoro-glitch {
     animation: none;
     border-radius: 44% 56% 52% 48% / 46% 48% 54% 52%;
   }
 
-  .mc-blob,
-  .silk-sweep,
-  .silk-sweep-2 {
+  .mc-blob {
     will-change: auto;
   }
 
+  /* Freeze blob animations */
   .mc-blob--ink-a,
   .mc-blob--ink-b,
-  .mc-blob--amber-core,
-  .mc-blob--amber-halo,
-  .silk-sweep,
-  .silk-sweep-2,
   .mc-blob--noise-r,
   .mc-blob--noise-g,
   .mc-blob--noise-b,
@@ -483,4 +1125,52 @@
   .mc-blob--noise-c {
     animation: none;
   }
+
+  /* Freeze amber-rings: show rings at a mid-expand pose */
+  .mc-ring-core {
+    animation: none;
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.85;
+  }
+
+  .mc-ring--1  { animation: none; transform: translate(-50%, -50%) scale(0.10); opacity: 0.80; }
+  .mc-ring--2  { animation: none; transform: translate(-50%, -50%) scale(0.38); opacity: 0.64; }
+  .mc-ring--3  { animation: none; transform: translate(-50%, -50%) scale(0.66); opacity: 0.50; }
+  .mc-ring--4  { animation: none; transform: translate(-50%, -50%) scale(0.94); opacity: 0.36; }
+  .mc-ring--5  { animation: none; transform: translate(-50%, -50%) scale(1.22); opacity: 0.24; }
+  .mc-ring--6  { animation: none; transform: translate(-50%, -50%) scale(1.50); opacity: 0.14; }
+  .mc-ring--7  { animation: none; transform: translate(-50%, -50%) scale(1.78); opacity: 0.08; }
+  .mc-ring--8  { animation: none; transform: translate(-50%, -50%) scale(2.06); opacity: 0.04; }
+  .mc-ring--9  { animation: none; transform: translate(-50%, -50%) scale(2.34); opacity: 0.02; }
+  .mc-ring--10 { animation: none; transform: translate(-50%, -50%) scale(2.62); opacity: 0.01; }
+
+  /* Freeze silver-threads: hold SVG in a neutral position */
+  .mc-wave-svg {
+    animation: none;
+    transform: translateY(-50%) translateX(-20%);
+  }
+
+  /* Q2 / Q4 freeze states */
+  .mc-cring { animation: none; opacity: 0.65; }
+  .mc-cring--1 { transform: translate(-50%, -50%) scale(1); }
+  .mc-cring--2 { transform: translate(-50%, -50%) scale(1); }
+  .mc-cring--3 { transform: translate(-50%, -50%) scale(1); }
+  .mc-cring--4 { transform: translate(-50%, -50%) scale(1); }
+  .mc-cring--5 { transform: translate(-50%, -50%) scale(1); }
+
+  .mc-grid { animation: none; }
+  .mc-parallels { animation: none; }
+  .mc-bands { animation: none; }
+
+  .mc-taiji { animation: none; }
+
+  .mc-blob--vapor-a,
+  .mc-blob--vapor-b,
+  .mc-blob--vapor-c,
+  .mc-blob--mist-a,
+  .mc-blob--mist-b,
+  .mc-blob--fluoro-r,
+  .mc-blob--fluoro-g,
+  .mc-blob--fluoro-b,
+  .mc-blob--fluoro-y { animation: none; }
 }
